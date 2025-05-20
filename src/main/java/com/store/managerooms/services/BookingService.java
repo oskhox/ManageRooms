@@ -15,10 +15,10 @@ public interface BookingService {
 
 
     public List<DetailedBookingDto> getAllBookings();
-    public DetailedBookingDto saveBooking(DetailedBookingDto detailedBookingDto);
+    public DetailedBookingDto saveNewBooking(DetailedBookingDto detailedBookingDto);
     public DetailedBookingDto findBookingById(Long id);
     public void deleteBookingById(Long id);
-    public Booking updateDetailedBooking(Long id, DetailedBookingDto detailedBookingDto);
+    public Booking updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto);
 
 
     }

@@ -32,7 +32,7 @@ public class BookingController {
 
     @PostMapping("/create")
     public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
-        DetailedBookingDto savedBookingDto = bookingService.saveBooking(detailedBookingDto);
+        DetailedBookingDto savedBookingDto = bookingService.saveNewBooking(detailedBookingDto);
         model.addAttribute("booking", savedBookingDto);
         return "bookingConfirmation";
     }

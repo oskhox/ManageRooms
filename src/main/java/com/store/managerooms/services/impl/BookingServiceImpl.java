@@ -40,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public DetailedBookingDto saveBooking(DetailedBookingDto detailedBookingDto) {
+    public DetailedBookingDto saveNewBooking(DetailedBookingDto detailedBookingDto) {
         Booking booking = detailedBookingDtoToBooking(new Booking(),detailedBookingDto);
         Booking savedBooking = bookingRepository.save(booking);
         return bookingToDetailedBookingDto(savedBooking);
@@ -48,14 +48,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking updateDetailedBooking(Long id, DetailedBookingDto detailedBookingDto) {
+    public Booking updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
         return bookingRepository.save(detailedBookingDtoToBooking(booking,detailedBookingDto));
     }
-
-
-
 
     @Override
     public Booking detailedBookingDtoToBooking(Booking booking, DetailedBookingDto detailedBookingDto) {
