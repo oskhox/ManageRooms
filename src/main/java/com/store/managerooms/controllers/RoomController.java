@@ -27,10 +27,10 @@ public class RoomController {
     public List<Room> addRoom(@RequestParam int roomNumber,
                               @RequestParam String name,
                               @RequestParam int beds,
-                              @RequestParam boolean extraBeds){
+                              @RequestParam boolean extraBedsAvailable){
 
-        if(extraBeds){
-            Room doubleRoom = new Room(roomNumber,new RoomType(name,beds,0,extraBeds));
+        if(extraBedsAvailable){
+            Room doubleRoom = new Room(roomNumber,new RoomType(name,beds,0, true));
             roomRepo.save(doubleRoom);
         }else{
             Room room = new Room(roomNumber, new RoomType(name,beds));

@@ -16,20 +16,19 @@ public class RoomType {
     @GeneratedValue
     private long id;
     private String name;
-    private int bedCounts;
-    private int addBeds;
-    private boolean extraBeds;
+    private int bedCount;
+    private int extraBeds;
+    private boolean extraBedsAvailable;
 
-    public RoomType(String name, int bedCounts) {
+    public RoomType(String name, int bedCount) {
         this.name = name;
-        this.bedCounts = bedCounts;
-        this.extraBeds = extraBeds;
+        this.bedCount = bedCount;
     }
 
-    public RoomType(String name, int bedCounts, int addBeds, boolean extraBeds) {
+    public RoomType(String name, int bedCount, int extraBeds, boolean extraBedsAvailable) {
         this.name = name;
-        this.bedCounts = bedCounts;
-        this.addBeds = addBeds;
+        this.bedCount = bedCount;
         this.extraBeds = extraBeds;
+        this.extraBedsAvailable = extraBedsAvailable;
     }
 }
