@@ -20,7 +20,7 @@ public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
 
 
-    @GetMapping("")
+    @RequestMapping("")
     public String getBookings(Model model) {
         List<DetailedBookingDto> bookings = bookingService.getAllBookings();
         model.addAttribute("bookings", bookings);
@@ -37,7 +37,7 @@ public class BookingController {
 
     //inte gjort dto än
 
-    @PostMapping("/cancel")
+    @DeleteMapping("/cancel")
     public String cancelBooking(@ModelAttribute Long id, Model model) {
         bookingService.deleteBookingById(id);
         model.addAttribute("message", "Bokning " + id + " är raderad");
@@ -45,7 +45,7 @@ public class BookingController {
 
     }
 
-    @RequestMapping("/booked-room/")
+    @RequestMapping ("/booked-room/")
     public String findBooking(@RequestParam Long id, Model model) {
         try {
             Booking booking = bookingService.findBookingById(id);
