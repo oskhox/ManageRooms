@@ -5,6 +5,7 @@ package com.store.managerooms;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -24,9 +25,11 @@ public class BookingService {
         bookingRepository.deleteById(id);
     }
 
-    public Optional<Booking> findBookingById(Long id) {
-       return bookingRepository.findById(id);
+    public Booking findBookingById(Long id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Bokningen med id " + id + " finns inte."));
     }
+
 
     public Booking saveBooking(Booking booking) {
         return bookingRepository.save(booking);

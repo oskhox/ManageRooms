@@ -1,5 +1,6 @@
 package com.store.managerooms;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -28,18 +30,18 @@ public class BookingController {
     public String cancelBooking(@RequestParam Long id, Model model) {
         bookingService.deleteBookingById(id);
         model.addAttribute("message", "Bokningen " + id + " är raderad");
-        return "bookingCancelled";
+        return "cancelled";
     }
 
-    @RequestMapping("/booked-room/{id}")
-    public String findBooking(@RequestParam Long id, Model model){
-        Optional<Booking> booking = bookingService.findBookingById(id);
-        if (booking.isPresent()) {
-            model.addAttribute("booking", booking.get());
+    @RequestMapping("/booked-room/")
+    public String handleBooking(@RequestParam Long id, Model model){
+        try {
+            Booking booking = bookingService.findBookingById(id);
+            model.addAttribute("booking", booking);
             return "bookingDetails";
-        } else {
-            model.addAttribute("errorMessage", "Bokningen " + id + " finns inte.");
-            return "errorPage";
+        } catch (NoSuchElementException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "bookings";
         }
     }
 

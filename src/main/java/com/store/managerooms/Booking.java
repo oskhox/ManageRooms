@@ -22,7 +22,7 @@ public class Booking {
     @JoinColumn()
     private Customer customer;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn()
     private Room room;
 
