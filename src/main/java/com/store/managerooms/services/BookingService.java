@@ -1,4 +1,8 @@
-package com.store.managerooms;
+package com.store.managerooms.services;
+
+import com.store.managerooms.Booking;
+import com.store.managerooms.dtos.BookingDto;
+import com.store.managerooms.dtos.DetailedBookingDto;
 
 import java.util.List;
 

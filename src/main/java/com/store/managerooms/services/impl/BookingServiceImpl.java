@@ -1,5 +1,10 @@
-package com.store.managerooms;
+package com.store.managerooms.services.impl;
 
+import com.store.managerooms.Booking;
+import com.store.managerooms.dtos.BookingDto;
+import com.store.managerooms.BookingRepository;
+import com.store.managerooms.dtos.DetailedBookingDto;
+import com.store.managerooms.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

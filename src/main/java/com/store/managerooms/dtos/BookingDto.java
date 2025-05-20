@@ -1,4 +1,4 @@
-package com.store.managerooms;
+package com.store.managerooms.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

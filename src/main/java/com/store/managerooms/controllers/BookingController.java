@@ -1,5 +1,8 @@
 package com.store.managerooms;
 
+import com.store.managerooms.dtos.DetailedBookingDto;
+import com.store.managerooms.services.BookingService;
+import com.store.managerooms.services.impl.BookingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
