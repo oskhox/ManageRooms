@@ -1,7 +1,7 @@
 package com.store.managerooms;
 
-import com.store.managerooms.model.Customer;
-import com.store.managerooms.repository.CustomerRepository;
+import com.store.managerooms.Models.Customer;
+import com.store.managerooms.Repos.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

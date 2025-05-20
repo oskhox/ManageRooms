@@ -1,6 +1,6 @@
-package com.store.managerooms.repository;
+package com.store.managerooms.Repos;
 
-import com.store.managerooms.model.Customer;
+import com.store.managerooms.Models.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {

@@ -1,6 +1,6 @@
-package com.store.managerooms.controller;
+package com.store.managerooms.Controllers;
 
-import com.store.managerooms.repository.CustomerRepository;
+import com.store.managerooms.Repos.CustomerRepository;
 import org.springframework.stereotype.Controller;
 
 @Controller

@@ -1,4 +1,4 @@
-package com.store.managerooms.model;
+package com.store.managerooms.Models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
