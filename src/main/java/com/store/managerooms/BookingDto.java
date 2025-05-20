@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class BookingDto {
 
-    private long Id;
+    private Long Id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String customerName;

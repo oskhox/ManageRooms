@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-public class BookingServiceImpl implements BookingService{
+public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final CustomerService customerService;
@@ -18,7 +18,7 @@ public class BookingServiceImpl implements BookingService{
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToDetailedBookingDto(b)).toList();
 
-}
+    }
 
     public void deleteBookingById(Long id) {
         bookingRepository.deleteById(id);
@@ -35,12 +35,25 @@ public class BookingServiceImpl implements BookingService{
         Booking booking = bookingDtoToBooking(bookingDto);
         Booking savedBooking = bookingRepository.save(booking);
         return bookingToBookingDto(savedBooking);
+    }
+
+    public Booking updateBooking(Long id, BookingDto bookingDto) {
+        Booking booking = bookingRepository.findById(id).get();
+        booking.setStartDate(bookingDto.getStartDate());
+        booking.setEndDate(bookingDto.getEndDate());
+
+        Customer customer = customerService.findByName(bookingDto.getCustomerName());
+        booking.setCustomer(customer);
+
+        Room room = roomService.findByRoomNumber(bookingDto.getRoomNumber());
+        booking.setRoom(room);
+
+        return bookingRepository.save(booking);
 
     }
 
     public Booking bookingDtoToBooking(BookingDto bookingDto) {
         Booking booking = new Booking();
-        booking.setId(bookingDto.getId());
         booking.setStartDate(bookingDto.getStartDate());
         booking.setEndDate(bookingDto.getEndDate());
 
@@ -76,4 +89,5 @@ public class BookingServiceImpl implements BookingService{
                 .roomNumber(booking.getRoom().getRoomNumber())
                 .roomType(booking.getRoom().getRoomType().getName())
                 .build();
+    }
 }
