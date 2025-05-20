@@ -29,7 +29,7 @@ public class BookingController {
     @PostMapping("/cancel")
     public String cancelBooking(@RequestParam Long id, Model model) {
         bookingService.deleteBookingById(id);
-        model.addAttribute("message", "Bokningen " + id + " är raderad");
+        model.addAttribute("message", "Bokning " + id + " är raderad");
         return "cancelled";
     }
 

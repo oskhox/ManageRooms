@@ -27,7 +27,7 @@ public class BookingService {
 
     public Booking findBookingById(Long id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Bokningen med id " + id + " finns inte."));
+                .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
     }
 
 
