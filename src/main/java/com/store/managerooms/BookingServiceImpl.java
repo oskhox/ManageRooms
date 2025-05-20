@@ -80,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
-    public Booking bookingDtoToDetailedBookingDto(DetailedBookingDto detailedBookingDto) {
+    public Booking DetailedBookingDtoToBooking(DetailedBookingDto detailedBookingDto) {
         Booking booking = new Booking();
         booking.setStartDate(detailedBookingDto.getStartDate());
         booking.setEndDate(detailedBookingDto.getEndDate());
