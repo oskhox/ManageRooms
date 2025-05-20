@@ -1,9 +1,7 @@
 package com.store.managerooms.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,10 +14,13 @@ public class Room {
     @GeneratedValue
     private long id;
     private int roomNumber;
-    private String type;
 
-    public Room(int roomNumber, String type) {
+    @ManyToOne
+    @JoinColumn
+    private RoomType roomType;
+
+    public Room(int roomNumber, RoomType roomType) {
         this.roomNumber = roomNumber;
-        this.type = type;
+        this.roomType = roomType;
     }
 }
