@@ -34,7 +34,7 @@ public class BookingController {
     }
 
     @RequestMapping("/booked-room/")
-    public String handleBooking(@RequestParam Long id, Model model){
+    public String findBooking(@RequestParam Long id, Model model) {
         try {
             Booking booking = bookingService.findBookingById(id);
             model.addAttribute("booking", booking);
@@ -44,6 +44,12 @@ public class BookingController {
             return "bookings";
         }
     }
+
+    @PostMapping("/booked-room/")
+    public String handleBooking(@RequestParam Long id, Model model) {
+        findBooking(id,model);
+    }
+
 
     @RequestMapping("")
     public List<Booking> getBookings() {
