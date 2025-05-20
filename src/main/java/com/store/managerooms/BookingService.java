@@ -11,6 +11,8 @@ public interface BookingService {
     public List<DetailedBookingDto> getAllBookings();
     public BookingDto saveBooking(BookingDto bookingDto);
     public DetailedBookingDto findBookingById(Long id);
+    public void deleteBookingById(Long id);
 
 
-}
+
+    }

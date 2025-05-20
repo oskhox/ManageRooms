@@ -20,6 +20,7 @@ public class BookingController {
     private final BookingService bookingService;
     private final CustomerService customerService;
     private final RoomService roomService;
+    private final BookingServiceImpl bookingServiceImpl;
 
 
     @GetMapping("")
@@ -38,14 +39,15 @@ public class BookingController {
     }
 
 
-
-    //inte gjort dto än
-
     @PostMapping("/cancel")
     public String cancelBooking(@RequestParam Long id, Model model) {
         bookingService.deleteBookingById(id);
         model.addAttribute("message", "Bokning " + id + " är raderad");
         return "cancelled";
+
+
+
+        //inte gjort dto än
     }
 
     @RequestMapping("/booked-room/")

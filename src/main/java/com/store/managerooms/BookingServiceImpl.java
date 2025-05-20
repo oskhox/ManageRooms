@@ -49,7 +49,21 @@ public class BookingServiceImpl implements BookingService {
         booking.setRoom(room);
 
         return bookingRepository.save(booking);
+    }
 
+
+    public Booking updateDetailedBooking(Long id, DetailedBookingDto detailedBookingDto) {
+        Booking booking = bookingRepository.findById(id).get();
+        booking.setStartDate(detailedBookingDto.getStartDate());
+        booking.setEndDate(detailedBookingDto.getEndDate());
+
+        Customer customer = customerService.findByName(detailedBookingDto.getCustomerName());
+        booking.setCustomer(customer);
+
+        Room room = roomService.findByRoomNumber(detailedBookingDto.getRoomNumber());
+        booking.setRoom(room);
+
+        return bookingRepository.save(booking);
     }
 
     public Booking bookingDtoToBooking(BookingDto bookingDto) {
@@ -61,6 +75,23 @@ public class BookingServiceImpl implements BookingService {
         booking.setCustomer(customer);
 
         Room room = roomService.findByRoomNumber(bookingDto.getRoomNumber());
+        booking.setRoom(room);
+
+        return booking;
+    }
+
+    public Booking bookingDtoToDetailedBookingDto(DetailedBookingDto detailedBookingDto) {
+        Booking booking = new Booking();
+        booking.setStartDate(detailedBookingDto.getStartDate());
+        booking.setEndDate(detailedBookingDto.getEndDate());
+
+        Customer customer = customerService.findByName(detailedBookingDto.getCustomerName())
+                .findByAdress(detailedBookingDto.getCustomerAddress())
+                .findByEmail(detailedBookingDto.getCustomerEmail());
+        booking.setCustomer(customer);
+
+        Room room = roomService.findByRoomNumber(detailedBookingDto.getRoomNumber())
+                .findByRoomtype(detailedBookingDto.getRoomType());
         booking.setRoom(room);
 
         return booking;
