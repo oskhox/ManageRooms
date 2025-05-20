@@ -16,6 +16,7 @@ public class BookingController {
     private final CustomerService customerService;
     private final RoomService roomService;
 
+
     public BookingController(BookingService bookingService, CustomerService customerService, RoomService roomService) {
         this.bookingService = bookingService;
         this.customerService = customerService;

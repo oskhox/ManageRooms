@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Booking {
 
+
     @Id
     @GeneratedValue
     private long id;
