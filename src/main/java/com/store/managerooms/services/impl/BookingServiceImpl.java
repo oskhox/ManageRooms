@@ -55,18 +55,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+
+
     @Override
     public Booking detailedBookingDtoToBooking(Booking booking, DetailedBookingDto detailedBookingDto) {
         booking.setStartDate(detailedBookingDto.getStartDate());
         booking.setEndDate(detailedBookingDto.getEndDate());
 
-        Customer customer = customerService.findByName(detailedBookingDto.getCustomerName())
-                .findByAdress(detailedBookingDto.getCustomerAddress())
-                .findByEmail(detailedBookingDto.getCustomerEmail());
+        Customer customer = customerService.findById(detailedBookingDto.getCustomerId());
         booking.setCustomer(customer);
 
-        Room room = roomService.findByRoomNumber(detailedBookingDto.getRoomNumber())
-                .findByRoomtype(detailedBookingDto.getRoomType());
+        Room room = roomService.findById(detailedBookingDto.getRoomId());
         booking.setRoom(room);
 
         return booking;
