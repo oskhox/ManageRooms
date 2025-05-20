@@ -14,16 +14,19 @@ public class BookingServiceImpl implements BookingService {
     private final CustomerService customerService;
     private final RoomService roomService;
 
+    @Override
     public List<DetailedBookingDto> getAllBookings() {
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToDetailedBookingDto(b)).toList();
 
     }
 
+    @Override
     public void deleteBookingById(Long id) {
         bookingRepository.deleteById(id);
     }
 
+    @Override
     public DetailedBookingDto findBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
@@ -31,12 +34,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+    @Override
     public BookingDto saveBooking(BookingDto bookingDto) {
         Booking booking = bookingDtoToBooking(bookingDto);
         Booking savedBooking = bookingRepository.save(booking);
         return bookingToBookingDto(savedBooking);
+
     }
 
+    @Override
     public Booking updateBooking(Long id, BookingDto bookingDto) {
         Booking booking = bookingRepository.findById(id).get();
         booking.setStartDate(bookingDto.getStartDate());
@@ -52,6 +58,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+    @Override
     public Booking updateDetailedBooking(Long id, DetailedBookingDto detailedBookingDto) {
         Booking booking = bookingRepository.findById(id).get();
         booking.setStartDate(detailedBookingDto.getStartDate());
@@ -66,6 +73,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.save(booking);
     }
 
+    @Override
     public Booking bookingDtoToBooking(BookingDto bookingDto) {
         Booking booking = new Booking();
         booking.setStartDate(bookingDto.getStartDate());
@@ -80,6 +88,7 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
+    @Override
     public Booking DetailedBookingDtoToBooking(DetailedBookingDto detailedBookingDto) {
         Booking booking = new Booking();
         booking.setStartDate(detailedBookingDto.getStartDate());

@@ -1,16 +1,12 @@
 package com.store.managerooms;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/bookings")
@@ -40,7 +36,7 @@ public class BookingController {
 
 
     @PostMapping("/cancel")
-    public String cancelBooking(@RequestParam Long id, Model model) {
+    public String cancelBooking(@ModelAttribute Long id, Model model) {
         bookingService.deleteBookingById(id);
         model.addAttribute("message", "Bokning " + id + " är raderad");
         return "cancelled";
