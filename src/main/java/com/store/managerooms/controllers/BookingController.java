@@ -17,8 +17,6 @@ import java.util.NoSuchElementException;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final CustomerService customerService;
-    private final RoomService roomService;
     private final BookingServiceImpl bookingServiceImpl;
 
 
@@ -37,6 +35,7 @@ public class BookingController {
         return "bookingConfirmation";
     }
 
+    //inte gjort dto än
 
     @PostMapping("/cancel")
     public String cancelBooking(@ModelAttribute Long id, Model model) {
@@ -44,9 +43,6 @@ public class BookingController {
         model.addAttribute("message", "Bokning " + id + " är raderad");
         return "cancelled";
 
-
-
-        //inte gjort dto än
     }
 
     @RequestMapping("/booked-room/")
