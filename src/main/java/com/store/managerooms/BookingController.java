@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/bookings")
@@ -23,17 +24,29 @@ public class BookingController {
         this.roomService = roomService;
     }
 
-    @RequestMapping("/delete/{id}")
-    public String deleteBooking(@PathVariable Long id){
+    @PostMapping("/cancel")
+    public String cancelBooking(@RequestParam Long id, Model model) {
         bookingService.deleteBookingById(id);
-        return "Bokning  " + id + " är raderad";
+        model.addAttribute("message", "Bokningen " + id + " är raderad");
+        return "bookingCancelled";
+    }
+
+    @RequestMapping("/booked-room/{id}")
+    public String findBooking(@RequestParam Long id, Model model){
+        Optional<Booking> booking = bookingService.findBookingById(id);
+        if (booking.isPresent()) {
+            model.addAttribute("booking", booking.get());
+            return "bookingDetails";
+        } else {
+            model.addAttribute("errorMessage", "Bokningen " + id + " finns inte.");
+            return "errorPage";
+        }
     }
 
     @RequestMapping("")
     public List<Booking> getBookings() {
         return bookingService.getAllBookings();
     }
-
 
     @PostMapping("/create")
     public String createBooking(@RequestParam String customerName,

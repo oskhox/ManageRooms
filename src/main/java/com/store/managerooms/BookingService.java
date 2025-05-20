@@ -5,6 +5,7 @@ package com.store.managerooms;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -23,8 +24,12 @@ public class BookingService {
         bookingRepository.deleteById(id);
     }
 
+    public Optional<Booking> findBookingById(Long id) {
+       return bookingRepository.findById(id);
+    }
+
     public Booking saveBooking(Booking booking) {
         return bookingRepository.save(booking);
-    } 
+    }
 
 }
