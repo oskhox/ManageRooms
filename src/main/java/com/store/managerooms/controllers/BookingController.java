@@ -1,5 +1,6 @@
 package com.store.managerooms;
 
+import com.store.managerooms.dtos.BookingDto;
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.impl.BookingServiceImpl;
@@ -22,7 +23,7 @@ public class BookingController {
 
     @RequestMapping("")
     public String getBookings(Model model) {
-        List<DetailedBookingDto> bookings = bookingService.getAllBookings();
+        List<BookingDto> bookings = bookingService.getAllBookings();
         model.addAttribute("bookings", bookings);
         return "bookings";
     }
@@ -46,7 +47,7 @@ public class BookingController {
     }
 
     @RequestMapping ("/booked-room/")
-    public String findBooking(@RequestParam Long id, Model model) {
+    public String showBooking(@RequestParam Long id, Model model) {
         try {
             Booking booking = bookingService.findBookingById(id);
             model.addAttribute("booking", booking);

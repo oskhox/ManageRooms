@@ -10,11 +10,12 @@ public interface BookingService {
 
     public BookingDto bookingToBookingDto(Booking booking);
     public DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
-    public Booking bookingDtoToBooking(BookingDto bookingDto);
-    public Booking detailedBookingDtoToBooking(Booking booking, DetailedBookingDto detailedBookingDto);
+
+    public Booking bookingDtoToBooking(Customer customer, Room room, BookingDto bookingDto);
+    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto);
 
 
-    public List<DetailedBookingDto> getAllBookings();
+    public List<BookingDto> getAllBookings();
     public DetailedBookingDto saveNewBooking(DetailedBookingDto detailedBookingDto);
     public DetailedBookingDto findBookingById(Long id);
     public void deleteBookingById(Long id);
