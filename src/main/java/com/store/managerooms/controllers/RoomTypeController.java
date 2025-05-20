@@ -13,5 +13,4 @@ public class RoomTypeController {
         this.roomTypeRepo = roomTypeRepo;
     }
 
-    @RequestMapping
 }
