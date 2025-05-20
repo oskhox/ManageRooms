@@ -1,5 +1,6 @@
 package com.store.managerooms;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/bookings")
+@RequiredArgsConstructor
 public class BookingController {
 
     private final BookingService bookingService;
@@ -20,11 +22,24 @@ public class BookingController {
     private final RoomService roomService;
 
 
-    public BookingController(BookingService bookingService, CustomerService customerService, RoomService roomService) {
-        this.bookingService = bookingService;
-        this.customerService = customerService;
-        this.roomService = roomService;
+    @GetMapping("")
+    public String getBookings(Model model) {
+        List<DetailedBookingDto> bookings = bookingService.getAllBookings();
+        model.addAttribute("bookings", bookings);
+        return "bookings";
     }
+
+
+    @PostMapping("/create")
+    public String createBooking(@ModelAttribute BookingDto bookingDto, Model model) {
+        BookingDto savedBookingDto = bookingService.saveBooking(bookingDto);
+        model.addAttribute("booking", savedBookingDto);
+        return "bookingConfirmation";
+    }
+
+
+
+    //inte gjort dto än
 
     @PostMapping("/cancel")
     public String cancelBooking(@RequestParam Long id, Model model) {
@@ -45,39 +60,9 @@ public class BookingController {
         }
     }
 
-    @PostMapping("/booked-room/")
-    public String handleBooking(@RequestParam Long id, Model model) {
-        findBooking(id,model);
-    }
-
-
-    @RequestMapping("")
-    public List<Booking> getBookings() {
-        return bookingService.getAllBookings();
-    }
-
-    @PostMapping("/create")
-    public String createBooking(@RequestParam String customerName,
-                                @RequestParam String customerAdress,
-                                @RequestParam String customerEmail,
-                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-                                @RequestParam Long roomId,
-                                Model model) {
-
-        Customer customer = customerService.createCustomer(customerName, customerAdress, customerEmail);
-        Room room = roomService.findById(roomId);
-
-        Booking booking = new Booking();
-        booking.setStartDate(startDate);
-        booking.setEndDate(endDate);
-        booking.setCustomer(customer);
-        booking.setRoom(room);
-
-        Booking savedBooking = bookingService.saveBooking(booking);
-
-        model.addAttribute("booking", savedBooking);
-            return "bookingConfirmation";
+        @PostMapping("/booked-room/")
+        public String handleBooking(@RequestParam Long id, Model model) {
+            findBooking(id,model);
         }
 
     }

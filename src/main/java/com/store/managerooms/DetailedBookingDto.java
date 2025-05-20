@@ -1,31 +1,29 @@
 package com.store.managerooms;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Entity
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
-public class Booking {
 
+public class DetailedBookingDto {
 
-    @Id
-    @GeneratedValue
     private long id;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ManyToOne
-    @JoinColumn()
-    private Customer customer;
+    private String customerName;
+    private String customerAddress;
+    private String customerEmail;
 
-    @OneToOne
-    @JoinColumn()
-    private Room room;
+    private String roomNumber;
+    private String roomType;
 
 }
+

@@ -1,38 +1,15 @@
 package com.store.managerooms;
 
-
-
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
-@Service
-public class BookingService {
+public interface BookingService {
 
-    private final BookingRepository bookingRepository;
+    public BookingDto bookingToBookingDto(Booking booking);
+    public DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
 
-    public BookingService(BookingRepository bookingRepository) {
-        this.bookingRepository = bookingRepository;
-    }
+    public List<DetailedBookingDto> getAllBookings();
+    public BookingDto saveBooking(BookingDto bookingDto);
 
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
-    }
-
-    public void deleteBookingById(Long id) {
-        bookingRepository.deleteById(id);
-    }
-
-    public Booking findBookingById(Long id) {
-        return bookingRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
-    }
-
-
-    public Booking saveBooking(Booking booking) {
-        return bookingRepository.save(booking);
-    }
 
 }
