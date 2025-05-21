@@ -1,9 +1,9 @@
 package com.store.managerooms.Controllers;
 
-import com.store.managerooms.Models.Customer;
-import com.store.managerooms.Repos.CustomerRepository;
+import com.store.managerooms.DTOs.DetailedCustomerDTO;
+import com.store.managerooms.Services.CustomerService;
 import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,21 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//gör ev om till controller
 @RestController
+@RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerRepository customerRepo;
-    public CustomerController(CustomerRepository customerRepository) {this.customerRepo = customerRepository;}
+    private final CustomerService customerService;
 
-    @GetMapping("/customers")
-    public String allCustomers() {
-        return customerRepo.findAll().toString();
+    @GetMapping("/allCustomers")
+    public List<DetailedCustomerDTO> allCustomers() {
+        return customerService.allCustomers();
     }
+
+    //TODO: Läs minimal DTO till booking
 
     @PostMapping("/addCustomer")
-    public List<Customer> addCustomer(@Valid @RequestBody Customer c) {
-        customerRepo.save(c);
-        return customerRepo.findAll();
+    public DetailedCustomerDTO addCustomer(@Valid @RequestBody DetailedCustomerDTO d) {
+        return customerService.addCustomer(d);
     }
+
+    //TODO: Ändra kund
+    //TODO: Ta bort kund
 }
