@@ -94,12 +94,13 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public DetailedBookingDto bookingToDetailedBookingDto(Booking booking) {
         return DetailedBookingDto.builder()
-                .Id(booking.getId())
+                .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
                 .customer(new CustomerDto(
                         booking.getCustomer().getId(),
-                        booking.getCustomer().getName(),
+                        booking.getCustomer().getfName(),
+                        booking.getCustomer().getLName(),
                         booking.getCustomer().getAdress(),
                         booking.getCustomer().getEmail()))
                 .room(new RoomDto(

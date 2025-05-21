@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class BookingDto {
 
-    private long Id;
+    private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String roomNumber;
