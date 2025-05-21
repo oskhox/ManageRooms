@@ -14,7 +14,6 @@ public interface BookingService {
     public Booking bookingDtoToBooking(Room room, BookingDto bookingDto);
     public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto);
 
-
     public List<BookingDto> getAllBookings();
 
     public void saveNewBooking(DetailedBookingDto detailedBookingDto);

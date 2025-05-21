@@ -1,4 +1,4 @@
-package com.store.managerooms;
+package com.store.managerooms.controllers;
 
 import com.store.managerooms.dtos.BookingDto;
 import com.store.managerooms.dtos.DetailedBookingDto;
@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 
 @Controller
-@RequestMapping("/bookings")
+@RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
 public class BookingController {
 
@@ -22,45 +22,48 @@ public class BookingController {
     @RequestMapping("")
     public String getBookings(Model model) {
         List<BookingDto> bookings = bookingService.getAllBookings();
+        model.addAttribute("pageTitle", "Bokningar");
         model.addAttribute("bookings", bookings);
         return "bookings";
     }
 
 
     @PostMapping("/create")
-    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+    public String createBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
         bookingService.saveNewBooking(detailedBookingDto);
+        model.addAttribute("pageTitle", "Skapa en bokning");
         model.addAttribute("message", "Bokningen är genomförd");
-        return "bookings";
+        return "redirct:/bookings";
     }
 
-    @DeleteMapping("/cancel")
-    public String cancelBooking(@ModelAttribute Long id, Model model) {
+    @DeleteMapping("/booked-room")
+    public String cancelBooking(@RequestParam Long id, Model model) {
         bookingService.deleteBookingById(id);
         model.addAttribute("message", "Bokning " + id + " är raderad");
-        return "cancelled";
+        return "redirct:/bookings";
 
     }
-
 
     @RequestMapping ("/booked-room/")
     public String showBooking(@RequestParam Long id, Model model) {
         try {
             DetailedBookingDto booking = bookingService.findBookingById(id);
+            model.addAttribute("pageTitle", "Bokat rum");
             model.addAttribute("booked-room", booking);
             return "booked-room";
         } catch (NoSuchElementException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "bookings";
+            model.addAttribute("errorMessage", "Bokning " + id + " hittades ej");
+            return "redirct:/bookings";
         }
     }
 
-
-        @PostMapping("/update-room/")
-        public String handleBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+        @PostMapping("/booked-room/update/")
+        public String updateBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
             bookingService.updateExistingBooking(detailedBookingDto);
+            model.addAttribute("pageTitle", "Uppdatera bokningen");
             model.addAttribute("message", "Bokningen är uppdaterad");
-            return "bookings";        }
+            return "redirct:/booked-room";
+        }
 
     }
 
