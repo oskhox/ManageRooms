@@ -27,23 +27,6 @@ public class BookingController {
         return "bookings";
     }
 
-
-    @PostMapping("/create")
-    public String createBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
-        bookingService.saveNewBooking(detailedBookingDto);
-        model.addAttribute("pageTitle", "Skapa en bokning");
-        model.addAttribute("message", "Bokningen är genomförd");
-        return "redirct:/bookings";
-    }
-
-    @DeleteMapping("/booked-room")
-    public String cancelBooking(@RequestParam Long id, Model model) {
-        bookingService.deleteBookingById(id);
-        model.addAttribute("message", "Bokning " + id + " är raderad");
-        return "redirct:/bookings";
-
-    }
-
     @RequestMapping ("/booked-room/")
     public String showBooking(@RequestParam Long id, Model model) {
         try {
@@ -57,13 +40,29 @@ public class BookingController {
         }
     }
 
-        @PostMapping("/booked-room/update/")
-        public String updateBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
-            bookingService.updateExistingBooking(detailedBookingDto);
-            model.addAttribute("pageTitle", "Uppdatera bokningen");
-            model.addAttribute("message", "Bokningen är uppdaterad");
-            return "redirct:/booked-room";
-        }
+    @PostMapping("/create")
+    public String createBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
+        bookingService.saveNewBooking(detailedBookingDto);
+        model.addAttribute("pageTitle", "Skapa en bokning");
+        model.addAttribute("message", "Bokningen är genomförd");
+        return "redirct:/bookings";
+    }
+
+    @PostMapping("/booked-room/update/")
+    public String updateBooking(@RequestParam DetailedBookingDto detailedBookingDto, Model model) {
+        bookingService.updateExistingBooking(detailedBookingDto);
+        model.addAttribute("pageTitle", "Uppdatera bokningen");
+        model.addAttribute("message", "Bokningen är uppdaterad");
+        return "redirct:/booked-room";
+    }
+
+
+    @DeleteMapping("/booked-room")
+    public String cancelBooking(@RequestParam Long id, Model model) {
+        bookingService.deleteBookingById(id);
+        model.addAttribute("message", "Bokning " + id + " är raderad");
+        return "redirct:/bookings";
 
     }
+}
 
