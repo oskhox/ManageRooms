@@ -23,7 +23,7 @@ public interface BookingService {
 
     public void deleteBookingById(Long id);
 
-    public void updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto);
+    public void updateExistingBooking(DetailedBookingDto detailedBookingDto);
 
 
     }

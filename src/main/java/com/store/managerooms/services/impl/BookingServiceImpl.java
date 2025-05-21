@@ -47,9 +47,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void updateExistingBooking(Long id, DetailedBookingDto booking) {
-        Booking existingBooking = bookingRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
+    public void updateExistingBooking(DetailedBookingDto booking) {
+        Booking existingBooking = bookingRepository.findById(booking.getId())
+                .orElseThrow(() -> new NoSuchElementException("Bokning " + booking.getId() + " finns inte."));
 
         Customer customer = customerService.findById(booking.getCustomerId());
         Room room = roomService.findById(booking.getRoomId());

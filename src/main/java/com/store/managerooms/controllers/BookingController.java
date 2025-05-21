@@ -34,8 +34,6 @@ public class BookingController {
         return "bookings";
     }
 
-    //inte gjort dto än
-
     @DeleteMapping("/cancel")
     public String cancelBooking(@ModelAttribute Long id, Model model) {
         bookingService.deleteBookingById(id);
@@ -44,22 +42,25 @@ public class BookingController {
 
     }
 
+
     @RequestMapping ("/booked-room/")
     public String showBooking(@RequestParam Long id, Model model) {
         try {
-            Booking booking = bookingService.findBookingById(id);
-            model.addAttribute("booking", booking);
-            return "bookingDetails";
+            DetailedBookingDto booking = bookingService.findBookingById(id);
+            model.addAttribute("booked-room", booking);
+            return "booked-room";
         } catch (NoSuchElementException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "bookings";
         }
     }
 
-        @PostMapping("/booked-room/")
-        public String handleBooking(@RequestParam Long id, Model model) {
-            findBooking(id,model);
-        }
+
+        @PostMapping("/update-room/")
+        public String handleBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+            bookingService.updateExistingBooking(detailedBookingDto);
+            model.addAttribute("message", "Bokningen är uppdaterad");
+            return "bookings";        }
 
     }
 
