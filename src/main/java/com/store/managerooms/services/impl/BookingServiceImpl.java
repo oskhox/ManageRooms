@@ -107,9 +107,8 @@ public class BookingServiceImpl implements BookingService {
                         booking.getCustomer().getLastName(),
                         booking.getCustomer().getPhone(),
                         booking.getCustomer().getEmail()))
-                .room(new RoomDto(
+                .room(new MinimalRoomDTO(
                         booking.getRoom().getId(),
-                        booking.getRoom().getRoom(),
                         booking.getRoom().getRoomNumber()))
                 .build();
     }
