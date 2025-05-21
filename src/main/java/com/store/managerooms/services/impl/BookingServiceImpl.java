@@ -23,7 +23,6 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingDto> getAllBookings() {
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToBookingDto(b)).toList();
-
     }
 
     @Override
@@ -40,33 +39,33 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public DetailedBookingDto saveNewBooking(DetailedBookingDto detailedBookingDto) {
+    public void saveNewBooking(DetailedBookingDto booking) {
         Customer customer = customerService.findById(detailedBookingDto.getCustomerId());
         Room room = roomService.findById(detailedBookingDto.getRoomId());
 
-        Booking booking = detailedBookingDtoToBooking(customer, room, detailedBookingDto);
-        Booking savedBooking = bookingRepository.save(booking);
-
-        return bookingToDetailedBookingDto(savedBooking);
+        bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));
     }
 
     @Override
-    public Booking updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto) {
-        bookingRepository.findById(id)
+    public void updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto) {
+        Booking existingBooking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
 
         Customer customer = customerService.findById(detailedBookingDto.getCustomerId());
         Room room = roomService.findById(detailedBookingDto.getRoomId());
 
-        Booking updatedBooking = detailedBookingDtoToBooking(customer,room,detailedBookingDto);
-        return bookingRepository.save(updatedBooking);
+        existingBooking.setStartDate(detailedBookingDto.getStartDate());
+        existingBooking.setEndDate(detailedBookingDto.getEndDate());
+        existingBooking.setCustomer(customer);
+        existingBooking.setRoom(room);
+        bookingRepository.save(existingBooking);
     }
 
     @Override
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto dto) {
+    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto) {
         return Booking.builder()
-                .startDate(dto.getStartDate())
-                .endDate(dto.getEndDate())
+                .startDate(detailedBookingDto.getStartDate())
+                .endDate(detailedBookingDto.getEndDate())
                 .customer(customer)
                 .room(room)
                 .build();
@@ -74,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public Booking bookingDtoToBooking((Customer customer, Room room, BookingDto bookingDto) {
+    public Booking bookingDtoToBooking(Room room, BookingDto bookingDto) {
         return Booking.builder()
                 .startDate(bookingDto.getStartDate())
                 .endDate(bookingDto.getEndDate())
@@ -98,11 +97,15 @@ public class BookingServiceImpl implements BookingService {
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customerName(booking.getCustomer().getName())
-                .customerAddress(booking.getCustomer().getAddress())
-                .customerEmail(booking.getCustomer().getEmail())
-                .roomNumber(booking.getRoom().getRoomNumber())
-                .roomType(booking.getRoom().getRoomType().getName())
+                .customer(new CustomerDto(
+                        booking.getCustomer().getId(),
+                        booking.getCustomer().getName(),
+                        booking.getCustomer().getAdress(),
+                        booking.getCustomer().getEmail()))
+                .room(new RoomDto(
+                        booking.getRoom().getId(),
+                        booking.getRoom().getRoom(),
+                        booking.getRoom().getRoomNumber()))
                 .build();
     }
 

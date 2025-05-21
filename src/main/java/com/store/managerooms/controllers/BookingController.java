@@ -18,8 +18,6 @@ import java.util.NoSuchElementException;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final BookingServiceImpl bookingServiceImpl;
-
 
     @RequestMapping("")
     public String getBookings(Model model) {
@@ -31,9 +29,9 @@ public class BookingController {
 
     @PostMapping("/create")
     public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
-        DetailedBookingDto savedBookingDto = bookingService.saveNewBooking(detailedBookingDto);
-        model.addAttribute("booking", savedBookingDto);
-        return "bookingConfirmation";
+        bookingService.saveNewBooking(detailedBookingDto);
+        model.addAttribute("message", "Bokningen är genomförd");
+        return "bookings";
     }
 
     //inte gjort dto än

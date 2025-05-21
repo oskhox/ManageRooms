@@ -17,11 +17,8 @@ public class DetailedBookingDto {
     private long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String customerName;
-    private String customerAddress;
-    private String customerEmail;
-    private String roomNumber;
-    private String roomType;
+    private CustomerDto customer;
+    private RoomDto room;
 
 }
 
