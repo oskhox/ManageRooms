@@ -94,7 +94,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public DetailedBookingDto bookingToDetailedBookingDto(Booking booking) {
         return DetailedBookingDto.builder()
-                .id(booking.getId())
+                .Id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
                 .customer(new CustomerDto(
@@ -108,5 +108,6 @@ public class BookingServiceImpl implements BookingService {
                         booking.getRoom().getRoomNumber()))
                 .build();
     }
+    }
 
-}
+
