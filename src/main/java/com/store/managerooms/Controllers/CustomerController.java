@@ -22,7 +22,7 @@ public class CustomerController {
         return customerService.allCustomers();
     }
 
-    //TODO: Läs minimal DTO till booking
+    //TODO: Läs minimal DTO till booking, skicka in id
 
     @PostMapping("/addCustomer")
     public DetailedCustomerDTO addCustomer(@Valid @RequestBody DetailedCustomerDTO d) {

@@ -1,7 +1,7 @@
 package com.store.managerooms.Services;
 
-import com.store.managerooms.DTOs.CustomerDTO;
 import com.store.managerooms.DTOs.DetailedCustomerDTO;
+import com.store.managerooms.DTOs.MinimalCustomerDTO;
 import com.store.managerooms.Models.Customer;
 import com.store.managerooms.Repos.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepo = repo;
     }
 
-    //INTERAKTIONSMETODER
-
+    /*
+    INTERAKTIONSMETODER
+    */
     //läs ut alla fullständiga kunder från databasen och gör dem till dto:s
     public List<DetailedCustomerDTO> allCustomers() {
         return customerRepo.findAll().stream().map(this::customerToDetailedCustomerDTO).toList();
@@ -39,7 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Long id) {
     }
 
-    //OMVANDLINGSMETODER
+    /*
+       OMVANDLINGSMETODER
+    */
 
     //3A. Omvandlar från Entitets-objekt till DTO-objekt för att läsa
     //Från Kund-objekt till stor kund-DTO
@@ -48,8 +51,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     //Från Kund-objekt till liten kund-DTO, anropa i booking sen
-    public CustomerDTO customerToDTO(Customer c) {
-        return new CustomerDTO(c.getId(), c.getFirstName(), c.getLastName());
+    public MinimalCustomerDTO customerToDTO(Customer c) {
+        return new MinimalCustomerDTO(c.getId(), c.getFirstName(), c.getLastName());
     }
 
     //3B. Omvandlar från stort DTO-objekt till stort Entitetsobjekt för att kunna skriva
