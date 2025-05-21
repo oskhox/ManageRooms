@@ -40,22 +40,22 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void saveNewBooking(DetailedBookingDto booking) {
-        Customer customer = customerService.findById(detailedBookingDto.getCustomerId());
-        Room room = roomService.findById(detailedBookingDto.getRoomId());
+        Customer customer = customerService.findById(booking.getCustomerId());
+        Room room = roomService.findById(booking.getRoomId());
 
         bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));
     }
 
     @Override
-    public void updateExistingBooking(Long id, DetailedBookingDto detailedBookingDto) {
+    public void updateExistingBooking(Long id, DetailedBookingDto booking) {
         Booking existingBooking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
 
-        Customer customer = customerService.findById(detailedBookingDto.getCustomerId());
-        Room room = roomService.findById(detailedBookingDto.getRoomId());
+        Customer customer = customerService.findById(booking.getCustomerId());
+        Room room = roomService.findById(booking.getRoomId());
 
-        existingBooking.setStartDate(detailedBookingDto.getStartDate());
-        existingBooking.setEndDate(detailedBookingDto.getEndDate());
+        existingBooking.setStartDate(booking.getStartDate());
+        existingBooking.setEndDate(booking.getEndDate());
         existingBooking.setCustomer(customer);
         existingBooking.setRoom(room);
         bookingRepository.save(existingBooking);
