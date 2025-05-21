@@ -43,7 +43,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void saveNewBooking(DetailedBookingDto booking) {
-        Customer customer = customerService.findById(booking.getCustomerId());
+        Customer customer = customerService.findByCustomerId(booking.getCustomerId());
         Room room = roomService.findById(booking.getRoomId());
 
         bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));

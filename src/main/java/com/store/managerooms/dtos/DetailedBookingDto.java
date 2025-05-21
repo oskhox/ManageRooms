@@ -19,6 +19,7 @@ public class DetailedBookingDto {
     private LocalDate endDate;
     private DetailedCustomerDto customer;
     private RoomDTO room;
+    private Long customerId;
 
 }
 
