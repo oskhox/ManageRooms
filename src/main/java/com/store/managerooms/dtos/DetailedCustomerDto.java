@@ -1,4 +1,4 @@
-package com.store.managerooms.DTOs;
+package com.store.managerooms.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetailedCustomerDTO {
+public class DetailedCustomerDto {
     private Long id;
 
     @NotEmpty(message = "First name is mandatory")

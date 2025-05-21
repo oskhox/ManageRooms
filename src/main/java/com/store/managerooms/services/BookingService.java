@@ -1,29 +1,29 @@
-package com.store.managerooms.Services;
+package com.store.managerooms.services;
 
-import com.store.managerooms.DTOs.DetailedBookingDTO;
-import com.store.managerooms.DTOs.MinimalBookingDTO;
-import com.store.managerooms.Models.Booking;
-import com.store.managerooms.Models.Customer;
+import com.store.managerooms.dtos.DetailedBookingDto;
+import com.store.managerooms.dtos.MinimalBookingDto;
+import com.store.managerooms.models.Booking;
+import com.store.managerooms.models.Customer;
 
 import java.util.List;
 
 public interface BookingService {
 
-    public MinimalBookingDTO bookingToBookingDto(Booking booking);
-    public DetailedBookingDTO bookingToDetailedBookingDto(Booking booking);
+    public MinimalBookingDto bookingToBookingDto(Booking booking);
+    public DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
 
-    public Booking bookingDtoToBooking(Room room, MinimalBookingDTO minimalBookingDTO);
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDTO detailedBookingDto);
+    public Booking bookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO);
+    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto);
 */
-    public List<MinimalBookingDTO> getAllBookings();
+    public List<MinimalBookingDto> getAllBookings();
 
-    public void saveNewBooking(DetailedBookingDTO detailedBookingDto);
+    public void saveNewBooking(DetailedBookingDto detailedBookingDto);
 
-    public DetailedBookingDTO findBookingById(Long id);
+    public DetailedBookingDto findBookingById(Long id);
 
     public void deleteBookingById(Long id);
 
-    public void updateExistingBooking(DetailedBookingDTO detailedBookingDto);
+    public void updateExistingBooking(DetailedBookingDto detailedBookingDto);
 
 
     }
