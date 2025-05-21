@@ -1,4 +1,4 @@
-package com.store.managerooms;
+package com.store.managerooms.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
