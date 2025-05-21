@@ -1,7 +1,7 @@
-package com.store.managerooms.Controllers;
+package com.store.managerooms.controllers;
 
-import com.store.managerooms.DTOs.DetailedCustomerDTO;
-import com.store.managerooms.Services.CustomerService;
+import com.store.managerooms.dtos.DetailedCustomerDto;
+import com.store.managerooms.services.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +18,14 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("/allCustomers")
-    public List<DetailedCustomerDTO> allCustomers() {
+    public List<DetailedCustomerDto> allCustomers() {
         return customerService.allCustomers();
     }
 
     //TODO: Läs minimal DTO till booking, skicka in id
 
     @PostMapping("/addCustomer")
-    public DetailedCustomerDTO addCustomer(@Valid @RequestBody DetailedCustomerDTO d) {
+    public DetailedCustomerDto addCustomer(@Valid @RequestBody DetailedCustomerDto d) {
         return customerService.addCustomer(d);
     }
 

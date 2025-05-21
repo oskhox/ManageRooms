@@ -1,14 +1,13 @@
-package com.store.managerooms.Services.impl;
+package com.store.managerooms.services.impl;
 
-import com.store.managerooms.DTOs.DetailedCustomerDTO;
-import com.store.managerooms.DTOs.MinimalCustomerDTO;
-import com.store.managerooms.Models.Booking;
-import com.store.managerooms.Repos.BookingRepository;
-import com.store.managerooms.DTOs.DetailedBookingDTO;
-import com.store.managerooms.DTOs.MinimalBookingDTO;
-import com.store.managerooms.Models.Customer;
-import com.store.managerooms.Services.CustomerService;
-import com.store.managerooms.Services.BookingService;
+import com.store.managerooms.dtos.DetailedCustomerDto;
+import com.store.managerooms.models.Booking;
+import com.store.managerooms.repos.BookingRepository;
+import com.store.managerooms.dtos.DetailedBookingDto;
+import com.store.managerooms.dtos.MinimalBookingDto;
+import com.store.managerooms.models.Customer;
+import com.store.managerooms.services.CustomerService;
+import com.store.managerooms.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class BookingServiceImpl implements BookingService {
     private final RoomService roomService;
 
     @Override
-    public List<MinimalBookingDTO> getAllBookings() {
+    public List<MinimalBookingDto> getAllBookings() {
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToBookingDto(b)).toList();
     }
@@ -35,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public DetailedBookingDTO findBookingById(Long id) {
+    public DetailedBookingDto findBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
         return bookingToDetailedBookingDto(booking);
@@ -43,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public void saveNewBooking(DetailedBookingDTO booking) {
+    public void saveNewBooking(DetailedBookingDto booking) {
         Customer customer = customerService.findById(booking.getCustomerId());
         Room room = roomService.findById(booking.getRoomId());
 
@@ -51,11 +50,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void updateExistingBooking(DetailedBookingDTO booking) {
+    public void updateExistingBooking(DetailedBookingDto booking) {
         Booking existingBooking = bookingRepository.findById(booking.getId())
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + booking.getId() + " finns inte."));
 
-        Customer customer = customerService.findById(booking.getCustomerId());
+        Customer customer = customerService.findByCustomerId(booking.getCustomerId());
         Room room = roomService.findById(booking.getRoomId());
 
         existingBooking.setStartDate(booking.getStartDate());
@@ -66,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDTO detailedBookingDto) {
+    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto) {
         return Booking.builder()
                 .startDate(detailedBookingDto.getStartDate())
                 .endDate(detailedBookingDto.getEndDate())
@@ -77,7 +76,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public Booking bookingDtoToBooking(Room room, MinimalBookingDTO minimalBookingDTO) {
+    public Booking bookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO) {
         return Booking.builder()
                 .startDate(minimalBookingDTO.getStartDate())
                 .endDate(minimalBookingDTO.getEndDate())
@@ -86,8 +85,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public MinimalBookingDTO bookingToBookingDto(Booking booking) {
-        return MinimalBookingDTO.builder()
+    public MinimalBookingDto bookingToBookingDto(Booking booking) {
+        return MinimalBookingDto.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
@@ -96,12 +95,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public DetailedBookingDTO bookingToDetailedBookingDto(Booking booking) {
-        return DetailedBookingDTO.builder()
+    public DetailedBookingDto bookingToDetailedBookingDto(Booking booking) {
+        return DetailedBookingDto.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customer(new DetailedCustomerDTO(
+                .customer(new DetailedCustomerDto(
                         booking.getCustomer().getId(),
                         booking.getCustomer().getFirstName(),
                         booking.getCustomer().getLastName(),

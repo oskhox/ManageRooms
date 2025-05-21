@@ -1,4 +1,4 @@
-package com.store.managerooms.DTOs;
+package com.store.managerooms.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 
-public class MinimalBookingDTO {
+public class MinimalBookingDto {
 
     private Long id;
     private LocalDate startDate;
