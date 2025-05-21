@@ -1,8 +1,8 @@
-package com.store.managerooms.controllers;
+package com.store.managerooms.Controllers;
 
-import com.store.managerooms.dtos.BookingDto;
-import com.store.managerooms.dtos.DetailedBookingDto;
-import com.store.managerooms.services.BookingService;
+import com.store.managerooms.DTOs.DetailedBookingDTO;
+import com.store.managerooms.DTOs.MinimalBookingDTO;
+import com.store.managerooms.Services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ public class BookingController {
 
     @RequestMapping("")
     public String getBookings(Model model) {
-        List<BookingDto> bookings = bookingService.getAllBookings();
+        List<MinimalBookingDTO> bookings = bookingService.getAllBookings();
         model.addAttribute("bookings", bookings);
         return "bookings";
     }
@@ -27,7 +27,7 @@ public class BookingController {
     @RequestMapping ("/booked-room/")
     public String showBooking(@RequestParam Long id, Model model) {
         try {
-            DetailedBookingDto booking = bookingService.findBookingById(id);
+            DetailedBookingDTO booking = bookingService.findBookingById(id);
             model.addAttribute("pageTitle", "Bokat rum");
             model.addAttribute("booked-room", booking);
             return "booked-room";
@@ -38,7 +38,7 @@ public class BookingController {
     }
 
     @PostMapping("/create")
-    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+    public String createBooking(@ModelAttribute DetailedBookingDTO detailedBookingDto, Model model) {
         bookingService.saveNewBooking(detailedBookingDto);
         model.addAttribute("pageTitle", "Skapa en bokning");
         model.addAttribute("message", "Bokningen är genomförd");
@@ -46,7 +46,7 @@ public class BookingController {
     }
 
     @PostMapping("/booked-room/update/")
-    public String updateBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+    public String updateBooking(@ModelAttribute DetailedBookingDTO detailedBookingDto, Model model) {
         bookingService.updateExistingBooking(detailedBookingDto);
         model.addAttribute("pageTitle", "Uppdatera bokningen");
         model.addAttribute("message", "Bokningen är uppdaterad");
@@ -67,7 +67,7 @@ public class BookingController {
     @RequestMapping("/booked-room/{id}")
     public String showBookingTest(@PathVariable Long id, Model model) {
         try {
-            DetailedBookingDto booking = bookingService.findBookingById(id);
+            DetailedBookingDTO booking = bookingService.findBookingById(id);
             model.addAttribute("pageTitle", "Bokat rum");
             model.addAttribute("booked-room", booking);
             return "booked-room";

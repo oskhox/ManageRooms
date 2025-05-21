@@ -1,10 +1,14 @@
-package com.store.managerooms.services.impl;
+package com.store.managerooms.Services.impl;
 
-import com.store.managerooms.Booking;
-import com.store.managerooms.dtos.BookingDto;
-import com.store.managerooms.BookingRepository;
-import com.store.managerooms.dtos.DetailedBookingDto;
-import com.store.managerooms.services.BookingService;
+import com.store.managerooms.DTOs.DetailedCustomerDTO;
+import com.store.managerooms.DTOs.MinimalCustomerDTO;
+import com.store.managerooms.Models.Booking;
+import com.store.managerooms.Repos.BookingRepository;
+import com.store.managerooms.DTOs.DetailedBookingDTO;
+import com.store.managerooms.DTOs.MinimalBookingDTO;
+import com.store.managerooms.Models.Customer;
+import com.store.managerooms.Services.CustomerService;
+import com.store.managerooms.Services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +24,7 @@ public class BookingServiceImpl implements BookingService {
     private final RoomService roomService;
 
     @Override
-    public List<BookingDto> getAllBookings() {
+    public List<MinimalBookingDTO> getAllBookings() {
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToBookingDto(b)).toList();
     }
@@ -31,7 +35,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public DetailedBookingDto findBookingById(Long id) {
+    public DetailedBookingDTO findBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + id + " finns inte."));
         return bookingToDetailedBookingDto(booking);
@@ -39,7 +43,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public void saveNewBooking(DetailedBookingDto booking) {
+    public void saveNewBooking(DetailedBookingDTO booking) {
         Customer customer = customerService.findById(booking.getCustomerId());
         Room room = roomService.findById(booking.getRoomId());
 
@@ -47,7 +51,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void updateExistingBooking(DetailedBookingDto booking) {
+    public void updateExistingBooking(DetailedBookingDTO booking) {
         Booking existingBooking = bookingRepository.findById(booking.getId())
                 .orElseThrow(() -> new NoSuchElementException("Bokning " + booking.getId() + " finns inte."));
 
@@ -62,7 +66,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto) {
+    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDTO detailedBookingDto) {
         return Booking.builder()
                 .startDate(detailedBookingDto.getStartDate())
                 .endDate(detailedBookingDto.getEndDate())
@@ -73,18 +77,18 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public Booking bookingDtoToBooking(Room room, BookingDto bookingDto) {
+    public Booking bookingDtoToBooking(Room room, MinimalBookingDTO minimalBookingDTO) {
         return Booking.builder()
-                .startDate(bookingDto.getStartDate())
-                .endDate(bookingDto.getEndDate())
+                .startDate(minimalBookingDTO.getStartDate())
+                .endDate(minimalBookingDTO.getEndDate())
                 .room(room)
                 .build();
     }
 
     @Override
-    public BookingDto bookingToBookingDto(Booking booking) {
-        return BookingDto.builder()
-                .Id(booking.getId())
+    public MinimalBookingDTO bookingToBookingDto(Booking booking) {
+        return MinimalBookingDTO.builder()
+                .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
                 .roomNumber(booking.getRoom().getRoomNumber())
@@ -92,16 +96,16 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public DetailedBookingDto bookingToDetailedBookingDto(Booking booking) {
-        return DetailedBookingDto.builder()
+    public DetailedBookingDTO bookingToDetailedBookingDto(Booking booking) {
+        return DetailedBookingDTO.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customer(new CustomerDto(
+                .customer(new DetailedCustomerDTO(
                         booking.getCustomer().getId(),
-                        booking.getCustomer().getfName(),
-                        booking.getCustomer().getLName(),
-                        booking.getCustomer().getAdress(),
+                        booking.getCustomer().getFirstName(),
+                        booking.getCustomer().getLastName(),
+                        booking.getCustomer().getPhone(),
                         booking.getCustomer().getEmail()))
                 .room(new RoomDto(
                         booking.getRoom().getId(),
@@ -109,6 +113,6 @@ public class BookingServiceImpl implements BookingService {
                         booking.getRoom().getRoomNumber()))
                 .build();
     }
-    }
+}
 
 
