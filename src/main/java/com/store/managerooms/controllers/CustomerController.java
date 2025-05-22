@@ -19,6 +19,11 @@ public class CustomerController {
         return customerService.allCustomers();
     }
 
+    @PostMapping("/addCustomer")
+    public DetailedCustomerDto addCustomer(@Valid @RequestBody DetailedCustomerDto d) {
+        return customerService.addCustomer(d);
+    }
+
     //id i URL, PUT-request i JSON utan id
     @PutMapping("/changeCustomer/{id}")
     public DetailedCustomerDto changeCustomer(@PathVariable String id, @Valid @RequestBody DetailedCustomerDto detailedCustomerDto) {
@@ -26,16 +31,9 @@ public class CustomerController {
         return customerService.changeCustomer(detailedCustomerDto);
     }
 
-    //returnerar string
+    //returnerar string med bekräftelse
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
-    }
-
-    //TODO: Läs minimal DTO till booking, skicka in id
-
-    @PostMapping("/addCustomer")
-    public DetailedCustomerDto addCustomer(@Valid @RequestBody DetailedCustomerDto d) {
-        return customerService.addCustomer(d);
     }
 }
