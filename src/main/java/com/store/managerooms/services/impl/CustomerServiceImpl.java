@@ -16,7 +16,7 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository customerRepo;
-    @Autowired //inject repository
+    @Autowired
     BookingRepository bookingsRepo;
 
     public CustomerServiceImpl(CustomerRepository repo) {
@@ -79,12 +79,12 @@ public class CustomerServiceImpl implements CustomerService {
         return new DetailedCustomerDto(c.getId(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());
     }
 
+    public Customer detailedCustomerDtoToCustomer(DetailedCustomerDto d) {
+        return new Customer(d.getId(), d.getFirstName(), d.getLastName(), d.getEmail(), d.getPhone());
+    }
+
     //TODO: Ev. anropa i booking sen, annars ta bort
     public MinimalCustomerDto customerToDTO(Customer c) {
         return new MinimalCustomerDto(c.getId(), c.getFirstName(), c.getLastName());
-    }
-
-    public Customer detailedCustomerDtoToCustomer(DetailedCustomerDto d) {
-        return new Customer(d.getId(), d.getFirstName(), d.getLastName(), d.getEmail(), d.getPhone());
     }
 }
