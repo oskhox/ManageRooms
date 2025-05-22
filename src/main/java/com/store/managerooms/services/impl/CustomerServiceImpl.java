@@ -86,7 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     //TODO: Ev. anropa i booking sen, annars ta bort
-    public MinimalCustomerDto customerToDTO(Customer c) {
+    public MinimalCustomerDto customerToMinimalDto(Customer c) {
         return new MinimalCustomerDto(c.getId(), c.getFirstName(), c.getLastName());
     }
 }
