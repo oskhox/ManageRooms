@@ -1,5 +1,6 @@
 package com.store.managerooms.controllers;
 
+/*
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.services.BookingService;
@@ -78,5 +79,5 @@ public class BookingController {
     }
 }
 
-
+*/
 

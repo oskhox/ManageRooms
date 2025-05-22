@@ -17,6 +17,6 @@ public class MinimalBookingDto {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private MinimalRoomDTO room;
+    //private MinimalRoomDTO room;
 
 }

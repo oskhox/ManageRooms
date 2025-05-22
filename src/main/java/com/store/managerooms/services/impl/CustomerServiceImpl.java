@@ -23,17 +23,30 @@ public class CustomerServiceImpl implements CustomerService {
     */
     @Override
     public List<DetailedCustomerDto> allCustomers() {
-        return customerRepo.findAll().stream().map(this::customerToDetailedCustomerDTO).toList();
+        return customerRepo.findAll().stream().map(this::customerToDetailedCustomerDto).toList();
     }
 
     @Override
     public DetailedCustomerDto addCustomer(DetailedCustomerDto d) {
-        Customer saved = customerRepo.save(detailedCustomerDTOToCustomer(d));
-        return customerToDetailedCustomerDTO(saved);
+        Customer saved = customerRepo.save(detailedCustomerDtoToCustomer(d));
+        return customerToDetailedCustomerDto(saved);
     }
 
     @Override
-    public void changeCustomer(Long id) {
+    public DetailedCustomerDto changeCustomer(DetailedCustomerDto d) {
+        Long id = d.getId();
+        Customer customerToChange = customerRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+        Customer updatedDetails = detailedCustomerDtoToCustomer(d);
+        customerToChange.setFirstName(updatedDetails.getFirstName());
+        customerToChange.setLastName(updatedDetails.getLastName());
+        customerToChange.setEmail(updatedDetails.getEmail());
+        customerToChange.setPhone(updatedDetails.getPhone());
+        customerRepo.save(customerToChange);
+
+        Customer updatedCustomer = customerRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+        return customerToDetailedCustomerDto(updatedCustomer);
     }
 
     @Override
@@ -49,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
        OMVANDLINGSMETODER
     */
 
-    public DetailedCustomerDto customerToDetailedCustomerDTO(Customer c) {
+    public DetailedCustomerDto customerToDetailedCustomerDto(Customer c) {
         return new DetailedCustomerDto(c.getId(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());
     }
 
@@ -58,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
         return new MinimalCustomerDto(c.getId(), c.getFirstName(), c.getLastName());
     }
 
-    public Customer detailedCustomerDTOToCustomer(DetailedCustomerDto d) {
+    public Customer detailedCustomerDtoToCustomer(DetailedCustomerDto d) {
         return new Customer(d.getId(), d.getFirstName(), d.getLastName(), d.getEmail(), d.getPhone());
     }
 }

@@ -1,5 +1,5 @@
 package com.store.managerooms.services;
-
+/*
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Booking;
@@ -14,7 +14,7 @@ public interface BookingService {
 
     public Booking bookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO);
     public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto);
-*/
+
     public List<MinimalBookingDto> getAllBookings();
 
     public void saveNewBooking(DetailedBookingDto detailedBookingDto);
@@ -27,3 +27,4 @@ public interface BookingService {
 
 
     }
+*/
