@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
         private long id;
         private int roomNumber;
         private RoomTypeDTO roomType;
-
     }
 
