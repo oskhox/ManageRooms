@@ -20,6 +20,7 @@ public class DetailedBookingDto {
     private DetailedCustomerDto customer;
     private RoomDTO room;
     private Long customerId;
+    private Long roomId;
 
 }
 
