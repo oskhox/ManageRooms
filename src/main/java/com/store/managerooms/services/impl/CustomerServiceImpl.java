@@ -56,15 +56,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String deleteCustomer(Long id) {
-        List<Booking> AllBookings = bookingsRepo.findAll();
-
-        for (Booking b : AllBookings) {
+        if (!customerRepo.existsById(id)) {
+            return "No customer with id: " + id + " found";
+        }
+        List<Booking> allBookings = bookingsRepo.findAll();
+        for (Booking b : allBookings) {
             if (b.getCustomer().getId().equals(id)) {
-                customerRepo.deleteById(id);
-                return "Customer deleted";
+                return "Customer has a booking and can't be deleted";
             }
         }
-        return "Customer not found with id: " + id;
+        customerRepo.deleteById(id);
+        return "Customer with id " + id + " deleted";
     }
 
     public Customer findByCustomerId(Long id) {
