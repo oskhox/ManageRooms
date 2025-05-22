@@ -1,4 +1,3 @@
-/*
 package com.store.managerooms.services.impl;
 
 import com.store.managerooms.dtos.DetailedCustomerDto;
@@ -113,5 +112,3 @@ public class BookingServiceImpl implements BookingService {
                 .build();
     }
 }
-*/
-

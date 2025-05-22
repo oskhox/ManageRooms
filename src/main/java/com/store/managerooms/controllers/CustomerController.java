@@ -14,20 +14,24 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-
     @GetMapping("/allCustomers")
     public List<DetailedCustomerDto> allCustomers() {
         return customerService.allCustomers();
     }
 
-    //Id i URL, PUT-request i JSON utan id
+    //id i URL, PUT-request i JSON utan id
     @PutMapping("/changeCustomer/{id}")
     public DetailedCustomerDto changeCustomer(@PathVariable String id, @Valid @RequestBody DetailedCustomerDto detailedCustomerDto) {
         detailedCustomerDto.setId(Long.parseLong(id));
         return customerService.changeCustomer(detailedCustomerDto);
     }
 
-    //TODO: Ta bort kund
+    //returnerar string
+    @DeleteMapping("/deleteCustomer/{id}")
+    public String deleteCustomer(@PathVariable String id) {
+        return customerService.deleteCustomer(Long.parseLong(id));
+    }
+
     //TODO: Läs minimal DTO till booking, skicka in id
 
     @PostMapping("/addCustomer")

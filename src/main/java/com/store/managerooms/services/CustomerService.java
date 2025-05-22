@@ -9,6 +9,6 @@ public interface CustomerService {
     List<DetailedCustomerDto> allCustomers();
     DetailedCustomerDto addCustomer(DetailedCustomerDto c);
     DetailedCustomerDto changeCustomer(DetailedCustomerDto detailedCustomerDto);
-    void deleteCustomer(Long id);
+    String deleteCustomer(Long id);
     Customer findByCustomerId(Long id);
 }

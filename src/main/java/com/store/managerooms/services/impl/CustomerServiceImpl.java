@@ -2,9 +2,12 @@ package com.store.managerooms.services.impl;
 
 import com.store.managerooms.dtos.DetailedCustomerDto;
 import com.store.managerooms.dtos.MinimalCustomerDto;
+import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Customer;
+import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.repos.CustomerRepository;
 import com.store.managerooms.services.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository customerRepo;
+    @Autowired //inject repository
+    BookingRepository bookingsRepo;
 
     public CustomerServiceImpl(CustomerRepository repo) {
         this.customerRepo = repo;
@@ -50,7 +55,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(Long id) {
+    public String deleteCustomer(Long id) {
+        List<Booking> AllBookings = bookingsRepo.findAll();
+
+        for (Booking b : AllBookings) {
+            if (b.getCustomer().getId().equals(id)) {
+                customerRepo.deleteById(id);
+                return "Customer deleted";
+            }
+        }
+        return "Customer not found with id: " + id;
     }
 
     public Customer findByCustomerId(Long id) {
@@ -61,12 +75,11 @@ public class CustomerServiceImpl implements CustomerService {
     /*
        OMVANDLINGSMETODER
     */
-
     public DetailedCustomerDto customerToDetailedCustomerDto(Customer c) {
         return new DetailedCustomerDto(c.getId(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());
     }
 
-    //TODO: Anropa i booking sen
+    //TODO: Ev. anropa i booking sen, annars ta bort
     public MinimalCustomerDto customerToDTO(Customer c) {
         return new MinimalCustomerDto(c.getId(), c.getFirstName(), c.getLastName());
     }

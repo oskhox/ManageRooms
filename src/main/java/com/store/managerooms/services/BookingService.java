@@ -1,5 +1,5 @@
 package com.store.managerooms.services;
-/*
+
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Booking;
@@ -27,4 +27,3 @@ public interface BookingService {
 
 
     }
-*/
