@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /*
-       OMVANDLINGSMETODER
+       TRANSFERERINGSMETODER
     */
     public DetailedCustomerDto customerToDetailedCustomerDto(Customer c) {
         return new DetailedCustomerDto(c.getId(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhone());
