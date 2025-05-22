@@ -1,0 +1,17 @@
+package com.store.managerooms.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class RoomTypeDTO {
+        private long id;
+        private String name;
+        private int bedCount;
+        private int extraBeds;
+        private boolean extraBedsAvailable;
+    }
+
