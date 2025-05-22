@@ -2,12 +2,14 @@ package com.store.managerooms.services.impl;
 
 import com.store.managerooms.dtos.DetailedCustomerDto;
 import com.store.managerooms.models.Booking;
+import com.store.managerooms.models.Room;
 import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.BookingService;
+import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
