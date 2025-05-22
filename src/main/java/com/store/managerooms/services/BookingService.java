@@ -5,17 +5,20 @@ import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Customer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingService {
 
-    public MinimalBookingDto bookingToBookingDto(Booking booking);
     public DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
+    public MinimalBookingDto bookingToMinimalBookingDto(Booking booking);
 
-    public Booking bookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO);
+    public Booking minimalBookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO);
     public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto detailedBookingDto);
-*/
+
     public List<MinimalBookingDto> getAllBookings();
+
+    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
 
     public void saveNewBooking(DetailedBookingDto detailedBookingDto);
 
@@ -23,7 +26,7 @@ public interface BookingService {
 
     public void deleteBookingById(Long id);
 
-    public void updateExistingBooking(DetailedBookingDto detailedBookingDto);
+    public void updateExistingBooking(MinimalBookingDto minimalBookingDTO);
 
 
     }
