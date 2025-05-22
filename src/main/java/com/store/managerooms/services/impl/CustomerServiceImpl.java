@@ -1,7 +1,6 @@
 package com.store.managerooms.services.impl;
 
 import com.store.managerooms.dtos.DetailedCustomerDto;
-import com.store.managerooms.dtos.MinimalCustomerDto;
 import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.repos.BookingRepository;
@@ -83,10 +82,5 @@ public class CustomerServiceImpl implements CustomerService {
 
     public Customer detailedCustomerDtoToCustomer(DetailedCustomerDto d) {
         return new Customer(d.getId(), d.getFirstName(), d.getLastName(), d.getEmail(), d.getPhone());
-    }
-
-    //TODO: Ev. anropa i booking sen, annars ta bort
-    public MinimalCustomerDto customerToMinimalDto(Customer c) {
-        return new MinimalCustomerDto(c.getId(), c.getFirstName(), c.getLastName());
     }
 }
