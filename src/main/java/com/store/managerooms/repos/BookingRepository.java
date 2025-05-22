@@ -8,10 +8,10 @@ import java.time.LocalDate;
 public interface BookingRepository extends JpaRepository<Booking, Long>{
 
 
-    @Query ("select count (Booking) > 0 " +
-            "from Booking " +
-            "where Booking.room.id= :roomId " +
-            "and Booking.startDate < :endDate " +
-            "and Booking.endDate > :startDate")
-    public Boolean isRoomBookedCheck(Long roomdId, LocalDate startDate,LocalDate endDate);
+//    @Query ("select count (Booking) > 0 " +
+//            "from Booking " +
+//            "where Booking.room.id= :roomId " +
+//            "and Booking.startDate < :endDate " +
+//            "and Booking.endDate > :startDate")
+//    public Boolean isRoomBookedCheck(Long roomdId, LocalDate startDate,LocalDate endDate);
 }

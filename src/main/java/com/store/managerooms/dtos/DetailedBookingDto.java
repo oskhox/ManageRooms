@@ -1,5 +1,6 @@
 package com.store.managerooms.dtos;
 
+import com.store.managerooms.models.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

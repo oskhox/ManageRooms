@@ -8,5 +8,5 @@ import java.util.List;
 public interface RoomService {
 
     List<RoomDTO> getAllRooms();
-    RoomDTO getRoomById(long id);
+    RoomDTO findByRoomId(Long roomId);
 }

@@ -20,14 +20,14 @@ public class BookingController {
     private final BookingService bookingService;
 
 
-    @RequestMapping("booked-rooms")
-    public String isRoomBooked(@RequestParam("roomId")Long roomdId,
-                                @RequestParam("startDate") LocalDate startDate,
-                                @RequestParam("endDate") LocalDate endDate, Model model) {
-        boolean booked = bookingService.isRoomBooked(roomId, startDate, endDate);
-        model.addAttribute("bookedRoom", booked);
-        return "";
-    }
+//    @RequestMapping("booked-rooms")
+//    public String isRoomBooked(@RequestParam("roomId")Long roomId,
+//                                @RequestParam("startDate") LocalDate startDate,
+//                                @RequestParam("endDate") LocalDate endDate, Model model) {
+//        boolean booked = bookingService.isRoomBooked(roomId, startDate, endDate);
+//        model.addAttribute("bookedRoom", booked);
+//        return "";
+//    }
 
 
     @RequestMapping("")
@@ -50,18 +50,18 @@ public class BookingController {
         }
     }
 
-    @PostMapping("/create")
-    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
-        try {
-            bookingService.saveNewBooking(detailedBookingDto);
-            model.addAttribute("pageTitle", "Skapa en bokning");
-            model.addAttribute("message", "Bokningen är genomförd");
-            return "bookings";
-        } catch (NoSuchElementException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "create";
-        }
-    }
+//    @PostMapping("/create")
+//    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+//        try {
+//            bookingService.saveNewBooking(detailedBookingDto);
+//            model.addAttribute("pageTitle", "Skapa en bokning");
+//            model.addAttribute("message", "Bokningen är genomförd");
+//            return "bookings";
+//        } catch (NoSuchElementException e) {
+//            model.addAttribute("errorMessage", e.getMessage());
+//            return "create";
+//        }
+//    }
 
     @PostMapping("/booked-room/update")
     public String updateBooking(@ModelAttribute MinimalBookingDto minimalBookingDto, Model model) {

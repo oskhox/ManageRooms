@@ -1,5 +1,6 @@
 package com.store.managerooms.dtos;
 
+import com.store.managerooms.models.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class MinimalBookingDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private RoomDTO room;
+    private int roomNumber;
     private Long roomId;
 
 }

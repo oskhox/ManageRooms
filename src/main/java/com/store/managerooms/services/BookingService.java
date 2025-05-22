@@ -19,9 +19,9 @@ public interface BookingService {
 
     public List<MinimalBookingDto> getAllBookings();
 
-    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
+//    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
 
-    public void saveNewBooking(DetailedBookingDto detailedBookingDto);
+//    public void saveNewBooking(DetailedBookingDto detailedBookingDto);
 
     public DetailedBookingDto findBookingById(Long id);
 

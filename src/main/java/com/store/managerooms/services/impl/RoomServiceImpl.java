@@ -40,11 +40,9 @@ import java.util.stream.Collectors;
             }
 
             @Override
-            public RoomDTO getRoomById(long id) {
-                return roomRepository.findById(id)
-                        .map(this::convertToDTO)
-                        .orElse(null);
-            }
+            public RoomDTO findByRoomId(Long id) {
+                return roomRepository.findById(id).map(this::convertToDTO).orElse(null);
 
+            }
         }
 

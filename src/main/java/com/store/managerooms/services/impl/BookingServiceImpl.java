@@ -1,11 +1,10 @@
 package com.store.managerooms.services.impl;
 
-import com.store.managerooms.dtos.DetailedCustomerDto;
+import com.store.managerooms.dtos.*;
 import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Room;
+import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.BookingRepository;
-import com.store.managerooms.dtos.DetailedBookingDto;
-import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.BookingService;
@@ -44,33 +43,33 @@ public class BookingServiceImpl implements BookingService {
         return bookingToDetailedBookingDto(booking);
     }
 
-    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
-            return bookingRepository.isRoomBookedCheck(roomId,startDate,endDate);
-    }
+//    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
+//            return bookingRepository.isRoomBookedCheck(roomId,startDate,endDate);
+//    }
 
 
-    @Override
-    public void saveNewBooking(DetailedBookingDto booking) {
-         boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
-         if (isRoomBooked) {
-                throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
-            }
-
-        Customer customer = customerService.findByCustomerId(booking.getCustomerId());
-        Room room = roomService.findByRoomId(booking.getRoomId());
-
-        bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));
-    }
+//    @Override
+//    public void saveNewBooking(DetailedBookingDto booking) {
+//         boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
+//         if (isRoomBooked) {
+//                throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
+//            }
+//
+//        Customer customer = customerService.findByCustomerId(booking.getCustomerId());
+//        RoomDTO room = roomService.findByRoomId(booking.getRoomId());
+//
+//        bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));
+//    }
 
     @Override
     public void updateExistingBooking(MinimalBookingDto booking) {
         Booking existingBooking = bookingRepository.findById(booking.getId())
                 .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
 
-        boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
-        if (isRoomBooked) {
-            throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
-        }
+//        boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
+//        if (isRoomBooked) {
+//            throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
+//        }
 
         if (booking.getStartDate() != null) {
             existingBooking.setStartDate(booking.getStartDate());
@@ -80,10 +79,10 @@ public class BookingServiceImpl implements BookingService {
             existingBooking.setEndDate(booking.getEndDate());
         }
 
-        if (booking.getRoomId() != null) {
-            Room room = roomService.findByRoomId(booking.getRoomId());
-            existingBooking.setRoom(room);
-        }
+//        if (booking.getRoomId() != null) {
+//            Room room = roomService.findByRoomId(booking.getRoomId());
+//            existingBooking.setRoom(room);
+//        }
 
         bookingRepository.save(existingBooking);
     }
@@ -130,9 +129,8 @@ public class BookingServiceImpl implements BookingService {
                         booking.getCustomer().getLastName(),
                         booking.getCustomer().getPhone(),
                         booking.getCustomer().getEmail()))
-                .room(new MinimalRoomDto(
+                .room(new RoomDTO(
                         booking.getRoom().getId(),
-                        booking.getRoom().getRoomNumber()))
-                .build();
+                        booking.getRoom().getRoomNumber(),new RoomTypeDTO())).build();
     }
 }
