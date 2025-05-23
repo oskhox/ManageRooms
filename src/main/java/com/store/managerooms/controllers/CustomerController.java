@@ -30,10 +30,14 @@ public class CustomerController {
         detailedCustomerDto.setId(Long.parseLong(id));
         return customerService.changeCustomer(detailedCustomerDto);
     }
-
+}
+/*
     //returnerar string med bekräftelse
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
     }
 }
+
+
+ */

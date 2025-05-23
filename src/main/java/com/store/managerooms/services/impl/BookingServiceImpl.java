@@ -10,16 +10,20 @@ import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
+    @Autowired
     private final BookingRepository bookingRepository;
     private final CustomerService customerService;
     private final RoomService roomService;
@@ -48,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public DetailedBookingDto createNewBooking(DetailedBookingDto booking) {
         Long roomId = booking.getRoom().getId();
-        Long customerId = booking.getCustomer().getId();
+        Set<Long> customerIds = booking.getCustomers().stream().map(DetailedCustomerDto::getId).collect(Collectors.toSet());
 
          boolean isRoomBooked = isRoomBooked(roomId,
                  booking.getStartDate(), booking.getEndDate());
@@ -56,10 +60,11 @@ public class BookingServiceImpl implements BookingService {
                 throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
             }
 
-        Customer customer = customerService.findByCustomerId(customerId);
-        Room room = roomService.findByRoomId(roomId);
+        Set<Customer> customers = customerIds.stream()
+                .map(customerService::findByCustomerId)
+                .collect(Collectors.toSet());        Room room = roomService.findByRoomId(roomId);
 
-        Booking newBooking = detailedBookingDtoToBooking(customer, room, booking);
+        Booking newBooking = detailedBookingDtoToBooking(customers, room, booking);
         Booking savedBooking = bookingRepository.save(newBooking);
 
         return bookingToDetailedBookingDto(savedBooking);
@@ -98,11 +103,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto booking) {
+    public Booking detailedBookingDtoToBooking(Set<Customer> customers, Room room, DetailedBookingDto booking) {
         return Booking.builder()
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customer(customer)
+                .customers(customers)
                 .room(room)
                 .build();
     }
@@ -157,18 +162,20 @@ public class BookingServiceImpl implements BookingService {
                 room.getRoomId(),
                 room.getRoomNumber(),
                 roomTypeDto);
-        DetailedCustomerDto customerDto = new DetailedCustomerDto(
-                booking.getCustomer().getId(),
-                booking.getCustomer().getFirstName(),
-                booking.getCustomer().getLastName(),
-                booking.getCustomer().getPhone(),
-                booking.getCustomer().getEmail());
+        Set<DetailedCustomerDto> customerDtos = booking.getCustomers()
+                .stream().map(c -> new DetailedCustomerDto(
+                c.getId(),
+                c.getFirstName(),
+                c.getLastName(),
+                c.getPhone(),
+                c.getEmail()))
+                .collect(Collectors.toSet());
 
         return DetailedBookingDto.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customer(customerDto)
+                .customers(customerDtos)
                 .room(roomDto)
                 .build();
     }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +26,8 @@ public class DetailedBookingDto {
     @NotNull(message = "Rum är obligatoriskt")
     private RoomDto room;
 
-    private DetailedCustomerDto customer;
+    private Set<DetailedCustomerDto> customers;
+
 
 
 }

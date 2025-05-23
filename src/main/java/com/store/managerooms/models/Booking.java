@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -25,9 +27,8 @@ public class Booking {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @OneToMany(mappedBy = "booking")
+    private Set<Customer> customers = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "room_id")
