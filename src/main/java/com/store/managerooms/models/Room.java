@@ -5,14 +5,16 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @NoArgsConstructor
 @Data
+@Entity
+@Table(name = "room")
 public class Room {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long roomId;
     private int roomNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)

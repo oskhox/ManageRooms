@@ -1,11 +1,10 @@
 package com.store.managerooms.services.impl;
 
-import com.store.managerooms.dtos.DetailedCustomerDto;
+import com.store.managerooms.dtos.*;
 import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Room;
+import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.BookingRepository;
-import com.store.managerooms.dtos.DetailedBookingDto;
-import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.BookingService;
@@ -37,55 +36,68 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.deleteById(id);
     }
 
+
+
+    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
+            return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
+    }
+
+    public boolean isDateBookedExistingBooking(Long roomId, LocalDate startDate, LocalDate endDate, Long bookingId) {
+        return bookingRepository.isDateBookedCheckExistingBooking(roomId,startDate,endDate,bookingId);
+    }
+
+
+    @Override
+    public DetailedBookingDto createNewBooking(DetailedBookingDto booking) {
+        Long roomId = booking.getRoom().getId();
+        Long customerId = booking.getCustomer().getId();
+
+         boolean isRoomBooked = isRoomBooked(roomId,
+                 booking.getStartDate(), booking.getEndDate());
+         if (isRoomBooked) {
+                throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
+            }
+
+        Customer customer = customerService.findByCustomerId(customerId);
+        Room room = roomService.findByRoomId(roomId);
+
+        Booking newBooking = detailedBookingDtoToBooking(customer, room, booking);
+        Booking savedBooking = bookingRepository.save(newBooking);
+
+        return bookingToDetailedBookingDto(savedBooking);
+
+    }
+
+    @Override
+    public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking) {
+        Booking existingBooking = bookingRepository.findById(booking.getId())
+                .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
+
+
+        Long roomId = booking.getRoom().getId();
+
+        boolean isRoomBooked = isDateBookedExistingBooking(roomId,
+                booking.getStartDate(), booking.getEndDate(),booking.getId());
+        if (isRoomBooked) {
+            throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
+        }
+
+        Room room = roomService.findByRoomId(roomId);
+
+            existingBooking.setStartDate(booking.getStartDate());
+            existingBooking.setEndDate(booking.getEndDate());
+            existingBooking.setRoom(room);
+
+        bookingRepository.save(existingBooking);
+        return bookingToMinimalBookingDto(existingBooking);
+
+    }
+
     @Override
     public DetailedBookingDto findBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
         return bookingToDetailedBookingDto(booking);
-    }
-
-    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
-            return bookingRepository.isRoomBookedCheck(roomId,startDate,endDate);
-    }
-
-
-    @Override
-    public void saveNewBooking(DetailedBookingDto booking) {
-         boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
-         if (isRoomBooked) {
-                throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
-            }
-
-        Customer customer = customerService.findByCustomerId(booking.getCustomerId());
-        Room room = roomService.findByRoomId(booking.getRoomId());
-
-        bookingRepository.save(detailedBookingDtoToBooking(customer,room,booking));
-    }
-
-    @Override
-    public void updateExistingBooking(MinimalBookingDto booking) {
-        Booking existingBooking = bookingRepository.findById(booking.getId())
-                .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
-
-        boolean isRoomBooked = isRoomBooked(booking.getRoomId(), booking.getStartDate(), booking.getEndDate());
-        if (isRoomBooked) {
-            throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
-        }
-
-        if (booking.getStartDate() != null) {
-            existingBooking.setStartDate(booking.getStartDate());
-        }
-
-        if (booking.getEndDate() != null) {
-            existingBooking.setEndDate(booking.getEndDate());
-        }
-
-        if (booking.getRoomId() != null) {
-            Room room = roomService.findByRoomId(booking.getRoomId());
-            existingBooking.setRoom(room);
-        }
-
-        bookingRepository.save(existingBooking);
     }
 
     @Override
@@ -110,29 +122,57 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public MinimalBookingDto bookingToMinimalBookingDto(Booking booking) {
+        Room room = booking.getRoom();
+        RoomType roomType = room.getRoomType();
+
+        RoomTypeDto roomTypeDto = new RoomTypeDto(
+                roomType.getId(),
+                roomType.getName(),
+                roomType.getBedCount(),
+                roomType.getExtraBeds(),
+                roomType.isExtraBedsAvailable());
+        RoomDto roomDto = new RoomDto(
+                room.getRoomId(),
+                room.getRoomNumber(),
+                roomTypeDto);
+
         return MinimalBookingDto.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .roomNumber(booking.getRoom().getRoomNumber())
+                .room(roomDto)
                 .build();
     }
 
+
     @Override
     public DetailedBookingDto bookingToDetailedBookingDto(Booking booking) {
+        Room room = booking.getRoom();
+        RoomType roomType = room.getRoomType();
+
+        RoomTypeDto roomTypeDto = new RoomTypeDto(
+                roomType.getId(),
+                roomType.getName(),
+                roomType.getBedCount(),
+                roomType.getExtraBeds(),
+                roomType.isExtraBedsAvailable());
+        RoomDto roomDto = new RoomDto(
+                room.getRoomId(),
+                room.getRoomNumber(),
+                roomTypeDto);
+        DetailedCustomerDto customerDto = new DetailedCustomerDto(
+                booking.getCustomer().getId(),
+                booking.getCustomer().getFirstName(),
+                booking.getCustomer().getLastName(),
+                booking.getCustomer().getPhone(),
+                booking.getCustomer().getEmail());
+
         return DetailedBookingDto.builder()
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
-                .customer(new DetailedCustomerDto(
-                        booking.getCustomer().getId(),
-                        booking.getCustomer().getFirstName(),
-                        booking.getCustomer().getLastName(),
-                        booking.getCustomer().getPhone(),
-                        booking.getCustomer().getEmail()))
-                .room(new MinimalRoomDto(
-                        booking.getRoom().getId(),
-                        booking.getRoom().getRoomNumber()))
+                .customer(customerDto)
+                .room(roomDto)
                 .build();
     }
 }
