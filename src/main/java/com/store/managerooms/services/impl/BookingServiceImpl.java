@@ -36,6 +36,8 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.deleteById(id);
     }
 
+
+
     public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
             return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
     }
@@ -70,6 +72,7 @@ public class BookingServiceImpl implements BookingService {
     public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking) {
         Booking existingBooking = bookingRepository.findById(booking.getId())
                 .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
+
 
         Long roomId = booking.getRoom().getId();
 

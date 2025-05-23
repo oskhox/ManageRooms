@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,7 @@ public class DetailedBookingDto {
     private RoomDto room;
 
     private DetailedCustomerDto customer;
+
 
 
 }
