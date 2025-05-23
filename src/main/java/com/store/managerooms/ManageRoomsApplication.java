@@ -28,11 +28,11 @@ public class ManageRoomsApplication {
             customerRepository.save(new Customer(null, "Laura", "Palmer", "laura.palmer@gmail.com", "+4612349"));
 
             roomRepo.save(new Room(1001,new RoomType("Single",1)));
-            roomRepo.save(new Room(1001,new RoomType("Single",1)));
+            roomRepo.save(new Room(1002,new RoomType("Single",1)));
             roomRepo.save(new Room(1003,new RoomType("Double",2,0,true)));
-            roomRepo.save(new Room(1003,new RoomType("Double",2,0,true)));
+            roomRepo.save(new Room(1004,new RoomType("Double",2,0,true)));
             roomRepo.save(new Room(1005,new RoomType("Big Double",2,0,true)));
-            roomRepo.save(new Room(1005,new RoomType("Big Double",2,0,true)));
+            roomRepo.save(new Room(1006,new RoomType("Big Double",2,0,true)));
 
         };
     }

@@ -21,13 +21,13 @@ public interface BookingService {
 
     public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
 
-    public void saveNewBooking(DetailedBookingDto detailedBookingDto);
+    public DetailedBookingDto createNewBooking(DetailedBookingDto booking);
 
     public DetailedBookingDto findBookingById(Long id);
 
     public void deleteBookingById(Long id);
 
-    public void updateExistingBooking(MinimalBookingDto minimalBookingDTO);
+    public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking);
 
 
     }

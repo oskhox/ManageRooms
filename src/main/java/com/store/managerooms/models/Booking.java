@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Builder
 
 @Entity
+@Table(name = "booking")
 public class Booking {
 
 
@@ -25,9 +26,10 @@ public class Booking {
     private LocalDate endDate;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "customer_id")
     private Customer customer;
-    @OneToOne
-    @JoinColumn()
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public class RoomTypeDTO {
+    public class RoomTypeDto {
         private long id;
         private String name;
         private int bedCount;
