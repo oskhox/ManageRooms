@@ -9,7 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-/*
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
@@ -38,8 +39,8 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
     }
-*/
 
+/*
 //MVC-controller
 @Controller
 @RequiredArgsConstructor
@@ -76,4 +77,6 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
     }
+
+ */
 }
