@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
         private long id;
         private String name;
         private int bedCount;
-        private int extraBeds;
-        private boolean extraBedsAvailable;
+        private int extraBedsAvailable;
     }
 

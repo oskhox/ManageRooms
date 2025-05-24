@@ -19,18 +19,16 @@ public class RoomType {
     private long id;
     private String name;
     private int bedCount;
-    private int extraBeds;
-    private boolean extraBedsAvailable;
+    private int extraBedsAvailable;
 
     public RoomType(String name, int bedCount) {
         this.name = name;
         this.bedCount = bedCount;
     }
 
-    public RoomType(String name, int bedCount, int extraBeds, boolean extraBedsAvailable) {
+    public RoomType(String name, int bedCount, int extraBedsAvailable) {
         this.name = name;
         this.bedCount = bedCount;
-        this.extraBeds = extraBeds;
         this.extraBedsAvailable = extraBedsAvailable;
     }
 }

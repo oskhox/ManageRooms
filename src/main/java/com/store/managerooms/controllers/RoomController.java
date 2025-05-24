@@ -25,15 +25,19 @@ public class RoomController {
 
     @RequestMapping("rooms/add")
     public List<Room> addRoom(@RequestParam int roomNumber,
-                              @RequestParam String name,
                               @RequestParam int beds,
-                              @RequestParam boolean extraBedsAvailable){
+                              @RequestParam int extraBedsAvailable){
 
-        if(extraBedsAvailable){
-            Room doubleRoom = new Room(roomNumber,new RoomType(name,beds,0, true));
+        if(extraBedsAvailable == 1 && beds == 2 ) {
+            Room doubleRoom = new Room(roomNumber, new RoomType("Double room", beds, extraBedsAvailable));
             roomRepo.save(doubleRoom);
-        }else{
-            Room room = new Room(roomNumber, new RoomType(name,beds));
+        }
+        else if(extraBedsAvailable == 2 && beds == 2 ) {
+            Room bigDoubleRoom = new Room(roomNumber, new RoomType("Big double room", beds, extraBedsAvailable));
+            roomRepo.save(bigDoubleRoom);
+            }
+        else if(beds == 1 && extraBedsAvailable == 0) {
+            Room room = new Room(roomNumber, new RoomType("Single room",beds));
             roomRepo.save(room);
         }
         return roomRepo.findAll();

@@ -1,9 +1,6 @@
 package com.store.managerooms.services.impl;
-import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.dtos.RoomDto;
 import com.store.managerooms.dtos.RoomTypeDto;
-import com.store.managerooms.models.Booking;
-import com.store.managerooms.models.Customer;
 import com.store.managerooms.models.Room;
 import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.RoomRepo;
@@ -23,8 +20,7 @@ import java.util.stream.Collectors;
                         rt.getId(),
                         rt.getName(),
                         rt.getBedCount(),
-                        rt.getExtraBeds(),
-                        rt.isExtraBedsAvailable()
+                        rt.getExtraBedsAvailable()
                 );
 
                 return new RoomDto(room.getRoomId(), room.getRoomNumber(), rtDTO);

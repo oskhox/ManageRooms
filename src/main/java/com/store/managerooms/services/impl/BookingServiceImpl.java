@@ -129,8 +129,7 @@ public class BookingServiceImpl implements BookingService {
                 roomType.getId(),
                 roomType.getName(),
                 roomType.getBedCount(),
-                roomType.getExtraBeds(),
-                roomType.isExtraBedsAvailable());
+                roomType.getExtraBedsAvailable());
         RoomDto roomDto = new RoomDto(
                 room.getRoomId(),
                 room.getRoomNumber(),
@@ -154,8 +153,7 @@ public class BookingServiceImpl implements BookingService {
                 roomType.getId(),
                 roomType.getName(),
                 roomType.getBedCount(),
-                roomType.getExtraBeds(),
-                roomType.isExtraBedsAvailable());
+                roomType.getExtraBedsAvailable());
         RoomDto roomDto = new RoomDto(
                 room.getRoomId(),
                 room.getRoomNumber(),
