@@ -36,14 +36,17 @@ public class RoomController {
         List<Room> availableRooms = new ArrayList<>();
         long idCounter = 1;
         for (Room room : roomRepo.findAll()) {
-            if(!bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start,end,idCounter)) {
+            if(bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start,end,idCounter)) {
+                System.out.println("Room with id" + room.getRoomId() + " is already booked");
+            } else {
                 int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
-
                 if(peopleInRoom >= peopleCount) {
                     availableRooms.add(room);
                 }
+
             }
-        }
+            idCounter++;
+            }
 
         return availableRooms;
     }

@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 public class ManageRoomsApplication {
 
@@ -36,7 +38,17 @@ public class ManageRoomsApplication {
             roomRepo.save(new Room(1005,new RoomType("Big Double room",2,2)));
             roomRepo.save(new Room(1006,new RoomType("Big Double room",2,2)));
 
-            bookingRepo.save(new Booking());
+            Room testRoom = new Room(1010,new RoomType("Double room",2,1));
+            roomRepo.save(testRoom);
+            Customer testCustomer = new Customer(null,"Test","testsson","test@test.com","12345567");
+            customerRepository.save(testCustomer);
+
+            Booking testBooking = new Booking();
+            testBooking.setStartDate(LocalDate.parse("2025-01-20"));
+            testBooking.setEndDate(LocalDate.parse("2025-01-25"));
+            testBooking.setCustomer(testCustomer);
+            testBooking.setRoom(testRoom);
+            bookingRepo.save(testBooking);
         };
     }
 }
