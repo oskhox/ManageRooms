@@ -1,8 +1,10 @@
 package com.store.managerooms;
 
+import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.models.Room;
 import com.store.managerooms.models.RoomType;
+import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.repos.CustomerRepository;
 import com.store.managerooms.repos.RoomRepo;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +20,7 @@ public class ManageRoomsApplication {
     }
 
     @Bean
-    public CommandLineRunner defaultCustomers(CustomerRepository customerRepository, RoomRepo roomRepo) {
+    public CommandLineRunner defaultCustomers(CustomerRepository customerRepository, RoomRepo roomRepo, BookingRepository bookingRepo) {
         return args -> {
 
             customerRepository.save(new Customer(null, "Jack", "Bauer", "jack.bauer@gmail.com", "+4612345"));
@@ -34,6 +36,7 @@ public class ManageRoomsApplication {
             roomRepo.save(new Room(1005,new RoomType("Big Double room",2,2)));
             roomRepo.save(new Room(1006,new RoomType("Big Double room",2,2)));
 
+            bookingRepo.save(new Booking());
         };
     }
 }
