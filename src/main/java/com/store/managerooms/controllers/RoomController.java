@@ -43,11 +43,9 @@ public class RoomController {
                 if(peopleInRoom >= peopleCount) {
                     availableRooms.add(room);
                 }
-
             }
             idCounter++;
             }
-
         return availableRooms;
     }
 
