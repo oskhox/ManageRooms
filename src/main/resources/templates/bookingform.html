@@ -9,28 +9,52 @@
 
 <div class="form-container">
 
-    <div id="loginForm" class="form-card">
+    <div id="customerForm" class="form-card customerForm">
         <h2>Customer Information</h2>
         <form th:action="@{/bookcustomer}" method="post">
-            <input type="text" name="firstName" placeholder="First Name" required />
-            <input type="text" name="lastName" placeholder="Last Name" required />
-            <input type="email" name="email" placeholder="email@email.com" required />
-            <input type="text" name="phone" placeholder="Phone Number" required />
-            <button onclick="showRoom()">Choose Room</button>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" placeholder="John" required />
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" placeholder="Doe" required />
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="email@email.com" required />
+            <label for="phone">PhoneNumber</label>
+            <input type="text" id="phone" placeholder="071234565" required />
+            <button class="buttons" onclick="showRoom()">Choose Room</button>
         </form>
 
     </div>
 
 
-    <div id="registerForm" class="form-card" style="display:none;">
-        <h2>Register</h2>
-        <form th:action="@{/bookroom}" method="post">
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Book</button>
+    <div id="roomForm" class="form-card roomForm" style="display:none;">
+        <h2>Choose Room</h2>
+        <form th:action="@{/room/addbeds}" method="post">
+            <input type="hidden" name="roomTypeId" value="6" />
+            <div class="choice">
+                <label for="singleRoom">Single Room         </label>
+                <input type="checkbox" id="singleRoom"/>
+            </div>
+            <div class="choice">
+                <label for="doubleRoom">Double Room         </label>
+                <input type="checkbox" id="doubleRoom"/>
+            </div>
+            <div class="choice">
+                <label for="bigDoubleRoom">Big Double Room  </label>
+                <input type="checkbox" id="bigDoubleRoom"/>
+            </div>
+            <div class="choice">
+                <label for="oneExtraBed">Add one extra bed  </label>
+                <input type="checkbox" id="oneExtraBed" name="beds" value="1"/>
+            </div>
+            <div class="choice">
+                <label for="twoExtraBeds">Add two extra beds</label>
+                <input type="checkbox" id="twoExtraBeds" name="beds" value="2"/>
+            </div>
+            <div class="buttonDiv">
+                <button type="submit" class="buttons">Book</button>
+                <button class="buttons" onclick="showCustomer()">Go Back</button>
+            </div>
         </form>
-        <button onclick="showCustomer()">Back to Customer form</button>
     </div>
 </div>
 <script th:src="@{/js/bookingscript.js}"></script>

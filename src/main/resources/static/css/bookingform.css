@@ -33,23 +33,29 @@
     }
 }
 
-p {
+label {
     font-size: 30px;
     color: #FFDEDE;
     font-family: "Condiment", cursive;
     font-weight: 400;
     font-style: normal;
-
 }
 
-.login-register button {
+.roomForm label{
+    font-size: 20px;
+    color: #FFDEDE;
+    font-family: "Condiment", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.buttons {
 
     border-bottom-left-radius: 40%;
     border-top-right-radius: 40%;
     background: linear-gradient(71deg, #080509, #1a171c, #080509);
     color: white;
     height: 50px;
-    width: 120px;
+    width: 200px;
     margin-left: 4rem;
     margin-top: 7rem;
     font-family: "Condiment", cursive;
@@ -58,7 +64,25 @@ p {
     font-size: 25px;
 }
 
-.user-input input {
+.choice{
+    display: flex;
+}
+
+.customerForm input {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: 80%;
+    border-top-right-radius: 80%;
+}
+.buttonDiv{
+    display: flex;
+    margin-right: 35px;
+}
+
+.roomForm input {
+    display: flex;
+    justify-content: flex-end;
     height: 30px;
     width: 80%;
     border-top-right-radius: 80%;

@@ -1,6 +1,6 @@
 function showRoom() {
-    const customer = document.getElementById('loginForm');
-    const room = document.getElementById('registerForm');
+    const customer = document.getElementById('customerForm');
+    const room = document.getElementById('roomForm');
 
     customer.classList.add('animate-out');
     customer.style.display = 'none';
@@ -11,8 +11,8 @@ function showRoom() {
 }
 
 function showCustomer() {
-    const customer = document.getElementById('loginForm');
-    const room = document.getElementById('registerForm');
+    const customer = document.getElementById('customerForm');
+    const room = document.getElementById('roomForm');
 
     room.classList.add('animate-out');
     room.style.display = 'none';
