@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/style.css}" />
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${booking}">Bokningar</title>
+</head>
+<body>
+
+<header class="header">
+    <h1 th:text="${pageTitle}"></h1>
+</header>
+
+<nav>
+    <a th:href="@{/bookings}">Alla bokningar</a> |
+    <a th:href="@{/customers/addCustomer}">Registrera kund</a> |
+</nav>
+
+<div class="container">
+<h2 th:text="${formTitle}"></h2>
+    <form th:action="@{/bookings/create}" th:object="${detailedBookingDto}" method="post">
+        <label for="customers">Välj kund:</label>
+        <select id="customers" th:field="*{customer.id}" required>
+            <option th:each="cust : ${customers}"
+                    th:value="${cust.id}"
+                    th:text="${cust.firstName + ' ' + cust.lastName}">
+            </option>
+        </select>
+
+        <label for="rooms">Välj rum:</label>
+        <select id="rooms" th:field="*{room.id}" required>
+            <option th:each="room : ${rooms}"
+                    th:value="${room.id}"
+                    th:text="${room.roomNumber + ' - ' + room.roomType.name}">
+            </option>
+        </select>
+
+        <label for="startDate">Startdatum:</label>
+        <input type="date" id="startDate" th:field="*{startDate}" required />
+
+        <label for="endDate">Slutdatum:</label>
+        <input type="date" id="endDate" th:field="*{endDate}" required />
+
+        <input type="submit" value="Skapa bokning" />
+    </form>
+
+    <div th:if="${errorMessage}">
+        <p style="color:red;" th:text="${errorMessage}"></p>
+    </div>
+
+    <div th:if="${message}">
+        <p style="color:green;" th:text="${message}"></p>
+
+    </div>
+</div>
+
+</body>
+</html>
+

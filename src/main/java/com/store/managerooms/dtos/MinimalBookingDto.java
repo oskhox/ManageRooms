@@ -18,14 +18,11 @@ public class MinimalBookingDto {
 
     private Long id;
 
-    @NotNull(message = "Startdatum är obligatoriskt")
     private LocalDate startDate;
 
-    @NotNull(message = "Slutdatum är obligatoriskt")
     private LocalDate endDate;
 
-    @Valid
-    @NotNull(message = "Rum är obligatoriskt")
+
     private RoomDto room;
 
 }
