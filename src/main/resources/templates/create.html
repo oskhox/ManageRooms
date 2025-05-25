@@ -20,7 +20,7 @@
 <div class="container">
 <h2 th:text="${formTitle}"></h2>
     <form th:action="@{/bookings/create}" th:object="${detailedBookingDto}" method="post">
-        <label for="customers">Välj kund:</label>
+        <label th:text="${labelCustomer}" for="customers"></label>
         <select id="customers" th:field="*{customer.id}" required>
             <option th:each="cust : ${customers}"
                     th:value="${cust.id}"
@@ -28,7 +28,7 @@
             </option>
         </select>
 
-        <label for="rooms">Välj rum:</label>
+        <label th:text="${labelRooms}" for="rooms"></label>
         <select id="rooms" th:field="*{room.id}" required>
             <option th:each="room : ${rooms}"
                     th:value="${room.id}"
@@ -36,10 +36,10 @@
             </option>
         </select>
 
-        <label for="startDate">Startdatum:</label>
+        <label th:text="${labelStartDate}" for="startDate"></label>
         <input type="date" id="startDate" th:field="*{startDate}" required />
 
-        <label for="endDate">Slutdatum:</label>
+        <label th:text="${labelEndDate}" for="endDate"></label>
         <input type="date" id="endDate" th:field="*{endDate}" required />
 
         <input type="submit" value="Skapa bokning" />

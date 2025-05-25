@@ -58,6 +58,12 @@ public class BookingController {
         model.addAttribute("detailedBookingDto", new DetailedBookingDto());
         model.addAttribute("pageTitle", "Skapa en bokning");
         model.addAttribute("formTitle", "Fyll i bokningsformuläret");
+        model.addAttribute("labelRooms", "Välj rum:");
+        model.addAttribute("labelCustomer", "Välj rum:");
+        model.addAttribute("labelStartDate", "Välj startdatum:");
+        model.addAttribute("labelEndDate", "Välj slutdatum:");
+
+
         return "create";
     }
 
@@ -85,6 +91,10 @@ public class BookingController {
         model.addAttribute("minimalBookingDto", booking);
         model.addAttribute("pageTitle", "Uppdatera en bokning");
         model.addAttribute("formTitle", "Ändra uppgifter i formuläret");
+        model.addAttribute("labelRooms", "Välj rum:");
+        model.addAttribute("labelStartDate", "Välj startdatum:");
+        model.addAttribute("labelEndDate", "Välj slutdatum:");
+
 
         return "update-booking";
     }

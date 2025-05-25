@@ -23,13 +23,13 @@
 
     <input type="hidden" th:field="*{id}" />
 
-    <label for="startDate">Startdatum:</label>
+        <label th:text="${labelStartDate}" for="startDate"></label>
     <input type="date" id="startDate" th:field="*{startDate}" required />
 
-    <label for="endDate">Slutdatum:</label>
+        <label th:text="${labelEndDate}" for="endDate"></label>
     <input type="date" id="endDate" th:field="*{endDate}" required />
 
-    <label for="room">Rum:</label>
+        <label th:text="${labelRooms}" for="room"></label>
     <select id="room" th:field="*{room.id}" required>
         <option th:each="room : ${rooms}"
                 th:value="${room.id}"
