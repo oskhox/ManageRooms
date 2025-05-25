@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/style.css}" />
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Uppdatera bokning</title>
+</head>
+<body>
+<header class="header">
+    <h1 th:text="${pageTitle}"></h1>
+</header>
+
+<nav>
+    <a th:href="@{/bookings}">Alla bokningar</a> |
+    <a th:href="@{/bookings/create}">Skapa bokning</a> |
+    <a th:href="@{/customers/addCustomer}">Registrera kund</a> |
+</nav>
+
+<div class="container">
+<h2 th:text="${formTitle}"></h2>
+    <form th:action="@{/update-booking}" method="post" th:object="${minimalBookingDto}">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <label for="startDate">Startdatum:</label>
+    <input type="date" id="startDate" th:field="*{startDate}" required />
+
+    <label for="endDate">Slutdatum:</label>
+    <input type="date" id="endDate" th:field="*{endDate}" required />
+
+    <label for="room">Rum:</label>
+    <select id="room" th:field="*{room.id}" required>
+        <option th:each="room : ${rooms}"
+                th:value="${room.id}"
+                th:text="${room.roomNumber}">
+        </option>
+    </select>
+
+    <button type="submit">Uppdatera bokning</button>
+</form>
+
+<div th:if="${errorMessage}">
+    <p style="color:red;" th:text="${errorMessage}"></p>
+</div>
+
+<div th:if="${message}">
+    <p style="color:green;" th:text="${message}"></p>
+</div>
+</div>
+</body>
+</html>
