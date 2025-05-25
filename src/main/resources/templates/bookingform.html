@@ -20,11 +20,13 @@
             <input type="email" id="email" placeholder="email@email.com" required />
             <label for="phone">PhoneNumber</label>
             <input type="text" id="phone" placeholder="071234565" required />
-            <button class="buttons" onclick="showRoom()">Choose Room</button>
+            <div class="buttonDiv">
+                <button class="buttons" onclick="showRoom()">Choose Room</button>
+                <button class="buttons" onclick="showAvailableRooms()">Available Rooms</button>
+            </div>
         </form>
-
     </div>
-
+    <div id="availableRooms"></div>
 
     <div id="roomForm" class="form-card roomForm" style="display:none;">
         <h2>Choose Room</h2>

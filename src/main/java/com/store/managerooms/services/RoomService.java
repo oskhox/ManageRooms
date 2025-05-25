@@ -12,6 +12,4 @@ public interface RoomService {
     public Room findByRoomId(Long id);
     List<Room>getAvailableRooms(int peopleCount, LocalDate start, LocalDate end);
     String addBeds (Long roomTypeId,int beds);
-
-
     }

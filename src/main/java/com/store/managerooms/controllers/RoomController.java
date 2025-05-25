@@ -6,13 +6,15 @@ import com.store.managerooms.models.Room;
 import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class RoomController {
 
@@ -25,8 +27,8 @@ public class RoomController {
 
     @GetMapping("rooms/search")
     public List<Room> getAvailableRooms(@RequestParam int peopleCount,
-                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
 
         return roomService.getAvailableRooms(peopleCount, start, end);
 
