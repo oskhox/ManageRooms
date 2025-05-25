@@ -14,6 +14,7 @@
 </head>
 <body>
 
+<h3>All customers</h3>
 <div class="allBooksTable" th:unless="${#lists.isEmpty(allCustomers)}">
 <table>
     <tbody>
@@ -25,8 +26,9 @@
     </tbody>
 </table>
 </div>
+<br>
 
-<p></p>
+<h3>Add customer</h3>
 <div class="container">
     <form action="addCustomer" method="post">
         <label for="firstName">First name:</label><br>

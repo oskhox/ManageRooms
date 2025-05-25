@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
@@ -39,8 +41,8 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
     }
+ */
 
-/*
 //MVC-controller
 @Controller
 @RequiredArgsConstructor
@@ -52,15 +54,15 @@ public class CustomerController {
     @GetMapping("/customer")
     public String allCustomers(Model model) {
         model.addAttribute("allCustomers", customerService.allCustomers());
-        model.addAttribute("title", "All customers");
-        return "customers";
+        model.addAttribute("title", "Customers");
+        return "customer";
     }
 
     //MVC 2
     @PostMapping("/addCustomer")
     public String addCustomer(@ModelAttribute DetailedCustomerDto c, Model model) {
         customerService.addCustomer(c);
-        return allCustomers(model);
+        return "redirect:/customer";
     }
 
     //REST 3
@@ -71,12 +73,16 @@ public class CustomerController {
         return customerService.changeCustomer(detailedCustomerDto);
     }
 
+    //rubrik i Customer.html med rullista under
+    //där val i rullistan tar fram ett ändrings-formulär (if någon kund vald...)
+    //när formuläret fyllts i sparas kunden enligt changeCustomer
+    //och customer returnas så man ser uppdaterade uppgifter
+
+
     //REST 4
     //returnerar string med bekräftelse
     @DeleteMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable String id) {
         return customerService.deleteCustomer(Long.parseLong(id));
     }
-
- */
 }
