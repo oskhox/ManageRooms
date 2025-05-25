@@ -1,10 +1,11 @@
 package com.store.managerooms.controllers;
 
+import ch.qos.logback.core.model.Model;
 import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.RoomTypeRepo;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RoomTypeController {
@@ -35,3 +36,4 @@ public class RoomTypeController {
     }
 
 }
+
