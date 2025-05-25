@@ -3,8 +3,13 @@ package com.store.managerooms.controllers;
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.services.BookingService;
+import com.store.managerooms.services.CustomerService;
+import com.store.managerooms.services.RoomService;
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,117 +20,106 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 
-@RestController
+@Controller
 @RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
+    private final CustomerService customerService;
+    private final RoomService roomService;
 
-/*
-    @RequestMapping("booked-rooms")
-    public String isRoomBooked(@RequestParam("roomId")Long roomId,
-                                @RequestParam("startDate") LocalDate startDate,
-                                @RequestParam("endDate") LocalDate endDate, Model model) {
+
+    @RequestMapping("booked-rooms/")
+    public String isRoomBooked(@RequestParam("roomId") Long roomId,
+                               @RequestParam("startDate") LocalDate startDate,
+                               @RequestParam("endDate") LocalDate endDate, Model model) {
         boolean booked = bookingService.isRoomBooked(roomId, startDate, endDate);
         model.addAttribute("bookedRoom", booked);
-        return "";
-    }
-
-
-    @RequestMapping("")
-    public String getBookings(Model model) {
-        List<MinimalBookingDto> bookings = bookingService.getAllBookings();
-        model.addAttribute("bookings", bookings);
         return "bookings";
     }
 
-    @RequestMapping ("/booked-room/")
-    public String showBooking(@RequestParam Long id, Model model) {
-        try {
-            DetailedBookingDto booking = bookingService.findBookingById(id);
-            model.addAttribute("pageTitle", "Bokat rum");
-            model.addAttribute("booked-room", booking);
-            return "booked-room";
-        } catch (NoSuchElementException e) {
-            model.addAttribute("errorMessage", "Bokningen hittades ej");
-            return "bookings";
-        }
+    @RequestMapping
+    public String getBookings(Model model) {
+        List<MinimalBookingDto> bookings = bookingService.getAllBookings();
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("pageTitle", "Alla bokningar");
+        model.addAttribute("formTitle", "Skapa en ny bokning");
+        model.addAttribute("startDate", "Startdatum");
+        model.addAttribute("endDate", "Slutdatum");
+        model.addAttribute("roomNumber", "Rumsnummer");
+        model.addAttribute("options", "Dina val");
+        return "bookings";
     }
 
-    @PostMapping("/create")
-    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, Model model) {
+    @GetMapping("create")
+    public String showBookingForm(Model model) {
+        model.addAttribute("customers", customerService.allCustomers());
+        model.addAttribute("rooms", roomService.getAllRooms());
+        model.addAttribute("detailedBookingDto", new DetailedBookingDto());
+        model.addAttribute("pageTitle", "Skapa en bokning");
+        model.addAttribute("formTitle", "Fyll i bokningsformuläret");
+        model.addAttribute("labelRooms", "Välj rum:");
+        model.addAttribute("labelCustomer", "Välj rum:");
+        model.addAttribute("labelStartDate", "Välj startdatum:");
+        model.addAttribute("labelEndDate", "Välj slutdatum:");
+
+
+        return "create";
+    }
+
+    @PostMapping("create")
+    public String createBooking(@ModelAttribute DetailedBookingDto detailedBookingDto, RedirectAttributes redirectAttributes, Model model) {
         try {
-            bookingService.createNewBooking(detailedBookingDto);
-            model.addAttribute("pageTitle", "Skapa en bokning");
-            model.addAttribute("message", "Bokningen är genomförd");
-            return "bookings";
+            DetailedBookingDto newBooking = bookingService.createNewBooking(detailedBookingDto);
+            model.addAttribute("booking", newBooking);
+            redirectAttributes.addFlashAttribute("message", "Bokning skapad!");
+            return "redirect:/bookings";
         } catch (NoSuchElementException e) {
             model.addAttribute("errorMessage", e.getMessage());
+
+            model.addAttribute("customers", customerService.allCustomers());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("detailedBookingDto", detailedBookingDto);
             return "create";
         }
     }
 
-    @PostMapping("/booked-room/update")
-    public String updateBooking(@ModelAttribute MinimalBookingDto minimalBookingDto, Model model) {
+    @GetMapping("update-booking/{id}")
+    public String showFormForExistingBooking(@PathVariable Long id, Model model) {
+        MinimalBookingDto booking = bookingService.findMinimalBookingById(id);
+        model.addAttribute("rooms", roomService.getAllRooms());
+        model.addAttribute("minimalBookingDto", booking);
+        model.addAttribute("pageTitle", "Uppdatera en bokning");
+        model.addAttribute("formTitle", "Ändra uppgifter i formuläret");
+        model.addAttribute("labelRooms", "Välj rum:");
+        model.addAttribute("labelStartDate", "Välj startdatum:");
+        model.addAttribute("labelEndDate", "Välj slutdatum:");
+
+
+        return "update-booking";
+    }
+
+    @PostMapping("update-booking")
+    public String updateBooking(@ModelAttribute MinimalBookingDto minimalBookingDto,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
         try {
-        bookingService.updateExistingBooking(minimalBookingDto);
-        model.addAttribute("pageTitle", "Uppdatera bokningen");
-        model.addAttribute("message", "Bokningen är uppdaterad");
-            return "booked-room";
+            bookingService.updateExistingBooking(minimalBookingDto);
+            redirectAttributes.addFlashAttribute("message", "Bokningen är uppdaterad!");
+            return "redirect:/bookings";
         } catch (NoSuchElementException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "/booked-room/update";
-
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("minimalBookingDto", minimalBookingDto);
+            return "update-booking";
         }
     }
 
-    @DeleteMapping("/booked-room")
-    public String cancelBooking(@RequestParam Long id, Model model) {
+    @PostMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         bookingService.deleteBookingById(id);
-        model.addAttribute("message", "Bokning " + id + " är raderad");
-        return "bookings";
-
-    }
-
-*/
-
-    //testa
-    @GetMapping("/booked-rooms")
-    public boolean isRoomBooked(@RequestParam("roomId") Long roomId,
-                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return bookingService.isRoomBooked(roomId, startDate, endDate);
-    }
-
-    @GetMapping
-    public List<MinimalBookingDto> getBookings() {
-        return bookingService.getAllBookings();
-    }
-
-    @GetMapping("/booked-room")
-    public DetailedBookingDto showBooking(@RequestParam Long id) {
-        return bookingService.findBookingById(id);
-    }
-
-    @PostMapping("/create")
-    public DetailedBookingDto createBooking(@Valid @RequestBody DetailedBookingDto detailedBookingDto) {
-        return bookingService.createNewBooking(detailedBookingDto);
-
-    }
-
-    @PutMapping("/update")
-    public MinimalBookingDto updateBooking(@Valid @RequestBody MinimalBookingDto minimalBookingDto) {
-        return bookingService.updateExistingBooking(minimalBookingDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public String cancelBooking(@PathVariable Long id) {
-        bookingService.deleteBookingById(id);
-        return "Bokning är raderad";
+        redirectAttributes.addFlashAttribute("message", "Bokningen är borttagen!");
+        return "redirect:/bookings";
     }
 
 }
-
-
-
-

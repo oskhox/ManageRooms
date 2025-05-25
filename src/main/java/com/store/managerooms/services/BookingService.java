@@ -24,9 +24,11 @@ public interface BookingService {
 
     public DetailedBookingDto createNewBooking(DetailedBookingDto booking);
 
-    public DetailedBookingDto findBookingById(Long id);
+    public DetailedBookingDto findDetailedBookingById(Long id);
+    public MinimalBookingDto findMinimalBookingById(Long id);
 
-    public void deleteBookingById(Long id);
+
+        public void deleteBookingById(Long id);
 
     public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking);
 

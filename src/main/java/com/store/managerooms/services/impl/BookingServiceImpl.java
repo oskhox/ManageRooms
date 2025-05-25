@@ -49,6 +49,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public DetailedBookingDto createNewBooking(DetailedBookingDto booking) {
+        if (booking.getEndDate().isBefore(booking.getStartDate())) {
+            throw new IllegalArgumentException("Slutdatum får inte vara före startdatum.");
+        }
+
         Long roomId = booking.getRoom().getId();
         Long customerId = booking.getCustomer().getId();
 
@@ -70,6 +74,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking) {
+        if (booking.getEndDate().isBefore(booking.getStartDate())) {
+            throw new IllegalArgumentException("Slutdatum får inte vara före startdatum.");
+        }
+
         Booking existingBooking = bookingRepository.findById(booking.getId())
                 .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
 
@@ -94,10 +102,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public DetailedBookingDto findBookingById(Long id) {
+    public DetailedBookingDto findDetailedBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
         return bookingToDetailedBookingDto(booking);
+    }
+
+    @Override
+    public MinimalBookingDto findMinimalBookingById(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Bokningen hittas ej"));
+        return bookingToMinimalBookingDto(booking);
     }
 
     @Override
