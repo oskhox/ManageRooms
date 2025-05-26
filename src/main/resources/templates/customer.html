@@ -14,6 +14,10 @@
 </head>
 <body>
 
+<a href="/">
+    <button>Home</button>
+</a>
+
 <h3>All customers</h3>
 <div class="allBooksTable" th:unless="${#lists.isEmpty(allCustomers)}">
 <table>
@@ -29,7 +33,6 @@
 <br>
 
 <h3>Add customer</h3>
-<div class="container">
     <form action="addCustomer" method="post">
         <label for="firstName">First name:</label><br>
         <input type="text" id="firstName" name="firstName"><br>
@@ -39,8 +42,8 @@
         <input type="text" id="email" name="email"><br>
         <label for="phone">Phone:</label><br>
         <input type="text" id="phone" name="phone"><br>
+        <br>
         <input type="submit" value="Submit">
     </form>
-</div>
 </body>
 </html>
