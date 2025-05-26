@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<html lang="sv" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" th:href="@{/style.css}" />
+
 <head>
     <meta charset="UTF-8" />
     <title th:text="${pageTitle}"></title>
-    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
 
@@ -22,15 +23,15 @@
 
 <div class="container">
     <h2 th:text="${formTitle}"></h2>
+
+    <form class="styled-form" th:action="@{/rooms/search}" th:object="${minimalBookingDto}" method="get">
+        <input type="number" name="peopleCount">
+        <input  type="date" name="start">
+        <input type="date" name="end">
+        <input type="submit">
+    </form>
+
     <form class="styled-form" th:action="@{/bookings/create}" th:object="${minimalBookingDto}" method="post">
-
-        <label th:text="${labelStartDate}" for="startDate"></label>
-        <input type="date" id="startDate" th:field="*{startDate}" required />
-        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></div>
-
-        <label th:text="${labelEndDate}" for="endDate"></label>
-        <input type="date" id="endDate" th:field="*{endDate}" required />
-        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error"></div>
 
         <label th:text="${labelCustomer}" for="customers"></label>
         <select id="customers" th:field="*{customer.id}" required>
@@ -43,17 +44,31 @@
         <div th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}" class="error"></div>
         <div th:if="${#fields.hasErrors('customer.id')}" th:errors="*{customer.id}" class="error"></div>
 
-        <label th:text="${labelRooms}" for="rooms"></label>
+
+        <label th:text="${labelRooms != null ? labelRooms : 'Välj rum:'}" for="rooms"></label>
         <select id="rooms" th:field="*{room.id}" required>
             <option value="" disabled selected>Välj rum</option>
-            <option th:each="room : ${rooms}"
-                    th:value="${room.id}"
-                    th:text="${room.roomNumber + ' - ' + room.roomType.name}">
+            <option th:if="${availableRooms != null}"
+                    th:each="room : ${availableRooms}"
+                    th:value="${room.getRoomId()}"
+                    th:text="${room.roomType != null ?room.roomType.name + ' ' + room.roomNumber + ' '
+                    + room.roomType.bedCount + ' säng(ar) - '
+                    + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}">
             </option>
         </select>
 
         <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="error"></div>
         <div th:if="${#fields.hasErrors('room.id')}" th:errors="*{room.id}" class="error"></div>
+
+        <label th:text="${labelStartDate}" for="startDate"></label>
+        <p th:text="*{getStartDate()}"></p>
+        <input type="hidden" id="startDate" th:field="*{startDate}" required />
+        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></div>
+
+        <label th:text="${labelEndDate}" for="endDate"></label>
+        <p th:text="*{getEndDate()}"></p>
+        <input type="hidden" id="endDate" th:field="*{endDate}" required />
+        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error"></div>
 
 
         <input type="submit" value="Skapa bokning" />
@@ -65,11 +80,10 @@
 
     <div th:if="${message}">
         <p style="color:green;" th:text="${message}"></p>
+
     </div>
 </div>
-
 <footer class="footer"></footer>
-
 </body>
 </html>
 
