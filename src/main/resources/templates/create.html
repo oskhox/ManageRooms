@@ -25,12 +25,15 @@
     <h2 th:text="${formTitle}"></h2>
 
     <form class="styled-form" th:action="@{/rooms/search}" th:object="${minimalBookingDto}" method="get">
+        <label>Välj antal personer</label>
         <input type="number" name="peopleCount">
+        <label>Välj startdatum</label>
         <input  type="date" name="start">
+        <label>Välj startdatum</label>
         <input type="date" name="end">
         <input type="submit">
+        </select>
     </form>
-
     <form class="styled-form" th:action="@{/bookings/create}" th:object="${minimalBookingDto}" method="post">
 
         <label th:text="${labelCustomer}" for="customers"></label>

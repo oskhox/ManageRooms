@@ -1,5 +1,6 @@
 package com.store.managerooms.dtos;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
     public class RoomDto {
 
-    @NotNull(message = "Rummets id krävs")
     private Long id;
+
+    @NotNull(message = "Välj rumsnummer")
     private int roomNumber;
+
+    @Valid
     private RoomTypeDto roomType;
 }
 
