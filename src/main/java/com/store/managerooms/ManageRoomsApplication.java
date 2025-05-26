@@ -29,7 +29,6 @@ public class ManageRoomsApplication {
             customerRepository.save(new Customer(null, "Chloe", "O'Brian", "chloe.obrian@gmail.com", "+4612346"));
             customerRepository.save(new Customer(null, "Tony", "Almeida", "tony.almeida@gmail.com", "+4612347"));
             customerRepository.save(new Customer(null, "Kim", "Smith", "kim.smith@gmail.com", "+4612348"));
-            customerRepository.save(new Customer(null, "Laura", "Palmer", "laura.palmer@gmail.com", "+4612349"));
 
             roomRepo.save(new Room(1001,new RoomType("Single room",1)));
             roomRepo.save(new Room(1002,new RoomType("Single room",1)));
@@ -40,7 +39,7 @@ public class ManageRoomsApplication {
 
             Room testRoom = new Room(1010,new RoomType("Double room",2,1));
             roomRepo.save(testRoom);
-            Customer testCustomer = new Customer(null,"Test","testsson","test@test.com","12345567");
+            Customer testCustomer = new Customer(null, "Laura", "Palmer", "laura.palmer@gmail.com", "+4612349");
             customerRepository.save(testCustomer);
 
             Booking testBooking = new Booking();
