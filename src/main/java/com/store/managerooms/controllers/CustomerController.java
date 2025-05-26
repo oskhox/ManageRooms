@@ -50,7 +50,6 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    //MVC 1
     @GetMapping("/customer")
     public String allCustomers(Model model) {
         model.addAttribute("allCustomers", customerService.allCustomers());
@@ -58,26 +57,17 @@ public class CustomerController {
         return "customer";
     }
 
-    //MVC 2
     @PostMapping("/addCustomer")
     public String addCustomer(@ModelAttribute DetailedCustomerDto c, Model model) {
         customerService.addCustomer(c);
         return "redirect:/customer";
     }
 
-    //REST 3
-    //id i URL, PUT-request i JSON utan id
-    @PutMapping("/changeCustomer/{id}")
-    public DetailedCustomerDto changeCustomer(@PathVariable String id, @Valid @RequestBody DetailedCustomerDto detailedCustomerDto) {
-        detailedCustomerDto.setId(Long.parseLong(id));
-        return customerService.changeCustomer(detailedCustomerDto);
+    @PostMapping("/changeCustomer")
+    public String changeCustomer(@ModelAttribute DetailedCustomerDto detailedCustomerDto) {
+        customerService.changeCustomer(detailedCustomerDto);
+        return "redirect:/customer";
     }
-
-    //rubrik i Customer.html med rullista under
-    //där val i rullistan tar fram ett ändrings-formulär (if någon kund vald...)
-    //när formuläret fyllts i sparas kunden enligt changeCustomer
-    //och customer returnas så man ser uppdaterade uppgifter
-
 
     //REST 4
     //returnerar string med bekräftelse

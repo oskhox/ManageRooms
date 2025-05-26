@@ -1,19 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Customers</title>
-    <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding: 1rem;
-        }
-    </style>
 </head>
-<body>
 
+<body>
+<h3>ManageRooms 1.0</h3>
 <a href="/">
     <button>Home</button>
 </a>
@@ -45,5 +38,41 @@
         <br>
         <input type="submit" value="Submit">
     </form>
+<br>
+
+<h3>Change Customer</h3>
+<form action="" method="get">
+    <label>
+        <select name="change" onchange="this.form.submit()">
+            <option value="">Customer to change</option>
+            <option th:each="customer : ${allCustomers}"
+                    th:value="${customer.id}"
+                    th:text="${customer.firstName + ' ' + customer.lastName}"
+                    th:selected="${param.change != null and param.change[0] == customer.id.toString()}">
+            </option>
+        </select>
+    </label>
+</form>
+<br>
+
+<div th:if="${param.change != null and param.change[0] != ''}">
+    <form th:action="@{/changeCustomer}" method="post">
+        <input type="hidden" name="id" th:value="${param.change[0]}">
+        <div th:each="customer : ${allCustomers}"
+             th:if="${customer.id.toString() == param.change[0]}">
+            <label>First name:<br>
+            <input type="text" name="firstName" th:value="${customer.firstName}"></label><br>
+            <label>Last name:<br>
+            <input type="text" name="lastName" th:value="${customer.lastName}"></label><br>
+            <label>Email:<br>
+            <input type="text" name="email" th:value="${customer.email}"></label><br>
+            <label>Phone:<br>
+            <input type="text" name="phone" th:value="${customer.phone}"></label><br>
+        </div>
+        <br>
+        <input type="submit" value="Update">
+    </form>
+</div>
+
 </body>
 </html>
