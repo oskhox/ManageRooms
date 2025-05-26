@@ -88,3 +88,25 @@ th {
 .footer {
     margin-top: 10rem;
 }
+
+.customer-container {
+    background: lightsteelblue;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 675px;
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.customer-btn {
+    max-width: 75px;
+    margin-top: 0.75em;
+}
+
+.customer-container h3 {
+    margin-top: 25px;
+    margin-bottom: 0;
+}
