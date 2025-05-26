@@ -16,6 +16,7 @@
     width: 100%;
 }
 
+
 h2 {
     margin: 0 0 10px 0;
     text-align: center;
@@ -64,6 +65,12 @@ table {
 th, td {
     padding: 8px;
     border: 1px solid black;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.bookingDetails-box {
+    padding: 8px;
     text-align: left;
     white-space: nowrap;
 }

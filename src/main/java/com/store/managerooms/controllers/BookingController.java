@@ -32,6 +32,13 @@ public class BookingController {
             DetailedBookingDto booking = bookingService.findDetailedBookingById(id);
             model.addAttribute("booking", booking);
             model.addAttribute("pageTitle", "Bokningsdetaljer");
+            model.addAttribute("customerName", "Kundnamn");
+            model.addAttribute("customerEmail", "Email");
+            model.addAttribute("customerPhoneNumber", "Telefonnummer");
+            model.addAttribute("startDate", "Startdatum");
+            model.addAttribute("endDate", "Slutdatum");
+            model.addAttribute("roomNumber", "Rumsnummer");
+            model.addAttribute("roomBeds", "Antal sängar");
             model.addAttribute("bookingDetails", "Bokningsinformation");
             model.addAttribute("bookingConfirmation", "Bokningen är genomförd!");
         } catch (NoSuchElementException e) {

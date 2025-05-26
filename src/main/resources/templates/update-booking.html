@@ -21,7 +21,6 @@
 
     <form class="styled-form" th:action="@{/bookings/update-booking}" method="post" th:object="${minimalBookingDto}">
         <input type="hidden" th:field="*{id}" />
-
         <label th:text="${labelStartDate}" for="startDate"></label>
         <input type="date" id="startDate" th:field="*{startDate}" required />
         <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></div>
