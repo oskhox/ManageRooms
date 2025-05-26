@@ -66,13 +66,13 @@
             <div th:each="customer : ${allCustomers}"
                  th:if="${customer.id.toString() == param.change[0]}">
                 <label>Förnamn:<br>
-                    <input type="text" name="firstName" th:value="${customer.firstName}" required></label><br>
+                <input type="text" name="firstName" th:value="${customer.firstName}" required></label><br>
                 <label>Efternamn:<br>
-                    <input type="text" name="lastName" th:value="${customer.lastName}" required></label><br>
+                <input type="text" name="lastName" th:value="${customer.lastName}" required></label><br>
                 <label>E-post:<br>
-                    <input type="text" name="email" th:value="${customer.email}" required></label><br>
+                <input type="text" name="email" th:value="${customer.email}" required></label><br>
                 <label>Telefon:<br>
-                    <input type="text" name="phone" th:value="${customer.phone}" required></label><br>
+                <input type="text" name="phone" th:value="${customer.phone}" required></label><br>
             </div>
             <input class="customer-btn" type="submit" value="Ändra">
         </form>
