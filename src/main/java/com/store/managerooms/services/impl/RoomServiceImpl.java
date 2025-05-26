@@ -15,80 +15,80 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-        @Service
-        public class RoomServiceImpl implements RoomService {
+@Service
+public class RoomServiceImpl implements RoomService {
 
-            private final RoomRepo roomRepo;
-            private final BookingRepository bookingRepo;
-            private final RoomTypeRepo roomTypeRepo;
+    private final RoomRepo roomRepo;
+    private final BookingRepository bookingRepo;
+    private final RoomTypeRepo roomTypeRepo;
 
-            private RoomDto convertToDTO(Room room) {
-                RoomType rt = room.getRoomType();
-                RoomTypeDto rtDTO = new RoomTypeDto(
-                        rt.getId(),
-                        rt.getName(),
-                        rt.getBedCount(),
-                        rt.getExtraBedsAvailable()
-                );
+    private RoomDto convertToDTO(Room room) {
+        RoomType rt = room.getRoomType();
+        RoomTypeDto rtDTO = new RoomTypeDto(
+                rt.getId(),
+                rt.getName(),
+                rt.getBedCount(),
+                rt.getExtraBedsAvailable()
+        );
 
-                return new RoomDto(room.getRoomId(), room.getRoomNumber(), rtDTO);
-            }
+        return new RoomDto(room.getRoomId(), room.getRoomNumber(), rtDTO);
+    }
 
 
-            public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo)
-            {
-                this.roomRepo = roomRepo;
-                this.bookingRepo = bookingRepo;
-                this.roomTypeRepo = roomTypeRepo;
-            }
+    public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo)
+    {
+        this.roomRepo = roomRepo;
+        this.bookingRepo = bookingRepo;
+        this.roomTypeRepo = roomTypeRepo;
+    }
 
-            @Override
-            public List<RoomDto> getAllRooms() {
-                return roomRepo.findAll().stream()
-                        .map(this::convertToDTO)
-                        .collect(Collectors.toList());
-            }
+    @Override
+    public List<RoomDto> getAllRooms() {
+        return roomRepo.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
-            public Room findByRoomId(Long id) {
-                return roomRepo.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
-            }
+    public Room findByRoomId(Long id) {
+        return roomRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
+    }
 
-            @Override
-            public List<Room> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end) {
-                List<Room> availableRooms = new ArrayList<>();
-                long idCounter = 1;
-                for (Room room : roomRepo.findAll()) {
-                    if (bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter)) {
-                        System.out.println("Room with id " + room.getRoomId() + " is already booked");
-                    } else {
-                        int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
-                        if (peopleInRoom >= peopleCount) {
-                            availableRooms.add(room);
-                        }
-                    }
-                    idCounter++;
+    @Override
+    public List<Room> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end) {
+        List<Room> availableRooms = new ArrayList<>();
+        long idCounter = 1;
+        for (Room room : roomRepo.findAll()) {
+            if (bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter)) {
+                System.out.println("Room with id " + room.getRoomId() + " is already booked");
+            } else {
+                int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
+                if (peopleInRoom >= peopleCount) {
+                    availableRooms.add(room);
                 }
-                return availableRooms;
             }
+            idCounter++;
+        }
+        return availableRooms;
+    }
 
-            @Override
-            public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds){
-                RoomType roomType = roomTypeRepo.findById(roomTypeId).get();
-                int availableBeds = roomType.getExtraBedsAvailable();
+    @Override
+    public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds){
+        RoomType roomType = roomTypeRepo.findById(roomTypeId).get();
+        int availableBeds = roomType.getExtraBedsAvailable();
 
-                if (availableBeds != 0 && availableBeds <= beds) {
-                    roomType.setBedCount(roomType.getBedCount() + beds);
-                    roomType.setExtraBedsAvailable(availableBeds - beds);
-                    roomTypeRepo.save(roomType);
-                    return "index";
+        if (availableBeds != 0 && availableBeds <= beds) {
+            roomType.setBedCount(roomType.getBedCount() + beds);
+            roomType.setExtraBedsAvailable(availableBeds - beds);
+            roomTypeRepo.save(roomType);
+            return "index";
 //            return "Added " + beds + " beds " + " to " + roomType.getName() + " with id: " + roomTypeId;
-                }
-                else if(roomType.getName().equals("Single room")){
-                    return "This is a Single room, you cant add any extra beds to this room";
-                }
-                else {
-                    return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
-                }
-            }
-            }
+        }
+        else if(roomType.getName().equals("Single room")){
+            return "This is a Single room, you cant add any extra beds to this room";
+        }
+        else {
+            return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
+        }
+    }
+}

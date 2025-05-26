@@ -23,6 +23,8 @@ public class MinimalBookingDto {
     @NotNull(message = "Slutdatum krävs")
     private LocalDate endDate;
 
+    private Integer peopleCount;
+
     @Valid
     private RoomDto room;
 

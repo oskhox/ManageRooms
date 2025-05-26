@@ -25,7 +25,7 @@ public class BookingServiceImpl implements BookingService {
     private final RoomService roomService;
 
 
-        @Override
+    @Override
     public List<MinimalBookingDto> getAllBookings() {
         return bookingRepository.findAll().stream()
                 .map(b -> bookingToMinimalBookingDto(b)).toList();
@@ -38,7 +38,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
-            return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
+        return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
     }
 
     public boolean isDateBookedExistingBooking(Long roomId, LocalDate startDate, LocalDate endDate, Long bookingId) {
@@ -55,11 +55,11 @@ public class BookingServiceImpl implements BookingService {
         Long roomId = booking.getRoom().getId();
         Long customerId = booking.getCustomer().getId();
 
-         boolean isRoomBooked = isRoomBooked(roomId,
-                 booking.getStartDate(), booking.getEndDate());
-         if (isRoomBooked) {
-                throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
-            }
+        boolean isRoomBooked = isRoomBooked(roomId,
+                booking.getStartDate(), booking.getEndDate());
+        if (isRoomBooked) {
+            throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
+        }
 
         Customer customer = customerService.findByCustomerId(customerId);
         Room room = roomService.findByRoomId(roomId);
@@ -91,9 +91,9 @@ public class BookingServiceImpl implements BookingService {
 
         Room room = roomService.findByRoomId(roomId);
 
-            existingBooking.setStartDate(booking.getStartDate());
-            existingBooking.setEndDate(booking.getEndDate());
-            existingBooking.setRoom(room);
+        existingBooking.setStartDate(booking.getStartDate());
+        existingBooking.setEndDate(booking.getEndDate());
+        existingBooking.setRoom(room);
 
         bookingRepository.save(existingBooking);
         return bookingToMinimalBookingDto(existingBooking);
