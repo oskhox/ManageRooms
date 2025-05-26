@@ -28,13 +28,13 @@
 <h3>Add customer</h3>
     <form action="addCustomer" method="post">
         <label for="firstName">First name:</label><br>
-        <input type="text" id="firstName" name="firstName"><br>
+        <input type="text" id="firstName" name="firstName" required><br>
         <label for="lastName">Last name:</label><br>
-        <input type="text" id="lastName" name="lastName"><br>
+        <input type="text" id="lastName" name="lastName" required><br>
         <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email"><br>
+        <input type="text" id="email" name="email" required><br>
         <label for="phone">Phone:</label><br>
-        <input type="text" id="phone" name="phone"><br>
+        <input type="text" id="phone" name="phone" required><br>
         <br>
         <input type="submit" value="Submit">
     </form>
@@ -61,18 +61,32 @@
         <div th:each="customer : ${allCustomers}"
              th:if="${customer.id.toString() == param.change[0]}">
             <label>First name:<br>
-            <input type="text" name="firstName" th:value="${customer.firstName}"></label><br>
+            <input type="text" name="firstName" th:value="${customer.firstName}" required></label><br>
             <label>Last name:<br>
-            <input type="text" name="lastName" th:value="${customer.lastName}"></label><br>
+            <input type="text" name="lastName" th:value="${customer.lastName}" required></label><br>
             <label>Email:<br>
-            <input type="text" name="email" th:value="${customer.email}"></label><br>
+            <input type="text" name="email" th:value="${customer.email}" required></label><br>
             <label>Phone:<br>
-            <input type="text" name="phone" th:value="${customer.phone}"></label><br>
+            <input type="text" name="phone" th:value="${customer.phone}" required></label><br>
         </div>
         <br>
         <input type="submit" value="Update">
     </form>
 </div>
+
+<h3>Delete Customer</h3>
+<form th:action="@{/deleteCustomer}" method="post">
+    <label>
+        <select name="deleteId" required>
+            <option value="" selected>Select customer to delete</option>
+            <option th:each="customer : ${allCustomers}"
+                    th:value="${customer.id}"
+                    th:text="${customer.firstName + ' ' + customer.lastName}">
+            </option>
+        </select>
+    </label>
+    <input type="submit" value="Delete">
+</form>
 
 </body>
 </html>
