@@ -82,7 +82,10 @@ public class BookingController {
     }
 
     @PostMapping("create")
-    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
 
         if (bindingResult.hasErrors()) {
             addFormAttributes(model);
