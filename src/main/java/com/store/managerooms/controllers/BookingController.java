@@ -2,6 +2,8 @@ package com.store.managerooms.controllers;
 
 import com.store.managerooms.dtos.DetailedBookingDto;
 import com.store.managerooms.dtos.MinimalBookingDto;
+import com.store.managerooms.dtos.RoomDto;
+import com.store.managerooms.models.Room;
 import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.RoomService;
@@ -12,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,10 +65,15 @@ public class BookingController {
         return "bookings";
     }
 
-    private void addFormAttributes(Model model) {
+
+    private void addFormAttributes(Model model, int peopleCount, LocalDate start, LocalDate end) {
         model.addAttribute("customers", customerService.allCustomers());
-        model.addAttribute("rooms", roomService.getAllRooms());
+
+        List<RoomDto> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
+        model.addAttribute("rooms", availableRooms);
+
         model.addAttribute("formTitle", "Fyll i bokningsformuläret");
+        model.addAttribute("labelPeopleCount", "Antal personer:");
         model.addAttribute("labelCustomer", "Välj kund:");
         model.addAttribute("labelRooms", "Välj rum:");
         model.addAttribute("labelStartDate", "Välj startdatum:");
@@ -74,17 +83,27 @@ public class BookingController {
 
     @GetMapping("create")
     public String showBookingForm(Model model) {
-        model.addAttribute("minimalBookingDto", new MinimalBookingDto());
-        addFormAttributes(model);
-        model.addAttribute("pageTitle", "Skapa en bokning");
-        return "create";
-    }
+    model.addAttribute("minimalBookingDto", new MinimalBookingDto());
+
+    int defaultPeopleCount = 1;
+    LocalDate defaultStart = LocalDate.now();
+    LocalDate defaultEnd = LocalDate.now().plusDays(1);
+
+    addFormAttributes(model, defaultPeopleCount, defaultStart, defaultEnd);
+    model.addAttribute("pageTitle", "Skapa en bokning");
+    return "create";
+}
 
     @PostMapping("create")
-    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto, BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            addFormAttributes(model);
+            int peopleCount = minimalBookingDto.getPeopleCount();
+            LocalDate start = minimalBookingDto.getStartDate();
+            LocalDate end = minimalBookingDto.getEndDate();
+
+            addFormAttributes(model, peopleCount, start, end);
             return "create";
         }
 
@@ -93,7 +112,11 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message", "Bokning skapad!");
             return "redirect:/bookings/booking/" + savedBooking.getId();
         } catch (Exception e) {
-            addFormAttributes(model);
+            int peopleCount = minimalBookingDto.getPeopleCount();
+            LocalDate start = minimalBookingDto.getStartDate();
+            LocalDate end = minimalBookingDto.getEndDate();
+
+            addFormAttributes(model, peopleCount, start, end);
             model.addAttribute("errorMessage", "Något gick fel: " + e.getMessage());
             return "create";
         }

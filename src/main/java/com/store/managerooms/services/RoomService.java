@@ -9,7 +9,10 @@ import java.util.List;
 public interface RoomService {
 
     List<RoomDto> getAllRooms();
-    public Room findByRoomId(Long id);
-    List<Room>getAvailableRooms(int peopleCount, LocalDate start, LocalDate end);
+    Room findByRoomId(Long id);
     String addBeds (Long roomTypeId,int beds);
-}
+    List<RoomDto> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end);
+    RoomDto convertToDto(Room room);
+
+
+    }

@@ -55,8 +55,7 @@
                     th:text="${room.roomNumber + ' - ' + room.roomType.name}">
             </option>
         </select>
-        <button class="buttons" onclick="showRoom()">Choose Room</button>
-        <button class="buttons" onclick="showAvailableRooms()">Available Rooms</button>
+
         <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="error"></div>
         <div th:if="${#fields.hasErrors('room.id')}" th:errors="*{room.id}" class="error"></div>
 

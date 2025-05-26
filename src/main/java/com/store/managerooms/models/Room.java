@@ -14,6 +14,7 @@ public class Room {
 
     @Id
     @GeneratedValue
+
     private Long roomId;
     private int roomNumber;
 
