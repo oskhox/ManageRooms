@@ -36,11 +36,12 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.deleteById(id);
     }
 
-
+    @Override
     public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
         return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
     }
 
+    @Override
     public boolean isDateBookedExistingBooking(Long roomId, LocalDate startDate, LocalDate endDate, Long bookingId) {
         return bookingRepository.isDateBookedCheckExistingBooking(roomId,startDate,endDate,bookingId);
     }

@@ -13,5 +13,7 @@ public interface CustomerService {
     String deleteCustomer(Long id);
     Customer findByCustomerId(Long id);
     MinimalCustomerDto customerToDTO(Customer c);
+    List<MinimalCustomerDto> allCustomersMinimal();
+
 
     }

@@ -24,10 +24,6 @@
     <h2 th:text="${formTitle}"></h2>
     <form class="styled-form" th:action="@{/bookings/create}" th:object="${minimalBookingDto}" method="post">
 
-        <label th:text="${labelPeopleCount}" for="peopleCount"></label>
-        <input type="number" id="peopleCount" th:field="*{peopleCount}" min="1" required />
-        <div th:if="${#fields.hasErrors('peopleCount')}" th:errors="*{peopleCount}" class="error"></div>
-
         <label th:text="${labelStartDate}" for="startDate"></label>
         <input type="date" id="startDate" th:field="*{startDate}" required />
         <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></div>
@@ -55,12 +51,10 @@
                     th:text="${room.roomNumber + ' - ' + room.roomType.name}">
             </option>
         </select>
-        <button class="buttons" onclick="showRoom()">Choose Room</button>
-        <button class="buttons" onclick="showAvailableRooms()">Available Rooms</button>
+
         <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="error"></div>
         <div th:if="${#fields.hasErrors('room.id')}" th:errors="*{room.id}" class="error"></div>
 
-        <div id="availableRooms"></div>
 
         <input type="submit" value="Skapa bokning" />
     </form>
@@ -75,7 +69,6 @@
 </div>
 
 <footer class="footer"></footer>
-<script th:src="@{/js/bookingscript.js}"></script>
 
 </body>
 </html>
