@@ -1,20 +1,22 @@
 package com.store.managerooms.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-    public class RoomDto {
+public class MinimalCustomerDto {
 
-    @NotNull(message = "Rummets id krävs")
+    @NotNull(message = "Du måste välja en kund")
     private Long id;
-    private int roomNumber;
-    private RoomTypeDto roomType;
-}
 
+    private String firstName;
+    private String lastName;
+
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header class="header">
+    <h1 th:text="${pageTitle}"></h1>
+</header>
+
+<nav>
+    <a th:href="@{/bookings}">Alla bokningar</a> |
+    <a th:href="@{/bookings/create}">Skapa bokning</a> |
+    <a th:href="@{/customers/addCustomer}">Registrera kund</a> |
+</nav>
+
+<div>
+    <h2 th:text="${bookingDetails}"></h2>
+    <span th:text="|${booking.customer.firstName} ${booking.customer.lastName}|"></span>
+    <p><strong>E-post:</strong> <span th:text="${booking.customer.email}"></span></p>
+    <p><strong>Telefon:</strong> <span th:text="${booking.customer.phone}"></span></p>
+    <p><strong>Startdatum:</strong> <span th:text="${booking.startDate}"></span></p>
+    <p><strong>Slutdatum:</strong> <span th:text="${booking.endDate}"></span></p>
+    <p><strong>Rum:</strong> <span th:text="${booking.room.roomNumber}"></span></p>
+    <p><strong>Antal sängar:</strong> <span th:text="${booking.room.roomType.bedCount}"></span></p>
+
+    <p th:text="${bookingConfirmation}"></p>
+
+</div>
+
+<footer class="footer"></footer>
+</body>
+</html>

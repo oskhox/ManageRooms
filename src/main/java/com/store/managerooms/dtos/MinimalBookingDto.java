@@ -17,12 +17,16 @@ import java.time.LocalDate;
 public class MinimalBookingDto {
 
     private Long id;
-
+    @NotNull(message = "Startdatum krävs")
     private LocalDate startDate;
 
+    @NotNull(message = "Slutdatum krävs")
     private LocalDate endDate;
 
-
+    @Valid
     private RoomDto room;
+
+    @Valid
+    private MinimalCustomerDto customer;
 
 }
