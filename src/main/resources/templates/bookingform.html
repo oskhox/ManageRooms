@@ -11,7 +11,7 @@
 
     <div id="customerForm" class="form-card customerForm">
         <h2>Customer Information</h2>
-        <form th:action="@{/bookcustomer}" method="post">
+        <form th:action="${bookCustomer}" method="post">
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" placeholder="John" required />
             <label for="lastName">Last Name</label>
@@ -22,15 +22,13 @@
             <input type="text" id="phone" placeholder="071234565" required />
             <div class="buttonDiv">
                 <button class="buttons" onclick="showRoom()">Choose Room</button>
-                <button class="buttons" onclick="showAvailableRooms()">Available Rooms</button>
             </div>
         </form>
     </div>
-    <div id="availableRooms"></div>
 
     <div id="roomForm" class="form-card roomForm" style="display:none;">
         <h2>Choose Room</h2>
-        <form th:action="@{/room/addbeds}" method="post">
+        <form id="submitForm" th:action="@{/room/addbeds}" method="post">
             <input type="hidden" name="roomTypeId" value="6" />
             <div class="choice">
                 <label for="singleRoom">Single Room         </label>
@@ -52,11 +50,12 @@
                 <label for="twoExtraBeds">Add two extra beds</label>
                 <input type="checkbox" id="twoExtraBeds" name="beds" value="2"/>
             </div>
-            <div class="buttonDiv">
-                <button type="submit" class="buttons">Book</button>
-                <button class="buttons" onclick="showCustomer()">Go Back</button>
-            </div>
         </form>
+        <div class="buttonDiv">
+            <button id="bookCustomer" type="submit" class="buttons" onclick="submitForm()">Book</button>
+            <button class="buttons" onclick="showCustomer()">Go Back</button>
+        </div>
+
     </div>
 </div>
 <script th:src="@{/js/bookingscript.js}"></script>

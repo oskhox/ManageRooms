@@ -25,12 +25,19 @@ public class RoomController {
         return roomService.getAllRooms();
     }
 
+    @GetMapping("rooms/searchform")
+    public String showSearchForm(){
+        return "available-rooms";
+    }
+
     @GetMapping("rooms/search")
-    public List<Room> getAvailableRooms(@RequestParam int peopleCount,
+    public String getAvailableRooms(@RequestParam int peopleCount,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
+        List<Room> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
+        model.addAttribute("availableRooms", availableRooms);
 
-        return roomService.getAvailableRooms(peopleCount, start, end);
+        return "available-rooms";
 
     }
 
