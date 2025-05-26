@@ -53,12 +53,11 @@ public class CustomerController {
     @GetMapping("/customer")
     public String allCustomers(Model model) {
         model.addAttribute("allCustomers", customerService.allCustomers());
-        model.addAttribute("title", "Customers");
         return "customer";
     }
 
     @PostMapping("/addCustomer")
-    public String addCustomer(@ModelAttribute DetailedCustomerDto c, Model model) {
+    public String addCustomer(@ModelAttribute DetailedCustomerDto c) {
         customerService.addCustomer(c);
         return "redirect:/customer";
     }
