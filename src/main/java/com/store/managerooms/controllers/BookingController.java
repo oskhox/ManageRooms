@@ -62,10 +62,11 @@ public class BookingController {
     }
 
     private void addFormAttributes(Model model) {
-        model.addAttribute("customers", customerService.allCustomers());
+        model.addAttribute("customers", customerService.allCustomersMinimal());
         model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("formTitle", "Fyll i bokningsformuläret");
         model.addAttribute("labelCustomer", "Välj kund:");
+        model.addAttribute("labelPeopleCount", "Antal gäster");
         model.addAttribute("labelRooms", "Välj rum:");
         model.addAttribute("labelStartDate", "Välj startdatum:");
         model.addAttribute("labelEndDate", "Välj slutdatum:");

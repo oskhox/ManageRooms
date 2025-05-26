@@ -32,6 +32,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<MinimalCustomerDto> allCustomersMinimal() {
+        return customerRepo.findAll().stream().map(this::customerToDTO).toList();
+    }
+
+    @Override
     public DetailedCustomerDto addCustomer(DetailedCustomerDto d) {
         Customer saved = customerRepo.save(detailedCustomerDtoToCustomer(d));
         return customerToDetailedCustomerDto(saved);
