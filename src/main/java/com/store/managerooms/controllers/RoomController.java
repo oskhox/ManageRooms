@@ -1,8 +1,10 @@
 package com.store.managerooms.controllers;
 
 
+import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.dtos.RoomDto;
 import com.store.managerooms.models.Room;
+import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +21,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
+    private final CustomerService customerService;
 
     @GetMapping("rooms")
     public List<RoomDto> getAllRooms() {
@@ -35,9 +38,22 @@ public class RoomController {
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
         List<Room> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
-        model.addAttribute("availableRooms", availableRooms);
 
-        return "available-rooms";
+        MinimalBookingDto bookingDto = new MinimalBookingDto();
+        bookingDto.setStartDate(start);
+        bookingDto.setEndDate(end);
+
+        model.addAttribute("availableRooms", availableRooms);
+        model.addAttribute("labelRooms", "Tillgängliga rum");
+        model.addAttribute("pageTitle", "Skapa bokning");
+        model.addAttribute("formTitle", "Bokningsformulär");
+        model.addAttribute("minimalBookingDto", bookingDto);
+        model.addAttribute("customers", customerService.allCustomers());
+        model.addAttribute("labelCustomer", "Välj kund:");
+        model.addAttribute("labelStartDate", "Startdatum:");
+        model.addAttribute("labelEndDate", "Slutdatum:");
+
+        return "create";
 
     }
 
