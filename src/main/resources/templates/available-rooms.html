@@ -5,20 +5,28 @@
   <title>Available Rooms</title>
 </head>
 <body>
-  <div>
-    <form th:action="@{/rooms/search}" method="get">
-      <input type="number" name="peopleCount">
-      <input  type="date" name="start">
-      <input type="date" name="end">
-      <input type="submit">
-    </form>
-    <ul>
-      <li th:each="room : ${availableRooms}">
-      Room Type: <span th:text="${room.roomType.name}"></span>,
-      Beds: <span th:text="${room.roomType.bedCount}"></span>,
-      Extra Beds: <span th:text="${room.roomType.extraBedsAvailable}"></span>
+<div>
+  <form th:action="@{/rooms/search}" method="get">
+    <label for="peopleCount">Antal personer:</label>
+    <input type="number" id="peopleCount" name="peopleCount" min="1" required />
+
+    <label for="start">Startdatum:</label>
+    <input type="date" id="start" name="start" required />
+
+    <label for="end">Slutdatum:</label>
+    <input type="date" id="end" name="end" required />
+
+    <input type="submit" value="Sök lediga rum" />
+  </form>
+
+  <ul>
+    <li th:each="room : ${availableRooms}">
+      Rumstyp:<span th:text="${room.roomType.name}"></span>,
+      Sängar:<span th:text="${room.roomType.bedCount}"></span>,
+      Extrasängar: <span th:text="${room.roomType.extraBedsAvailable}"></span>
     </li>
-    </ul>
-  </div>
+  </ul>
+</div>
+
 </body>
 </html>

@@ -30,11 +30,11 @@ public class RoomController {
         return "available-rooms";
     }
 
-    @GetMapping("rooms/search")
+    @GetMapping("/rooms/search")
     public String getAvailableRooms(@RequestParam int peopleCount,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
-        List<Room> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
+        List<RoomDto> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
         model.addAttribute("availableRooms", availableRooms);
 
         return "available-rooms";

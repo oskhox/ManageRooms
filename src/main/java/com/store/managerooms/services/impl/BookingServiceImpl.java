@@ -11,7 +11,6 @@ import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -114,6 +113,9 @@ public class BookingServiceImpl implements BookingService {
         return bookingToMinimalBookingDto(booking);
     }
 
+
+
+    //konvertering
 
     @Override
     public Booking minimalBookingDtoToBooking(Room room, Customer customer, MinimalBookingDto booking) {

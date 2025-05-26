@@ -6,12 +6,15 @@ import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.RoomService;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,11 +64,14 @@ public class BookingController {
         return "bookings";
     }
 
+
+
     private void addFormAttributes(Model model) {
         model.addAttribute("customers", customerService.allCustomers());
         model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("formTitle", "Fyll i bokningsformuläret");
         model.addAttribute("labelCustomer", "Välj kund:");
+        model.addAttribute("labelPeopleCount", "Antal personer:");
         model.addAttribute("labelRooms", "Välj rum:");
         model.addAttribute("labelStartDate", "Välj startdatum:");
         model.addAttribute("labelEndDate", "Välj slutdatum:");
@@ -81,7 +87,10 @@ public class BookingController {
     }
 
     @PostMapping("create")
-    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String createBooking(@Valid @ModelAttribute MinimalBookingDto minimalBookingDto,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
 
         if (bindingResult.hasErrors()) {
             addFormAttributes(model);
@@ -94,7 +103,7 @@ public class BookingController {
             return "redirect:/bookings/booking/" + savedBooking.getId();
         } catch (Exception e) {
             addFormAttributes(model);
-            model.addAttribute("errorMessage", "Något gick fel: " + e.getMessage());
+            model.addAttribute("errorMessage", "Försök igen " + e.getMessage());
             return "create";
         }
     }

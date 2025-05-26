@@ -22,7 +22,18 @@ public class RoomServiceImpl implements RoomService {
     private final BookingRepository bookingRepo;
     private final RoomTypeRepo roomTypeRepo;
 
-    private RoomDto convertToDTO(Room room) {
+
+
+
+    public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo)
+    {
+        this.roomRepo = roomRepo;
+        this.bookingRepo = bookingRepo;
+        this.roomTypeRepo = roomTypeRepo;
+    }
+
+
+    public RoomDto convertToDTO(Room room) {
         RoomType rt = room.getRoomType();
         RoomTypeDto rtDTO = new RoomTypeDto(
                 rt.getId(),
@@ -33,15 +44,6 @@ public class RoomServiceImpl implements RoomService {
 
         return new RoomDto(room.getRoomId(), room.getRoomNumber(), rtDTO);
     }
-
-
-    public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo)
-    {
-        this.roomRepo = roomRepo;
-        this.bookingRepo = bookingRepo;
-        this.roomTypeRepo = roomTypeRepo;
-    }
-
     @Override
     public List<RoomDto> getAllRooms() {
         return roomRepo.findAll().stream()
@@ -55,22 +57,25 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end) {
-        List<Room> availableRooms = new ArrayList<>();
+    public List<RoomDto> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end) {
+        List<RoomDto> availableRooms = new ArrayList<>();
         long idCounter = 1;
+
         for (Room room : roomRepo.findAll()) {
             if (bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter)) {
                 System.out.println("Room with id " + room.getRoomId() + " is already booked");
             } else {
                 int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
                 if (peopleInRoom >= peopleCount) {
-                    availableRooms.add(room);
+                    availableRooms.add(convertToDTO(room));
                 }
             }
             idCounter++;
         }
+
         return availableRooms;
     }
+
 
     @Override
     public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds){
