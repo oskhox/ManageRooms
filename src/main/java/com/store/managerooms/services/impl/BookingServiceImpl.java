@@ -37,7 +37,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-
     public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate) {
             return bookingRepository.isRoomBookedCheckNewBooking(roomId,startDate,endDate);
     }
@@ -48,7 +47,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public DetailedBookingDto createNewBooking(DetailedBookingDto booking) {
+    public MinimalBookingDto createNewBooking(MinimalBookingDto booking) {
         if (booking.getEndDate().isBefore(booking.getStartDate())) {
             throw new IllegalArgumentException("Slutdatum får inte vara före startdatum.");
         }
@@ -65,10 +64,10 @@ public class BookingServiceImpl implements BookingService {
         Customer customer = customerService.findByCustomerId(customerId);
         Room room = roomService.findByRoomId(roomId);
 
-        Booking newBooking = detailedBookingDtoToBooking(customer, room, booking);
+        Booking newBooking = minimalBookingDtoToBooking(room,customer,booking);
         Booking savedBooking = bookingRepository.save(newBooking);
 
-        return bookingToDetailedBookingDto(savedBooking);
+        return bookingToMinimalBookingDto(savedBooking);
 
     }
 
@@ -115,23 +114,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingToMinimalBookingDto(booking);
     }
 
+
     @Override
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto booking) {
+    public Booking minimalBookingDtoToBooking(Room room, Customer customer, MinimalBookingDto booking) {
         return Booking.builder()
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
+                .room(room)
                 .customer(customer)
-                .room(room)
-                .build();
-    }
-
-
-    @Override
-    public Booking minimalBookingDtoToBooking(Room room, MinimalBookingDto booking) {
-        return Booking.builder()
-                .startDate(booking.getStartDate())
-                .endDate(booking.getEndDate())
-                .room(room)
                 .build();
     }
 
@@ -139,6 +129,11 @@ public class BookingServiceImpl implements BookingService {
     public MinimalBookingDto bookingToMinimalBookingDto(Booking booking) {
         Room room = booking.getRoom();
         RoomType roomType = room.getRoomType();
+
+        MinimalCustomerDto customerDto = new MinimalCustomerDto(
+                booking.getCustomer().getId(),
+                booking.getCustomer().getFirstName(),
+                booking.getCustomer().getLastName());
 
         RoomTypeDto roomTypeDto = new RoomTypeDto(
                 roomType.getId(),
@@ -154,6 +149,7 @@ public class BookingServiceImpl implements BookingService {
                 .id(booking.getId())
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
+                .customer(customerDto)
                 .room(roomDto)
                 .build();
     }

@@ -12,25 +12,24 @@ import java.util.Set;
 
 public interface BookingService {
 
-    public DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
-    public MinimalBookingDto bookingToMinimalBookingDto(Booking booking);
+    DetailedBookingDto bookingToDetailedBookingDto(Booking booking);
+    MinimalBookingDto bookingToMinimalBookingDto(Booking booking);
 
-    public Booking minimalBookingDtoToBooking(Room room, MinimalBookingDto minimalBookingDTO);
-    public Booking detailedBookingDtoToBooking(Customer customer, Room room, DetailedBookingDto booking);
+    Booking minimalBookingDtoToBooking(Room room, Customer customer, MinimalBookingDto booking);
 
-    public List<MinimalBookingDto> getAllBookings();
+    List<MinimalBookingDto> getAllBookings();
 
-    public boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
-
-    public DetailedBookingDto createNewBooking(DetailedBookingDto booking);
-
-    public DetailedBookingDto findDetailedBookingById(Long id);
-    public MinimalBookingDto findMinimalBookingById(Long id);
+    boolean isRoomBooked(Long roomId, LocalDate startDate, LocalDate endDate);
+    boolean isDateBookedExistingBooking(Long roomId, LocalDate startDate, LocalDate endDate, Long bookingId);
 
 
-        public void deleteBookingById(Long id);
+    MinimalBookingDto createNewBooking(MinimalBookingDto booking);
+    DetailedBookingDto findDetailedBookingById(Long id);
+    MinimalBookingDto findMinimalBookingById(Long id);
+    MinimalBookingDto updateExistingBooking(MinimalBookingDto booking);
 
-    public MinimalBookingDto updateExistingBooking(MinimalBookingDto booking);
+    void deleteBookingById(Long id);
+
 
 
     }

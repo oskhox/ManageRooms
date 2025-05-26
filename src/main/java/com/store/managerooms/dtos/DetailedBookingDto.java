@@ -19,13 +19,17 @@ import java.util.Set;
 public class DetailedBookingDto {
 
     private Long id;
+
+    @NotNull(message = "Startdatum krävs")
     private LocalDate startDate;
+
+    @NotNull(message = "Slutdatum krävs")
     private LocalDate endDate;
 
     @Valid
-    @NotNull(message = "Rum är obligatoriskt")
     private RoomDto room;
 
+    @Valid
     private DetailedCustomerDto customer;
 
 

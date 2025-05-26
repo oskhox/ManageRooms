@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header class="header">
+    <h1 th:text="${pageTitle}"></h1>
+</header>
+
+<nav>
+    <a th:href="@{/bookings}">Alla bokningar</a> |
+    <a th:href="@{/bookings/create}">Skapa bokning</a> |
+    <a th:href="@{/customers/addCustomer}">Registrera kund</a> |
+</nav>
+
+<div class="container">
+        <h2 th:text="${bookingDetails}">Bokningsdetaljer</h2>
+    <div class="bookingDetails-box">
+        <table>
+            <thead>
+            <tr>
+                <th th:text="${customerName}"></th>
+                <th th:text="${customerEmail}"></th>
+                <th th:text="${customerPhoneNumber}"></th>
+                <th th:text="${startDate}"></th>
+                <th th:text="${endDate}"></th>
+                <th th:text="${roomNumber}"></th>
+                <th th:text="${roomBeds}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="|${booking.customer.firstName} ${booking.customer.lastName}|"></td>
+                <td th:text="${booking.customer.email}"></td>
+                <td th:text="${booking.customer.phone}"></td>
+                <td th:text="${booking.startDate}"></td>
+                <td th:text="${booking.endDate}"></td>
+                <td th:text="${booking.room.roomNumber}"></td>
+                <td th:text="${booking.room.roomType.bedCount}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p th:text="${bookingConfirmation}"></p>
+
+</div>
+</div>
+
+<footer class="footer"></footer>
+</body>
+</html>

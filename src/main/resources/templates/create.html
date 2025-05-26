@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title th:text="${booking}">Bokningar</title>
+    <title th:text="${pageTitle}"></title>
 </head>
 <body>
 
@@ -19,28 +19,38 @@
 
 <div class="container">
 <h2 th:text="${formTitle}"></h2>
-    <form th:action="@{/bookings/create}" th:object="${detailedBookingDto}" method="post">
+    <form class="styled-form" th:action="@{/bookings/create}" th:object="${minimalBookingDto}" method="post">
         <label th:text="${labelCustomer}" for="customers"></label>
         <select id="customers" th:field="*{customer.id}" required>
+            <option value="" disabled selected>Välj kund</option>
             <option th:each="cust : ${customers}"
                     th:value="${cust.id}"
                     th:text="${cust.firstName + ' ' + cust.lastName}">
             </option>
         </select>
+        <div th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}" class="error"></div>
+        <div th:if="${#fields.hasErrors('customer.id')}" th:errors="*{customer.id}" class="error"></div>
+
 
         <label th:text="${labelRooms}" for="rooms"></label>
         <select id="rooms" th:field="*{room.id}" required>
+            <option value="" disabled selected>Välj rum</option>
             <option th:each="room : ${rooms}"
                     th:value="${room.id}"
                     th:text="${room.roomNumber + ' - ' + room.roomType.name}">
             </option>
         </select>
+        <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="error"></div>
+        <div th:if="${#fields.hasErrors('room.id')}" th:errors="*{room.id}" class="error"></div>
 
         <label th:text="${labelStartDate}" for="startDate"></label>
         <input type="date" id="startDate" th:field="*{startDate}" required />
+        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></div>
 
         <label th:text="${labelEndDate}" for="endDate"></label>
         <input type="date" id="endDate" th:field="*{endDate}" required />
+        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error"></div>
+
 
         <input type="submit" value="Skapa bokning" />
     </form>
@@ -54,7 +64,7 @@
 
     </div>
 </div>
-
+<footer class="footer"></footer>
 </body>
 </html>
 
