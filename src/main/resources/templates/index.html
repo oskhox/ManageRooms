@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <title>ManageRooms 1.0</title>
 </head>
 <body>
-<h3>ManageRooms 1.0</h3>
-<a href="/customer">
-    <button>Kunder</button>
-</a>
-<a href="/bookings">
-    <button>Alla bokningar</button>
-</a>
-<a href="/bookings/create">
-    <button>Skapa bokning</button>
-</a>
-<a href="/available-rooms">
-    <button>Lediga rum</button>
-</a>
+
+<header class="header">
+    <h1>ManageRooms 1.0</h1>
+</header>
+
+<nav>
+    <a th:href="@{/}">Hem</a> |
+    <a th:href="@{/customer}">Kunder</a> |
+    <a th:href="@{/bookings}">Alla bokningar</a> |
+    <a th:href="@{/bookings/create}">Skapa bokning</a> |
+    <a th:href="@{/rooms}">Alla rum</a> |
+    <a th:href="@{/available-rooms}">Lediga rum</a>
+</nav>
 
 </body>
 </html>
