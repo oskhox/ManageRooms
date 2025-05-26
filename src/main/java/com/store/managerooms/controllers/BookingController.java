@@ -38,7 +38,8 @@ public class BookingController {
             model.addAttribute("startDate", "Startdatum");
             model.addAttribute("endDate", "Slutdatum");
             model.addAttribute("roomNumber", "Rumsnummer");
-            model.addAttribute("roomBeds", "Antal sängar");
+            model.addAttribute("typeOfRoom", "Rumstyp");
+            model.addAttribute("totalPeople", "Antal personer");
             model.addAttribute("bookingDetails", "Bokningsinformation");
             model.addAttribute("bookingConfirmation", "Bokningen är genomförd!");
         } catch (NoSuchElementException e) {
@@ -64,12 +65,8 @@ public class BookingController {
     private void addFormAttributes(Model model) {
         model.addAttribute("customers", customerService.allCustomersMinimal());
         model.addAttribute("rooms", roomService.getAllRooms());
-        model.addAttribute("formTitle", "Fyll i bokningsformuläret");
-        model.addAttribute("labelCustomer", "Välj kund:");
-        model.addAttribute("labelPeopleCount", "Antal gäster");
-        model.addAttribute("labelRooms", "Välj rum:");
-        model.addAttribute("labelStartDate", "Välj startdatum:");
-        model.addAttribute("labelEndDate", "Välj slutdatum:");
+        model.addAttribute("labelStartDate", "Valt startdatum:");
+        model.addAttribute("labelEndDate", "Valt slutdatum:");
     }
 
 
@@ -98,7 +95,7 @@ public class BookingController {
             return "redirect:/bookings/booking/" + savedBooking.getId();
         } catch (Exception e) {
             addFormAttributes(model);
-            model.addAttribute("errorMessage", "Något gick fel: " + e.getMessage());
+            model.addAttribute("errorMessage", "Försök igen: " + e.getMessage());
             return "create";
         }
     }
