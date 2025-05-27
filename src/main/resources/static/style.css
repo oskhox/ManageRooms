@@ -110,3 +110,11 @@ th {
     margin-top: 25px;
     margin-bottom: 0;
 }
+
+.alert-success {
+    font-size: 20px;
+    margin: 20px auto;
+    color: seagreen;
+    text-align: center;
+}
+

@@ -17,6 +17,9 @@
     <a th:href="@{/bookings/create}">Skapa bokning</a>
 </nav>
 
+
+
+
 <div class="container">
         <h2 th:text="${bookingDetails}">Bokningsdetaljer</h2>
     <div class="bookingDetails-box">
@@ -51,9 +54,12 @@
             </tbody>
         </table>
 
-        <p th:text="${bookingConfirmation}"></p>
+        <div th:if="${bookingMessage}" class="alert alert-success">
+            <p th:text="${bookingMessage}"></p>
+        </div>
 
-</div>
+
+    </div>
 </div>
 
 <footer class="footer"></footer>
