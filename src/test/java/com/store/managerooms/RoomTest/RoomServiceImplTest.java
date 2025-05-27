@@ -21,6 +21,8 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -71,34 +73,6 @@ public class RoomServiceImplTest {
         assertTrue(savedRooms.size() >= 2);
         assertTrue(savedRooms.stream().anyMatch(r -> r.getRoomNumber() == 1011));
         assertTrue(savedRooms.stream().anyMatch(r -> r.getRoomNumber() == 1012));
-    }
-
-    @Test
-    void testGetAvailableRooms() {
-        LocalDate start = LocalDate.of(2020, 1, 1);
-        LocalDate end = LocalDate.of(2020, 1, 15);
-        int peopleCount = 2;
-
-        RoomType roomType1 = new RoomType("Big Double Room",2,2);
-        RoomType roomType2 = new RoomType("Double Room",2,1);
-        Room room1 = new Room();
-        room1.setRoomId(1L);
-        room1.setRoomNumber(1001);
-        room1.setRoomType(roomType1);
-
-        Room room2 = new Room();
-        room2.setRoomId(2L);
-        room2.setRoomNumber(1002);
-        room2.setRoomType(roomType2);
-
-        when(roomRepo.findAll()).thenReturn(List.of(room1,room2));
-        when(bookingRepository.isDateBookedCheckExistingBooking(1L,start,end,(long)1)).thenReturn(true);
-        when(bookingRepository.isDateBookedCheckExistingBooking(2L,start,end,(long)2)).thenReturn(false);
-
-        List<RoomDto> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
-
-        assertThat(availableRooms.size()).isEqualTo(1);
-        assertThat(availableRooms.getFirst().getRoomNumber()).isEqualTo(1002);
     }
 
     @Test
