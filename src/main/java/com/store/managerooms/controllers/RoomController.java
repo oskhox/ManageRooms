@@ -34,10 +34,10 @@ public class RoomController {
     }
 
     @GetMapping("rooms/search")
-    public String getAvailableRooms(@RequestParam int bedCount,
+    public String getAvailableRooms(@RequestParam int peopleCount,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
-        List<RoomDto> availableRooms = roomService.getAvailableRooms(bedCount, start, end);
+        List<RoomDto> availableRooms = roomService.getAvailableRooms(peopleCount, start, end);
 
         MinimalBookingDto bookingDto = new MinimalBookingDto();
         bookingDto.setStartDate(start);
@@ -47,12 +47,12 @@ public class RoomController {
         model.addAttribute("labelRooms", "Tillgängliga rum");
         model.addAttribute("pageTitle", "Skapa bokning");
         model.addAttribute("formTitle", "Bokningsformulär");
-        model.addAttribute("bedCount", "Välj antal personer");
         model.addAttribute("minimalBookingDto", bookingDto);
         model.addAttribute("customers", customerService.allCustomers());
-        model.addAttribute("labelStartDate", "Valt startdatum:");
-        model.addAttribute("labelEndDate", "Valt slutdatum:");
-        model.addAttribute("labelCustomer", "Vald kund:");
+        model.addAttribute("labelCustomer", "Välj kund:");
+        model.addAttribute("labelStartDate", "Startdatum:");
+        model.addAttribute("labelEndDate", "Slutdatum:");
+
         return "create";
 
     }
