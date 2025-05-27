@@ -33,11 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/changeCustomer")
-    public String changeCustomer(@Valid @ModelAttribute DetailedCustomerDto detailedCustomerDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("allCustomers", customerService.allCustomers());
-            return "customer";
-        }
+    public String changeCustomer( @ModelAttribute DetailedCustomerDto detailedCustomerDto) {
         customerService.changeCustomer(detailedCustomerDto);
         return "redirect:/customer";
     }
