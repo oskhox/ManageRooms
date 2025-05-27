@@ -40,7 +40,7 @@ public class BookingController {
             model.addAttribute("roomNumber", "Rumsnummer");
             model.addAttribute("typeOfRoom", "Rumstyp");
             model.addAttribute("totalPeople", "Antal personer");
-            model.addAttribute("availableBeds", "Antal extra sängar");
+            //model.addAttribute("availableBeds", "Antal extra sängar");
             model.addAttribute("bookingDetails", "Bokningsinformation");
         } catch (NoSuchElementException e) {
             model.addAttribute("errorMessage", "Bokning hittades inte.");

@@ -34,7 +34,7 @@
                 <th th:text="${roomNumber}"></th>
                 <th th:text="${typeOfRoom}"></th>
                 <th th:text="${totalPeople}"></th>
-                <th th:text="${availableBeds}"></th>
+                <!--<th th:text="${availableBeds}"></th>-->
 
             </tr>
             </thead>
@@ -48,7 +48,7 @@
                 <td th:text="${booking.room.roomNumber}"></td>
                 <td th:text="${booking.room.roomType.getName()}"></td>
                 <td th:text="${booking.room.roomType.bedCount}"></td>
-                <td th:text="${booking.room.roomType.extraBedsAvailable}"></td>
+                <!--<td th:text="${booking.room.roomType.extraBedsAvailable}"></td>-->
 
             </tr>
             </tbody>
