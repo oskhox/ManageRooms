@@ -42,7 +42,6 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-    //TODO: Add validation
     @PostMapping("/deleteCustomer")
     public String deleteCustomer(@RequestParam("deleteId") String id) {
         customerService.deleteCustomer(Long.parseLong(id));
