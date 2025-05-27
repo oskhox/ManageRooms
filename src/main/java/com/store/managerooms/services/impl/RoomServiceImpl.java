@@ -62,16 +62,16 @@ import java.util.stream.Collectors;
                 List<RoomDto> availableRooms = new ArrayList<>();
                 long idCounter = 1;
                 for (Room room : roomRepo.findAll()) {
-                    if (bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter)) {
-                        System.out.println("Room with id " + room.getRoomId() + " is already booked");
-                    } else {
+                    boolean isBooked = bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter);
+                    if (!isBooked) {
                         int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
                         if (peopleInRoom >= peopleCount) {
                             availableRooms.add(convertToDTO(room));
                         }
                     }
                     idCounter++;
-                }
+                    }
+
                 return availableRooms;
             }
 
