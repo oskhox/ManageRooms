@@ -1,5 +1,4 @@
 package com.store.managerooms.RoomTest;
-
 import com.store.managerooms.dtos.RoomDto;
 import com.store.managerooms.models.Room;
 import com.store.managerooms.models.RoomType;
@@ -15,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
@@ -26,7 +24,6 @@ public class RoomServiceTest {
 
     @Mock
     private BookingRepository bookingRepository;
-
 
     @Mock
     private RoomRepo roomRepo;
