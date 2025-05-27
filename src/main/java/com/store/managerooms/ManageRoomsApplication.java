@@ -48,7 +48,6 @@ public class ManageRoomsApplication {
             testBooking.setCustomer(testCustomer);
             testBooking.setRoom(testRoom);
             bookingRepo.save(testBooking);
-
         };
     }
 }

@@ -14,9 +14,7 @@
     <a th:href="@{/}">Hem</a> |
     <a th:href="@{/customer}">Hantera kunder</a> |
     <a th:href="@{/bookings}">Alla bokningar</a> |
-    <a th:href="@{/bookings/create}">Skapa bokning</a> |
-    <a th:href="@{/rooms}">Alla rum</a> |
-    <a th:href="@{/available-rooms}">Lediga rum</a>
+    <a th:href="@{/bookings/create}">Skapa bokning</a>
 </nav>
 
 <div class="customer-container">
@@ -55,33 +53,30 @@
     </form>
 
     <h3>Ändra kund</h3>
-    <form action="" method="get">
+    <form method="get" th:action="@{/editCustomer}">
         <label>
-            <select name="change" onchange="this.form.submit()">
+            <select name="id" onchange="this.form.submit()">
                 <option value="">Välj kund att ändra</option>
                 <option th:each="customer : ${allCustomers}"
                         th:value="${customer.id}"
                         th:text="${customer.firstName + ' ' + customer.lastName}"
-                        th:selected="${param.change != null and param.change[0] == customer.id.toString()}">
+                        th:selected="${editCustomer != null and editCustomer.id == customer.id}">
                 </option>
             </select>
         </label>
     </form>
 
-    <div th:if="${param.change != null and param.change[0] != ''}">
-        <form th:action="@{/changeCustomer}" method="post">
-            <input type="hidden" name="id" th:value="${param.change[0]}">
-            <div th:each="customer : ${allCustomers}"
-                 th:if="${customer.id.toString() == param.change[0]}">
-                <label>Förnamn:<br>
-                    <input type="text" name="firstName" th:value="${customer.firstName}" required></label><br>
-                <label>Efternamn:<br>
-                    <input type="text" name="lastName" th:value="${customer.lastName}" required></label><br>
-                <label>E-post:<br>
-                    <input type="text" name="email" th:value="${customer.email}" required></label><br>
-                <label>Telefon:<br>
-                    <input type="text" name="phone" th:value="${customer.phone}" required></label><br>
-            </div>
+    <div th:if="${editCustomer != null}">
+        <form th:action="@{/editCustomer}" method="post" th:object="${editCustomer}">
+            <input type="hidden" th:field="*{id}">
+            <label>Förnamn:<br>
+                <input type="text" th:field="*{firstName}" required></label><br>
+            <label>Efternamn:<br>
+                <input type="text" th:field="*{lastName}" required></label><br>
+            <label>E-post:<br>
+                <input type="text" th:field="*{email}" required></label><br>
+            <label>Telefon:<br>
+                <input type="text" th:field="*{phone}" required></label><br>
             <input class="customer-btn" type="submit" value="Ändra">
         </form>
     </div>
