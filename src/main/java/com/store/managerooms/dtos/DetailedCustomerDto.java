@@ -19,9 +19,7 @@ public class DetailedCustomerDto {
     private String lastName;
 
     @NotEmpty(message = "E-post krävs")
-    @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", message = "Ogiltig e-postadress"
-    )
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", message = "Ogiltig e-postadress")
     private String email;
 
     @NotEmpty(message = "Telefonnummer krävs")
