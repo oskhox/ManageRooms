@@ -24,7 +24,6 @@ public class RoomTypeController {
     public ResponseEntity<String> addBeds(@ModelAttribute @Valid AddBedsDto addBedsDto,Model model) {
 
         roomService.addBeds(addBedsDto);
-//        redirectAttributes.addFlashAttribute("bedMessage", "Extra säng(ar) tillagda!");
 
         model.addAttribute("availableRooms", "Available rooms");
         model.addAttribute("labelRooms", "Tillgängliga rum");
