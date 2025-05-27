@@ -23,8 +23,9 @@
     <h2 th:text="${formTitle}"></h2>
 
     <form class="styled-form" th:action="@{/rooms/search}" th:object="${minimalBookingDto}" method="get">
-        <label>Välj antal personer</label>
-        <input type="number" name="peopleCount">
+        <label th:text="${bedCount}" for="bedCount"></label>
+        <input type="number" id="bedCount" name="bedCount">
+
         <label>Välj startdatum</label>
         <input  type="date" name="start">
         <label>Välj startdatum</label>
