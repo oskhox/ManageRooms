@@ -37,7 +37,7 @@ public class RoomController {
     public String getAvailableRooms(@RequestParam int bedCount,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, Model model) {
-        List<Room> availableRooms = roomService.getAvailableRooms(bedCount, start, end);
+        List<RoomDto> availableRooms = roomService.getAvailableRooms(bedCount, start, end);
 
         MinimalBookingDto bookingDto = new MinimalBookingDto();
         bookingDto.setStartDate(start);

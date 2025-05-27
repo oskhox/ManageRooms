@@ -16,23 +16,44 @@
     <a th:href="@{/}">Hem</a> |
     <a th:href="@{/customer}">Hantera kunder</a> |
     <a th:href="@{/bookings}">Alla bokningar</a> |
-    <a th:href="@{/bookings/create}">Skapa bokning</a>
+    <a th:href="@{/bookings/create}">Skapa bokning</a> |
+    <a th:href="@{/rooms}">Alla rum</a> |
+    <a th:href="@{/available-rooms}">Lediga rum</a>
 </nav>
 
 <div class="container">
     <h2 th:text="${formTitle}"></h2>
 
     <form class="styled-form" th:action="@{/rooms/search}" th:object="${minimalBookingDto}" method="get">
-        <label th:text="${bedCount}" for="bedCount"></label>
-        <input type="number" id="bedCount" name="bedCount">
+        <input type="number" name="peopleCount" required
+               oninvalid="this.setCustomValidity('Du måste ange antal personer')"
+               oninput="this.setCustomValidity('')">
 
-        <label>Välj startdatum</label>
-        <input  type="date" name="start">
-        <label>Välj startdatum</label>
-        <input type="date" name="end">
+        <input  type="date" name="start" required
+                oninvalid="this.setCustomValidity('Du måste ange ett startdatum')"
+                oninput="this.setCustomValidity('')">
+
+        <input type="date" name="end" required
+               oninvalid="this.setCustomValidity('Du måste ange ett slutdatum')"
+               oninput="this.setCustomValidity('')">
         <input type="submit">
-        </select>
     </form>
+
+
+    <form id="addBedsForm" class="styled-form">
+        <input type="hidden" name="roomTypeId" id="roomTypeIdInput">
+        <div class="bedOptionOne" >
+            <label for="addOneBed">Add one extra bed</label>
+            <input id="addOneBed" type="checkbox" name="beds" value="1">
+        </div>
+        <div class="bedOption">
+            <label for="addTwoBeds">Add two extra beds</label>
+            <input id="addTwoBeds" type="checkbox" name="beds" value="2">
+        </div>
+        <input type="submit" value="Lägg till sängar">
+    </form>
+    <div id="bedMessage"></div>
+
     <form class="styled-form" th:action="@{/bookings/create}" th:object="${minimalBookingDto}" method="post">
 
         <label th:text="${labelCustomer}" for="customers"></label>
@@ -52,10 +73,11 @@
             <option value="" disabled selected>Välj rum</option>
             <option th:if="${availableRooms != null}"
                     th:each="room : ${availableRooms}"
-                    th:value="${room.getRoomId()}"
+                    th:value="${room.id}"
                     th:text="${room.roomType != null ?room.roomType.name + ' ' + room.roomNumber + ' '
                     + room.roomType.bedCount + ' säng(ar) - '
-                    + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}">
+                    + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}"
+                    th:attr="data-roomTypeId=${room.roomType.id}">
             </option>
         </select>
 
@@ -76,16 +98,18 @@
         <input type="submit" value="Skapa bokning" />
     </form>
 
+
     <div th:if="${errorMessage}">
         <p style="color:red;" th:text="${errorMessage}"></p>
     </div>
 
-    <div th:if="${bookingMessage}">
-        <p style="color:green;" th:text="${bookingMessage}"></p>
+    <div th:if="${message}">
+        <p style="color:green;" th:text="${message}"></p>
 
     </div>
 </div>
 <footer class="footer"></footer>
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
 
