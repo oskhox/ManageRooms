@@ -53,7 +53,8 @@
                     th:value="${room.getRoomId()}"
                     th:text="${room.roomType != null ?room.roomType.name + ' ' + room.roomNumber + ' '
                     + room.roomType.bedCount + ' säng(ar) - '
-                    + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}">
+                    + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}"
+                    th:attr="data-roomTypeId=${room.roomType.getId()}">
             </option>
         </select>
 
@@ -73,6 +74,21 @@
 
         <input type="submit" value="Skapa bokning" />
     </form>
+    <div class="addBedsToRoom">
+        <form id="addBedsForm" class="styled-form">
+            <input type="hidden" name="roomTypeId" id="roomTypeIdInput">
+            <div class="bedOptionOne" >
+                <label for="addOneBed">Add one extra bed</label>
+                <input id="addOneBed" type="checkbox" name="beds" value="1">
+            </div>
+            <div class="bedOption">
+                <label for="addTwoBeds">Add two extra beds</label>
+                <input id="addTwoBeds" type="checkbox" name="beds" value="2">
+            </div>
+            <input type="submit" value="Lägg till sängar">
+        </form>
+        <div id="bedMessage"></div>
+    </div>
 
     <div th:if="${errorMessage}">
         <p style="color:red;" th:text="${errorMessage}"></p>
@@ -84,6 +100,7 @@
     </div>
 </div>
 <footer class="footer"></footer>
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
 

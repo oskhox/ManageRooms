@@ -1,21 +1,60 @@
 package com.store.managerooms.controllers;
 
-import ch.qos.logback.core.model.Model;
-import com.store.managerooms.models.RoomType;
-import com.store.managerooms.repos.RoomTypeRepo;
+import com.store.managerooms.dtos.MinimalBookingDto;
+import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.RoomService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
 public class RoomTypeController {
 
     private final RoomService roomService;
-//    private final RoomTypeRepo roomTypeRepo;
+    private final CustomerService customerService;
+
+    @PostMapping("room/addbeds")
+    public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds, RedirectAttributes redirectAttributes, Model model) {
+
+        roomService.addBeds(roomTypeId, beds);
+        redirectAttributes.addFlashAttribute("bedMessage", "Extra säng(ar) tillagda!");
+
+        model.addAttribute("availableRooms", "Available rooms");
+        model.addAttribute("labelRooms", "Tillgängliga rum");
+        model.addAttribute("pageTitle", "Skapa bokning");
+        model.addAttribute("formTitle", "Bokningsformulär");
+        model.addAttribute("minimalBookingDto", new MinimalBookingDto());
+        model.addAttribute("customers", customerService.allCustomers());
+        model.addAttribute("labelCustomer", "Välj kund:");
+        model.addAttribute("labelStartDate", "Startdatum:");
+        model.addAttribute("labelEndDate", "Slutdatum:");
+
+        return "redirect:/bookings/create";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //    private final RoomTypeRepo roomTypeRepo;
 
 //    public RoomTypeController(RoomTypeRepo roomTypeRepo) {
 //        this.roomTypeRepo = roomTypeRepo;
@@ -59,10 +98,6 @@ public class RoomTypeController {
 //            return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
 //        }
 //    }
-    @PostMapping("room/addbeds")
-    public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds) {
-        return roomService.addBeds(roomTypeId, beds);
-    }
 
 }
 

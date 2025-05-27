@@ -88,3 +88,22 @@ th {
 .footer {
     margin-top: 10rem;
 }
+
+.bedOption{
+    display: flex;
+    align-items: center;
+    gap: 45px;
+
+}
+
+.bedOptionOne{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 20px;
+
+}
+
+.bedOption input .bedOptionOne input{
+    width: 15px;
+}

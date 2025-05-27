@@ -81,14 +81,15 @@ import java.util.stream.Collectors;
                     roomType.setBedCount(roomType.getBedCount() + beds);
                     roomType.setExtraBedsAvailable(availableBeds - beds);
                     roomTypeRepo.save(roomType);
-                    return "index";
-//            return "Added " + beds + " beds " + " to " + roomType.getName() + " with id: " + roomTypeId;
+
+                    return "Added " + beds + " beds " + " to " + roomType.getName() + " with id: " + roomTypeId;
                 }
                 else if(roomType.getName().equals("Single room")){
                     return "This is a Single room, you cant add any extra beds to this room";
                 }
-                else {
-                    return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
-                }
+//                else {
+//                    return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
+//                }
+                return null;
             }
-            }
+        }
