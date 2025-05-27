@@ -134,7 +134,7 @@ public class BookingController {
             model.addAttribute("minimalBookingDto", booking);
             redirectAttributes.addFlashAttribute("message", "Bokningen är uppdaterad!");
             return "redirect:/bookings";
-        } catch (NoSuchElementException | IllegalStateException e) {
+        } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("rooms", roomService.getAllRooms());
             model.addAttribute("minimalBookingDto", minimalBookingDto);
