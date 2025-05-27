@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -98,5 +99,15 @@ public class RoomServiceImplTest {
 
         assertThat(availableRooms.size()).isEqualTo(1);
         assertThat(availableRooms.getFirst().getRoomNumber()).isEqualTo(1002);
+    }
+
+    @Test
+    void findByRoomId() {
+        RoomDto result = roomService.findByRoomId(room1.getRoomId());
+
+        assertEquals(1011, result.getRoomNumber());
+        assertEquals("Enkelrum", result.getRoomType().getName());
+        assertEquals(1, result.getRoomType().getBedCount());
+        assertEquals(0, result.getRoomType().getExtraBedsAvailable());
     }
 }
