@@ -3,7 +3,6 @@ package com.store.managerooms.controllers;
 
 import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.dtos.RoomDto;
-import com.store.managerooms.models.Room;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 

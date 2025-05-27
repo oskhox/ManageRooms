@@ -2,8 +2,6 @@ package com.store.managerooms.services;
 
 import com.store.managerooms.dtos.AddBedsDto;
 import com.store.managerooms.dtos.RoomDto;
-import com.store.managerooms.models.Room;
-
 import java.time.LocalDate;
 import java.util.List;
 

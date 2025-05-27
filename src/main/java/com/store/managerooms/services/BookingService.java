@@ -5,10 +5,8 @@ import com.store.managerooms.dtos.MinimalBookingDto;
 import com.store.managerooms.models.Booking;
 import com.store.managerooms.models.Customer;
 import com.store.managerooms.models.Room;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public interface BookingService {
 
