@@ -7,6 +7,7 @@ import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.repos.RoomRepo;
 import com.store.managerooms.repos.RoomTypeRepo;
 import com.store.managerooms.services.RoomService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,8 +36,7 @@ import java.util.stream.Collectors;
             }
 
 
-            public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo)
-            {
+            public RoomServiceImpl(RoomRepo roomRepo, BookingRepository bookingRepo, RoomTypeRepo roomTypeRepo) {
                 this.roomRepo = roomRepo;
                 this.bookingRepo = bookingRepo;
                 this.roomTypeRepo = roomTypeRepo;
@@ -55,7 +55,7 @@ import java.util.stream.Collectors;
             }
 
             @Override
-            public List<Room> getAvailableRooms(int peopleCount, LocalDate start, LocalDate end) {
+            public List<Room> getAvailableRooms(@Valid int peopleCount, LocalDate start, LocalDate end) {
                 List<Room> availableRooms = new ArrayList<>();
                 long idCounter = 1;
                 for (Room room : roomRepo.findAll()) {
@@ -73,23 +73,14 @@ import java.util.stream.Collectors;
             }
 
             @Override
-            public String addBeds(@RequestParam Long roomTypeId, @RequestParam int beds){
+            public void addBeds(@Valid Long roomTypeId, int beds) {
                 RoomType roomType = roomTypeRepo.findById(roomTypeId).get();
                 int availableBeds = roomType.getExtraBedsAvailable();
 
-                if (availableBeds != 0 && availableBeds <= beds) {
+                if (availableBeds != 0 && availableBeds >= beds) {
                     roomType.setBedCount(roomType.getBedCount() + beds);
                     roomType.setExtraBedsAvailable(availableBeds - beds);
                     roomTypeRepo.save(roomType);
-
-                    return "Added " + beds + " beds " + " to " + roomType.getName() + " with id: " + roomTypeId;
                 }
-                else if(roomType.getName().equals("Single room")){
-                    return "This is a Single room, you cant add any extra beds to this room";
-                }
-//                else {
-//                    return "There is " + roomType.getExtraBedsAvailable() + " extra beds available";
-//                }
-                return null;
             }
         }

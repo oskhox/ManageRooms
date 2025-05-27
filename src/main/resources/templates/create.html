@@ -25,11 +25,20 @@
 <h2 th:text="${formTitle}"></h2>
 
     <form class="styled-form" th:action="@{/rooms/search}" th:object="${minimalBookingDto}" method="get">
-        <input type="number" name="peopleCount">
-        <input  type="date" name="start">
-        <input type="date" name="end">
+        <input type="number" name="peopleCount" required
+               oninvalid="this.setCustomValidity('Du måste ange antal personer')"
+               oninput="this.setCustomValidity('')">
+
+        <input  type="date" name="start" required
+                oninvalid="this.setCustomValidity('Du måste ange ett startdatum')"
+                oninput="this.setCustomValidity('')">
+
+        <input type="date" name="end" required
+               oninvalid="this.setCustomValidity('Du måste ange ett slutdatum')"
+               oninput="this.setCustomValidity('')">
         <input type="submit">
     </form>
+
 
         <form id="addBedsForm" class="styled-form">
             <input type="hidden" name="roomTypeId" id="roomTypeIdInput">
