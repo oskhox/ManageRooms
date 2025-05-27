@@ -11,5 +11,4 @@ class ManageRoomsApplicationTests {
 
     @Test
     void contextLoads() {}
-
 }
