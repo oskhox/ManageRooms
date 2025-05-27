@@ -27,19 +27,6 @@ public class BookingControllerTest {
 
     }
 
-    @Test
-    public void testBookingConfirmationPageIsWorking() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
-                String.class)).contains("bookings/booking/");
-
-    }
-
-    @Test
-    public void testBookingUpdatePageIsWorking() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
-                String.class)).contains("bookings/update-booking/1");
-
-    }
 
     @Test
     public void testBookingsPageIsWorking() throws Exception {

@@ -5,17 +5,13 @@ import com.store.managerooms.models.Room;
 import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.repos.RoomRepo;
-import com.store.managerooms.repos.RoomTypeRepo;
-import com.store.managerooms.services.RoomService;
 import com.store.managerooms.services.impl.RoomServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
 
 import java.time.LocalDate;
 import java.util.List;
