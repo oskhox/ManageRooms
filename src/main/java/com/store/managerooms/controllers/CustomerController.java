@@ -32,9 +32,18 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-    @PostMapping("/changeCustomer")
-    public String changeCustomer( @ModelAttribute DetailedCustomerDto detailedCustomerDto) {
-        customerService.changeCustomer(detailedCustomerDto);
+    @GetMapping("/editCustomer")
+    public String showEditForm(@RequestParam("id") Long id, Model model) {
+        DetailedCustomerDto customer = customerService.findDTOByCustomerId(id);
+        model.addAttribute("editCustomer", customer);
+        model.addAttribute("allCustomers", customerService.allCustomers());
+        model.addAttribute("detailedCustomerDto", new DetailedCustomerDto());
+        return "customer";
+    }
+
+    @PostMapping("/editCustomer")
+    public String editCustomer(@ModelAttribute DetailedCustomerDto dto) {
+        customerService.changeCustomer(dto);
         return "redirect:/customer";
     }
 

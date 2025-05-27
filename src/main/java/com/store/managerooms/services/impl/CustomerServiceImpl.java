@@ -79,6 +79,12 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
     }
 
+    public DetailedCustomerDto findDTOByCustomerId(Long id) {
+        Customer customerToTransform = customerRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+        return customerToDetailedCustomerDto(customerToTransform);
+    }
+
     /*
        TRANSFERERINGSMETODER
     */

@@ -14,6 +14,5 @@ public interface CustomerService {
     Customer findByCustomerId(Long id);
     MinimalCustomerDto customerToDTO(Customer c);
     List<MinimalCustomerDto> allCustomersMinimal();
-
-
+    DetailedCustomerDto findDTOByCustomerId(Long id);
     }
