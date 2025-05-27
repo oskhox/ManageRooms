@@ -73,11 +73,11 @@
             <option value="" disabled selected>Välj rum</option>
             <option th:if="${availableRooms != null}"
                     th:each="room : ${availableRooms}"
-                    th:value="${room.getRoomId()}"
+                    th:value="${room.id}"
                     th:text="${room.roomType != null ?room.roomType.name + ' ' + room.roomNumber + ' '
                     + room.roomType.bedCount + ' säng(ar) - '
                     + room.roomType.extraBedsAvailable + ' extra sängar' : 'Rummet finns ej'}"
-                    th:attr="data-roomTypeId=${room.roomType.getId()}">
+                    th:attr="data-roomTypeId=${room.roomType.id}">
             </option>
         </select>
 

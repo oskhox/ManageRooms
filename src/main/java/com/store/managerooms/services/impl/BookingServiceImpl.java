@@ -6,6 +6,7 @@ import com.store.managerooms.models.Room;
 import com.store.managerooms.models.RoomType;
 import com.store.managerooms.repos.BookingRepository;
 import com.store.managerooms.models.Customer;
+import com.store.managerooms.repos.RoomRepo;
 import com.store.managerooms.services.CustomerService;
 import com.store.managerooms.services.BookingService;
 import com.store.managerooms.services.RoomService;
@@ -21,6 +22,7 @@ import java.util.NoSuchElementException;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final RoomRepo roomRepo;
     private final CustomerService customerService;
     private final RoomService roomService;
 
@@ -62,7 +64,9 @@ public class BookingServiceImpl implements BookingService {
             }
 
         Customer customer = customerService.findByCustomerId(customerId);
-        Room room = roomService.findByRoomId(roomId);
+        RoomDto roomDto = roomService.findByRoomId(roomId);
+        Room room = roomRepo.findById(roomDto.getId())
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
         Booking newBooking = minimalBookingDtoToBooking(room,customer,booking);
         Booking savedBooking = bookingRepository.save(newBooking);
@@ -89,7 +93,9 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("Rummet är redan bokat för önskat datum.");
         }
 
-        Room room = roomService.findByRoomId(roomId);
+        RoomDto roomDto = roomService.findByRoomId(roomId);
+        Room room = roomRepo.findById(roomDto.getId())
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
             existingBooking.setStartDate(booking.getStartDate());
             existingBooking.setEndDate(booking.getEndDate());

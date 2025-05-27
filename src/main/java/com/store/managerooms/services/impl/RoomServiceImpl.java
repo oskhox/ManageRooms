@@ -1,4 +1,5 @@
 package com.store.managerooms.services.impl;
+import com.store.managerooms.dtos.AddBedsDto;
 import com.store.managerooms.dtos.RoomDto;
 import com.store.managerooms.dtos.RoomTypeDto;
 import com.store.managerooms.models.Room;
@@ -49,14 +50,16 @@ import java.util.stream.Collectors;
                         .collect(Collectors.toList());
             }
 
-            public Room findByRoomId(Long id) {
-                return roomRepo.findById(id)
+            public RoomDto findByRoomId(Long id) {
+                Room room = roomRepo.findById(id)
                         .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
+
+                return convertToDTO(room);
             }
 
             @Override
-            public List<Room> getAvailableRooms(@Valid int peopleCount, LocalDate start, LocalDate end) {
-                List<Room> availableRooms = new ArrayList<>();
+            public List<RoomDto> getAvailableRooms(@Valid int peopleCount, LocalDate start, LocalDate end) {
+                List<RoomDto> availableRooms = new ArrayList<>();
                 long idCounter = 1;
                 for (Room room : roomRepo.findAll()) {
                     if (bookingRepo.isDateBookedCheckExistingBooking(room.getRoomId(), start, end, idCounter)) {
@@ -64,7 +67,7 @@ import java.util.stream.Collectors;
                     } else {
                         int peopleInRoom = room.getRoomType().getBedCount() + room.getRoomType().getExtraBedsAvailable();
                         if (peopleInRoom >= peopleCount) {
-                            availableRooms.add(room);
+                            availableRooms.add(convertToDTO(room));
                         }
                     }
                     idCounter++;
@@ -73,13 +76,15 @@ import java.util.stream.Collectors;
             }
 
             @Override
-            public void addBeds(@Valid Long roomTypeId, int beds) {
-                RoomType roomType = roomTypeRepo.findById(roomTypeId).get();
+            public void addBeds(@Valid AddBedsDto addBeds) {
+                RoomType roomType = roomTypeRepo.findById(addBeds.getRoomTypeId())
+                        .orElseThrow(() -> new RuntimeException("Rummet hittades inte"));
+
                 int availableBeds = roomType.getExtraBedsAvailable();
 
-                if (availableBeds != 0 && availableBeds >= beds) {
-                    roomType.setBedCount(roomType.getBedCount() + beds);
-                    roomType.setExtraBedsAvailable(availableBeds - beds);
+                if (availableBeds != 0 && availableBeds >= addBeds.getBeds()) {
+                    roomType.setBedCount(roomType.getBedCount() + addBeds.getBeds());
+                    roomType.setExtraBedsAvailable(availableBeds - addBeds.getBeds());
                     roomTypeRepo.save(roomType);
                 }
             }
