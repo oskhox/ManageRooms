@@ -129,17 +129,20 @@ th {
     display: flex;
     align-items: center;
     gap: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+
+}
+
+
+.bedOption input {
+    margin-left: 15px;
+    width: 13px;
 
 }
 
 .bedOptionOne input{
-    width: 15px;
-}
+    width: 65px;
 
-.bedOption2 input {
-    width: 15px;
-    margin-left: 30px;
 }
 
 .extra-bed-label {
