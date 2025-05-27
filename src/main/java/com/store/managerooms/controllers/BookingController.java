@@ -56,8 +56,8 @@ public class BookingController {
         model.addAttribute("formTitle", "Samtliga bokningar");
         model.addAttribute("customerName", "Kundnamn");
         model.addAttribute("roomNumber", "Rumsnummer");
-        model.addAttribute("startDate", "Startdatum");
-        model.addAttribute("endDate", "Slutdatum");
+        model.addAttribute("startDate", "Bokat startdatum");
+        model.addAttribute("endDate", "Bokat slutdatum");
         model.addAttribute("options", "Dina val");
         return "bookings";
     }
