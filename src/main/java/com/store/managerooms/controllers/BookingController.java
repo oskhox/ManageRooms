@@ -42,7 +42,6 @@ public class BookingController {
             model.addAttribute("totalPeople", "Antal personer");
             model.addAttribute("availableBeds", "Antal extra sängar");
             model.addAttribute("bookingDetails", "Bokningsinformation");
-            model.addAttribute("bookingConfirmation", "Bokningen är genomförd!");
         } catch (NoSuchElementException e) {
             model.addAttribute("errorMessage", "Bokning hittades inte.");
         }
