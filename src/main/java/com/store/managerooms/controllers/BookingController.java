@@ -65,10 +65,8 @@ public class BookingController {
     private void addFormAttributes(Model model) {
         model.addAttribute("customers", customerService.allCustomersMinimal());
         model.addAttribute("rooms", roomService.getAllRooms());
-        model.addAttribute("labelStartDate", "Valt startdatum:");
-        model.addAttribute("labelEndDate", "Valt slutdatum:");
+        model.addAttribute("labelCustomer", "Välj kund:");
     }
-
 
     @GetMapping("create")
     public String showBookingForm(Model model) {

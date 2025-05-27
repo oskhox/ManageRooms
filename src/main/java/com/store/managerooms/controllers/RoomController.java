@@ -49,10 +49,9 @@ public class RoomController {
         model.addAttribute("formTitle", "Bokningsformulär");
         model.addAttribute("minimalBookingDto", bookingDto);
         model.addAttribute("customers", customerService.allCustomers());
-        model.addAttribute("labelCustomer", "Välj kund:");
-        model.addAttribute("labelStartDate", "Startdatum:");
-        model.addAttribute("labelEndDate", "Slutdatum:");
-
+        model.addAttribute("labelStartDate", "Valt startdatum:");
+        model.addAttribute("labelEndDate", "Valt slutdatum:");
+        model.addAttribute("labelCustomer", "Vald kund:");
         return "create";
 
     }
