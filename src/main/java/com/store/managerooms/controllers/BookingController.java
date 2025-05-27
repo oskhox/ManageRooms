@@ -91,7 +91,7 @@ public class BookingController {
 
         try {
             MinimalBookingDto savedBooking = bookingService.createNewBooking(minimalBookingDto);
-            redirectAttributes.addFlashAttribute("message", "Bokning skapad!");
+            redirectAttributes.addFlashAttribute("bookingMessage", "Bokning skapad!");
             return "redirect:/bookings/booking/" + savedBooking.getId();
         } catch (Exception e) {
             addFormAttributes(model);
@@ -134,7 +134,7 @@ public class BookingController {
             model.addAttribute("minimalBookingDto", booking);
             redirectAttributes.addFlashAttribute("message", "Bokningen är uppdaterad!");
             return "redirect:/bookings";
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("rooms", roomService.getAllRooms());
             model.addAttribute("minimalBookingDto", minimalBookingDto);
