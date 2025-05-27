@@ -37,9 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public DetailedCustomerDto addCustomer(DetailedCustomerDto d) {
-        Customer saved = customerRepo.save(detailedCustomerDtoToCustomer(d));
-        return customerToDetailedCustomerDto(saved);
+    public void addCustomer(DetailedCustomerDto d) {
+        customerRepo.save(detailedCustomerDtoToCustomer(d));
     }
 
     @Override
