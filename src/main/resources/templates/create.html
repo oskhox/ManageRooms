@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/style.css}" />
 
 <head>
     <meta charset="UTF-8" />
@@ -41,11 +41,11 @@
     <form id="addBedsForm" class="styled-form">
         <input type="hidden" name="roomTypeId" id="roomTypeIdInput">
         <div class="bedOptionOne" >
-            <label for="addOneBed">Add one extra bed</label>
+            <label for="addOneBed" class="extra-bed-label">Lägg till en extra säng</label>
             <input id="addOneBed" type="checkbox" name="beds" value="1">
         </div>
-        <div class="bedOption">
-            <label for="addTwoBeds">Add two extra beds</label>
+        <div class="bedOption2">
+            <label for="addTwoBeds" class="extra-bed-label">Lägg till två extra sängar</label>
             <input id="addTwoBeds" type="checkbox" name="beds" value="2">
         </div>
         <input type="submit" value="Lägg till sängar">

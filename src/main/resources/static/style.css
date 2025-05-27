@@ -133,7 +133,19 @@ th {
 
 }
 
-.bedOption input .bedOptionOne input{
+.bedOptionOne input{
     width: 15px;
+}
+
+.bedOption2 input {
+    width: 15px;
+    margin-left: 30px;
+}
+
+.extra-bed-label {
+    display: inline;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #333;
 }
 
