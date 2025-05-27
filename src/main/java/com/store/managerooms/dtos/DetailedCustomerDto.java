@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 public class DetailedCustomerDto {
     private Long id;
 
-    @NotEmpty(message = "First name is mandatory")
+    @NotEmpty(message = "Förnamn krävs")
     private String firstName;
 
-    @NotEmpty(message = "Last name is mandatory")
+    @NotEmpty(message = "Efternamn krävs")
     private String lastName;
 
-    @NotEmpty(message = "Email is mandatory")
+    @NotEmpty(message = "E-post krävs")
     private String email;
 
-    @NotEmpty(message = "Phone number is mandatory")
+    @NotEmpty(message = "Telefonnummer krävs")
     private String phone;
 }
