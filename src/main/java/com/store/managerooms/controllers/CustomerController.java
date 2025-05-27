@@ -33,7 +33,7 @@ public class CustomerController {
     }
 
     @GetMapping("/editCustomer")
-    public String showEditForm(@RequestParam("id") Long id, Model model) {
+    public String showForm(@RequestParam("id") Long id, Model model) {
         DetailedCustomerDto customerDto = customerService.findDTOByCustomerId(id);
         model.addAttribute("editCustomer", customerDto);
         model.addAttribute("allCustomers", customerService.allCustomers());
